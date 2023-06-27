@@ -24,6 +24,7 @@
     <link href="<?= base_url('assets/custom/pos.css') ?>" rel="stylesheet" />
     <script type="text/javascript" src="<?= $assets ?>js/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="<?= $assets ?>js/jquery-migrate-1.2.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="<?= $assets ?>js/jquery.js"></script>
     <![endif]-->
@@ -118,7 +119,7 @@
                                 <i class="fa fa-key"></i>
                             </a>
                         </li>
-                        <li class="dropdown hidden-small">
+                        <!-- <li class="dropdown hidden-small">
                             <a type="button" class="btn pos-tip" title="<?= lang('pole_display') ?>" data-placement="bottom" id="rfd-pole-connect">
                                 <i class="fa fa-play"></i>
                             </a>
@@ -127,7 +128,7 @@
                             <a class="btn pos-tip" title="<?= lang('view_bill_screen') ?>" data-placement="bottom" href="<?= admin_url('pos/view_bill') ?>" target="_blank">
                                 <i class="fa fa-laptop"></i>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="dropdown">
                             <a class="btn blightOrange pos-tip" id="opened_bills" title="<span><?= lang('suspended_sales') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/opened_bills') ?>" data-toggle="ajax">
                                 <i class="fa fa-th"></i>
@@ -170,14 +171,14 @@
                                     <i class="fa fa-list"></i>
                                 </a>
                             </li>
+                            <li class="dropdown hidden-xs">
+                                <a class="btn bred pos-tip" title="<?= lang('clear_ls') ?>" data-placement="bottom" id="clearLS" href="#">
+                                    <i class="ri-delete-bin-2-line"></i>
+                                </a>
+                            </li>
                         <?php
                         }
                         ?>
-                        <li class="dropdown hidden-xs">
-                            <a class="btn bred pos-tip" title="<?= lang('clear_ls') ?>" data-placement="bottom" id="clearLS" href="#">
-                                <i class="fa fa-eraser"></i>
-                            </a>
-                        </li>
                     </ul>
 
                     <ul class="nav navbar-nav pull-right hidden-smallest">
