@@ -5,17 +5,23 @@ foreach ($bgs as &$bg) {
     $bg = $assets . $af[1];
 }
 // $this->sma->print_arrays($bgs);
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title><?= $title ?></title>
-    <script type="text/javascript">if (parent.frames.length !== 0) { top.location = '<?=admin_url()?>'; }</script>
+    <script type="text/javascript">
+        if (parent.frames.length !== 0) {
+            top.location = '<?= admin_url() ?>';
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="<?= $assets ?>images/icon.png"/>
-    <link href="<?= $assets ?>styles/theme.css" rel="stylesheet"/>
-    <link href="<?= $assets ?>styles/style.css" rel="stylesheet"/>
-    <link href="<?= $assets ?>styles/helpers/login.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="<?= $assets ?>images/icon.png" />
+    <link href="<?= $assets ?>styles/theme.css" rel="stylesheet" />
+    <link href="<?= $assets ?>styles/style.css" rel="stylesheet" />
+    <link href="<?= $assets ?>styles/helpers/login.css" rel="stylesheet" />
     <script type="text/javascript" src="<?= $assets ?>js/jquery-2.0.3.min.js"></script>
     <!--[if lt IE 9]>
     <script src="<?= $assets ?>js/respond.min.js"></script>
@@ -24,9 +30,11 @@ foreach ($bgs as &$bg) {
         body {
             min-width: 350px;
         }
+
         .bblue {
             background: #fff !important;
         }
+
         .login-page .page-back {
             display: flex;
             align-items: center;
@@ -36,6 +44,7 @@ foreach ($bgs as &$bg) {
             background-position: center !important;
             background-image: url("<?= $bgs[mt_rand(0, count($bgs) - 1)] ?>") !important;
         }
+
         .contents {
             margin: 16px;
             border-radius: 6px;
@@ -43,7 +52,9 @@ foreach ($bgs as &$bg) {
             background: rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0, 0, 0, 0.2);
         }
-        .login-content, .login-page .login-form-links {
+
+        .login-content,
+        .login-page .login-form-links {
             margin-top: 20px;
             border-radius: 6px;
         }
@@ -66,8 +77,8 @@ foreach ($bgs as &$bg) {
         <div class="contents">
             <div class="text-center">
                 <?php if ($Settings->logo2) {
-    echo '<img src="' . base_url('assets/uploads/logos/' . $Settings->logo2) . '" alt="' . $Settings->site_name . '" style="margin-bottom:10px;" />';
-} ?>
+                    echo '<img src="' . base_url('assets/uploads/logos/' . $Settings->logo2) . '" alt="' . $Settings->site_name . '" style="margin-bottom:10px;" />';
+                } ?>
             </div>
 
             <div id="login">
@@ -76,53 +87,52 @@ foreach ($bgs as &$bg) {
                     <div class="login-form-div">
                         <div class="login-content">
                             <?php if ($Settings->mmode) {
-    ?>
+                            ?>
                                 <div class="alert alert-warning">
                                     <button data-dismiss="alert" class="close" type="button">×</button>
                                     <?= lang('site_offline') ?>
                                 </div>
-                                <?php
-}
+                            <?php
+                            }
                             if ($error) {
-                                ?>
+                            ?>
                                 <div class="alert alert-danger">
                                     <button data-dismiss="alert" class="close" type="button">×</button>
                                     <ul class="list-group"><?= $error; ?></ul>
                                 </div>
-                                <?php
+                            <?php
                             }
                             if ($message) {
-                                ?>
+                            ?>
                                 <div class="alert alert-success">
                                     <button data-dismiss="alert" class="close" type="button">×</button>
                                     <ul class="list-group"><?= $message; ?></ul>
                                 </div>
-                                <?php
+                            <?php
                             }
                             ?>
                             <?php echo admin_form_open('auth/login', 'class="login" data-toggle="validator"'); ?>
                             <div class="div-title col-sm-12">
-                                <h3 class="text-primary"><?= lang('login_to_your_account') ?></h3>
+                                <h3 class="text-primary text-center" style="margin-bottom: 3px;">Assalamualaikum,</h3>
+                                <h3 class="text-primary text-center">silahkan login ke akun anda</h3>
                             </div>
                             <div class="col-sm-12">
                                 <div class="textbox-wrap form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input type="text" value="<?= DEMO ? 'owner@tecdiary.com' : ''; ?>" required="required" class="form-control" name="identity"
-                                        placeholder="<?= lang('username') ?>"/>
+                                        <input type="text" value="<?= DEMO ? 'owner@tecdiary.com' : ''; ?>" required="required" class="form-control" name="identity" placeholder="<?= lang('username') ?>" />
                                     </div>
                                 </div>
                                 <div class="textbox-wrap form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                        <input type="password" value="<?= DEMO ? '12345678' : ''; ?>" required="required" class="form-control " name="password"
-                                        placeholder="<?= lang('pw') ?>"/>
+                                        <input type="password" value="<?= DEMO ? '12345678' : ''; ?>" required="required" class="form-control " name="password" placeholder="<?= lang('pw') ?>" />
                                     </div>
                                 </div>
                             </div>
                             <?php
                             if ($Settings->captcha) {
-                                ?>
+                            ?>
                                 <div class="col-sm-12">
                                     <div class="textbox-wrap form-group">
                                         <div class="row">
@@ -142,7 +152,7 @@ foreach ($bgs as &$bg) {
                                         </div>
                                     </div>
                                 </div>
-                                <?php
+                            <?php
                             } /* echo $recaptcha_html; */
                             ?>
 
@@ -159,21 +169,18 @@ foreach ($bgs as &$bg) {
                             <div class="clearfix"></div>
                         </div>
                         <div class="login-form-links link2">
-                            <h4 class="text-danger"><?= lang('forgot_your_password') ?></h4>
-                            <span><?= lang('dont_worry') ?></span>
-                            <a href="#forgot_password" class="text-danger forgot_password_link"><?= lang('click_here') ?></a>
-                            <span><?= lang('to_rest') ?></span>
+                            <h6 class="text-center">Develop by <b>IT Development Babada</b></h6>
                         </div>
                         <?php
                         if ($Settings->allow_reg) {
-                            ?>
+                        ?>
                             <div class="login-form-links link1">
                                 <h4 class="text-info"><?= lang('dont_have_account') ?></h4>
                                 <span><?= lang('no_worry') ?></span>
                                 <a href="#register" class="text-info register_link"><?= lang('click_here') ?></a>
                                 <span><?= lang('to_register') ?></span>
                             </div>
-                            <?php
+                        <?php
                         }
                         ?>
                     </div>
@@ -186,20 +193,20 @@ foreach ($bgs as &$bg) {
                         <div class="login-content">
                             <?php
                             if ($error) {
-                                ?>
+                            ?>
                                 <div class="alert alert-danger">
                                     <button data-dismiss="alert" class="close" type="button">×</button>
                                     <ul class="list-group"><?= $error; ?></ul>
                                 </div>
-                                <?php
+                            <?php
                             }
                             if ($message) {
-                                ?>
+                            ?>
                                 <div class="alert alert-success">
                                     <button data-dismiss="alert" class="close" type="button">×</button>
                                     <ul class="list-group"><?= $message; ?></ul>
                                 </div>
-                                <?php
+                            <?php
                             }
                             ?>
                             <div class="div-title col-sm-12">
@@ -213,8 +220,7 @@ foreach ($bgs as &$bg) {
                                 <div class="textbox-wrap form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon "><i class="fa fa-envelope"></i></span>
-                                        <input type="email" name="forgot_email" class="form-control "
-                                        placeholder="<?= lang('email_address') ?>" required="required"/>
+                                        <input type="email" name="forgot_email" class="form-control " placeholder="<?= lang('email_address') ?>" required="required" />
                                     </div>
                                 </div>
                                 <div class="form-action">
@@ -234,7 +240,7 @@ foreach ($bgs as &$bg) {
             </div>
             <?php
             if ($Settings->allow_reg) {
-                ?>
+            ?>
                 <div id="register">
                     <div class="container">
                         <div class="registration-form-div reg-content">
@@ -247,7 +253,7 @@ foreach ($bgs as &$bg) {
                                     <?= lang('first_name', 'first_name'); ?>
                                     <div class="input-group">
                                         <span class="input-group-addon "><i class="fa fa-user"></i></span>
-                                        <input type="text" name="first_name" class="form-control " placeholder="<?= lang('first_name') ?>" required="required"/>
+                                        <input type="text" name="first_name" class="form-control " placeholder="<?= lang('first_name') ?>" required="required" />
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +262,7 @@ foreach ($bgs as &$bg) {
                                     <?= lang('last_name', 'last_name'); ?>
                                     <div class="input-group">
                                         <span class="input-group-addon "><i class="fa fa-user"></i></span>
-                                        <input type="text" name="last_name" class="form-control " placeholder="<?= lang('last_name') ?>" required="required"/>
+                                        <input type="text" name="last_name" class="form-control " placeholder="<?= lang('last_name') ?>" required="required" />
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +271,7 @@ foreach ($bgs as &$bg) {
                                     <?= lang('company', 'company'); ?>
                                     <div class="input-group">
                                         <span class="input-group-addon "><i class="fa fa-building"></i></span>
-                                        <input type="text" name="company" class="form-control " placeholder="<?= lang('company') ?>"/>
+                                        <input type="text" name="company" class="form-control " placeholder="<?= lang('company') ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -274,7 +280,7 @@ foreach ($bgs as &$bg) {
                                     <?= lang('phone', 'phone'); ?>
                                     <div class="input-group">
                                         <span class="input-group-addon "><i class="fa fa-phone-square"></i></span>
-                                        <input type="text" name="phone" class="form-control " placeholder="<?= lang('phone') ?>" required="required"/>
+                                        <input type="text" name="phone" class="form-control " placeholder="<?= lang('phone') ?>" required="required" />
                                     </div>
                                 </div>
                             </div>
@@ -283,7 +289,7 @@ foreach ($bgs as &$bg) {
                                     <?= lang('username', 'username'); ?>
                                     <div class="input-group">
                                         <span class="input-group-addon "><i class="fa fa-user"></i></span>
-                                        <input type="text" name="username" class="form-control " placeholder="<?= lang('username') ?>" required="required"/>
+                                        <input type="text" name="username" class="form-control " placeholder="<?= lang('username') ?>" required="required" />
                                     </div>
                                 </div>
                             </div>
@@ -292,7 +298,7 @@ foreach ($bgs as &$bg) {
                                     <?= lang('email', 'email'); ?>
                                     <div class="input-group">
                                         <span class="input-group-addon "><i class="fa fa-envelope"></i></span>
-                                        <input type="email" name="email" class="form-control " placeholder="<?= lang('email_address') ?>" required="required"/>
+                                        <input type="email" name="email" class="form-control " placeholder="<?= lang('email_address') ?>" required="required" />
                                     </div>
                                 </div>
                             </div>
@@ -330,7 +336,7 @@ foreach ($bgs as &$bg) {
                         </div>
                     </div>
                 </div>
-                <?php
+            <?php
             }
             ?>
         </div>
@@ -340,7 +346,7 @@ foreach ($bgs as &$bg) {
     <script src="<?= $assets ?>js/jquery.cookie.js"></script>
     <script src="<?= $assets ?>js/login.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             localStorage.clear();
             var hash = window.location.hash;
             if (hash && hash != '') {
@@ -350,4 +356,5 @@ foreach ($bgs as &$bg) {
         });
     </script>
 </body>
+
 </html>
