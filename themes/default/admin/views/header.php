@@ -74,17 +74,17 @@
                                 <img alt="" src="<?= $this->session->userdata('avatar') ? base_url() . 'assets/uploads/avatars/thumbs/' . $this->session->userdata('avatar') : base_url('assets/images/' . $this->session->userdata('gender') . '.png'); ?>" class="mini_avatar img-rounded">
 
                                 <div class="user">
-                                    <span><?= lang('welcome') ?> <?= $this->session->userdata('username'); ?></span>
+                                    <span><?= $this->session->userdata('username'); ?></span>
                                 </div>
                             </a>
                             <ul class="dropdown-menu pull-right">
                                 <li>
                                     <a href="<?= admin_url('users/profile/' . $this->session->userdata('user_id')); ?>">
-                                        <i class="fa fa-user"></i> <?= lang('profile'); ?>
+                                        <i class="ri-user-3-fill"></i> <?= lang('profile'); ?>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= admin_url('users/profile/' . $this->session->userdata('user_id') . '/#cpassword'); ?>"><i class="fa fa-key"></i> <?= lang('change_password'); ?>
+                                    <a href="<?= admin_url('users/profile/' . $this->session->userdata('user_id') . '/#cpassword'); ?>"><i class="ri-lock-password-fill"></i> <?= lang('change_password'); ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
@@ -97,31 +97,13 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav pull-right">
-                        <li class="dropdown hidden-xs"><a class="btn tip" title="<?= lang('dashboard') ?>" data-placement="bottom" href="<?= admin_url('welcome') ?>"><i class="fa fa-dashboard"></i></a></li>
-                        <?php if (SHOP) {
-                        ?>
+                        <li class="dropdown hidden-xs"><a class="btn tip" title="<?= lang('dashboard') ?>" data-placement="bottom" href="<?= admin_url('welcome') ?>"><i class="ri-home-3-line"></i></a></li>
+                        <?php if (SHOP) { ?>
                             <li class="dropdown hidden-xs"><a class="btn tip" title="<?= lang('shop') ?>" data-placement="bottom" href="<?= base_url() ?>"><i class="fa fa-shopping-cart"></i></a></li>
-                        <?php
-                        } ?>
-                        <?php if (POS) {
-                        ?>
-                            <a href="<?= admin_url('pos') ?>" class="btn">
-                                <span class="fa fa-th-large"></span>
-                            </a>
-                        <?php
-                        } ?>
-                        <?php if ($Owner) {
-                        ?>
-                            <!-- <li class="dropdown hidden-sm">
-                                <a class="btn tip" title="<?= lang('settings') ?>" data-placement="bottom" href="<?= admin_url('system_settings') ?>">
-                                    <i class="fa fa-cogs"></i>
-                                </a>
-                            </li> -->
-                        <?php
-                        } ?>
+                        <?php } ?>
                         <li class="dropdown hidden-xs">
                             <a class="btn tip" title="<?= lang('calculator') ?>" data-placement="bottom" href="#" data-toggle="dropdown">
-                                <i class="fa fa-calculator"></i>
+                                <i class="ri-calculator-line"></i>
                             </a>
                             <ul class="dropdown-menu pull-right calc">
                                 <li class="dropdown-content">
@@ -129,9 +111,8 @@
                                 </li>
                             </ul>
                         </li>
-                        <?php if ($info) {
-                        ?>
-                            <!-- <li class="dropdown hidden-sm">
+                        <?php if ($info) { ?>
+                            <li class="dropdown hidden-sm">
                                 <a class="btn tip" title="<?= lang('notifications') ?>" data-placement="bottom" href="#" data-toggle="dropdown">
                                     <i class="fa fa-info-circle"></i>
                                     <span class="number blightOrange black"><?= sizeof($info) ?></span>
@@ -150,12 +131,11 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </li> -->
-                        <?php
-                        } ?>
+                            </li>
+                        <?php } ?>
                         <?php if ($events) {
                         ?>
-                            <!-- <li class="dropdown hidden-xs">
+                            <li class="dropdown hidden-xs">
                                 <a class="btn tip" title="<?= lang('calendar') ?>" data-placement="bottom" href="#" data-toggle="dropdown">
                                     <i class="fa fa-calendar"></i>
                                     <span class="number blightOrange black"><?= sizeof($events) ?></span>
@@ -179,15 +159,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li> -->
-                        <?php
-                        } else {
-                        ?>
-                            <!-- <li class="dropdown hidden-xs">
-                                <a class="btn tip" title="<?= lang('calendar') ?>" data-placement="bottom" href="<?= admin_url('calendar') ?>">
-                                    <i class="fa fa-calendar"></i>
-                                </a>
-                            </li> -->
+                            </li>
                         <?php
                         } ?>
                         <!-- <li class="dropdown hidden-sm">
@@ -212,6 +184,7 @@
                                 </li>
                             </ul>
                         </li> -->
+
                         <!-- <li class="dropdown hidden-xs">
                             <a class="btn tip" title="<?= lang('language') ?>" data-placement="bottom" data-toggle="dropdown" href="#">
                                 <img src="<?= base_url('assets/images/' . $Settings->user_language . '.png'); ?>" alt="">
@@ -315,14 +288,14 @@
                             ?>
                                 <li class="dropdown hidden-xs">
                                     <a class="btn bblue tip" title="<?= lang('list_open_registers') ?>" data-placement="bottom" href="<?= admin_url('pos/registers') ?>">
-                                        <i class="fa fa-list"></i>
+                                        <i class="ri-list-check"></i>
                                     </a>
                                 </li>
                             <?php
                             } ?>
                             <li class="dropdown hidden-xs">
                                 <a class="btn bred tip" title="<?= lang('clear_ls') ?>" data-placement="bottom" id="clearLS" href="#">
-                                    <i class="fa fa-eraser"></i>
+                                    <i class="ri-delete-bin-2-line"></i>
                                 </a>
                             </li>
                         <?php
@@ -350,7 +323,6 @@
                                         <?php
                                         if ($Owner || $Admin) {
                                         ?>
-
                                             <li class="mm_products">
                                                 <a class="dropmenu" href="#">
                                                     <i class="ri-shopping-bag-line"></i>
@@ -372,14 +344,8 @@
                                                     </li>
                                                     <li id="products_import_csv">
                                                         <a class="submenu" href="<?= admin_url('products/import_csv'); ?>">
-                                                            <i class="fa fa-file-text"></i>
+                                                            <i class="ri-download-2-fill"></i>
                                                             <span class="text"> <?= lang('import_products'); ?></span>
-                                                        </a>
-                                                    </li>
-                                                    <li id="products_print_barcodes">
-                                                        <a class="submenu" href="<?= admin_url('products/print_barcodes'); ?>">
-                                                            <i class="fa fa-tags"></i>
-                                                            <span class="text"> <?= lang('print_barcode_label'); ?></span>
                                                         </a>
                                                     </li>
                                                     <li id="products_quantity_adjustments">
@@ -388,22 +354,10 @@
                                                             <span class="text"> <?= lang('quantity_adjustments'); ?></span>
                                                         </a>
                                                     </li>
-                                                    <li id="products_add_adjustment">
-                                                        <a class="submenu" href="<?= admin_url('products/add_adjustment'); ?>">
-                                                            <i class="fa fa-filter"></i>
-                                                            <span class="text"> <?= lang('add_adjustment'); ?></span>
-                                                        </a>
-                                                    </li>
                                                     <li id="products_stock_counts">
                                                         <a class="submenu" href="<?= admin_url('products/stock_counts'); ?>">
                                                             <i class="fa fa-list-ol"></i>
-                                                            <span class="text"> <?= lang('stock_counts'); ?></span>
-                                                        </a>
-                                                    </li>
-                                                    <li id="products_count_stock">
-                                                        <a class="submenu" href="<?= admin_url('products/count_stock'); ?>">
-                                                            <i class="fa fa-plus-circle"></i>
-                                                            <span class="text"> <?= lang('count_stock'); ?></span>
+                                                            <span class="text"> Perhitungan Stok-stok</span>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -411,14 +365,14 @@
 
                                             <li class="mm_sales <?= strtolower($this->router->fetch_method()) == 'sales' ? 'mm_pos' : '' ?>">
                                                 <a class="dropmenu" href="#">
-                                                    <i class="fa fa-heart"></i>
+                                                    <i class="ri-shopping-cart-2-line"></i>
                                                     <span class="text"> <?= lang('sales'); ?>
                                                     </span> <span class="chevron closed"></span>
                                                 </a>
                                                 <ul>
                                                     <li id="sales_index">
                                                         <a class="submenu" href="<?= admin_url('sales'); ?>">
-                                                            <i class="fa fa-heart"></i>
+                                                            <i class="ri-shopping-basket-line"></i>
                                                             <span class="text"> <?= lang('list_sales'); ?></span>
                                                         </a>
                                                     </li>
@@ -426,7 +380,7 @@
                                                     ?>
                                                         <li id="pos_sales">
                                                             <a class="submenu" href="<?= admin_url('pos/sales'); ?>">
-                                                                <i class="fa fa-heart"></i>
+                                                                <i class="ri-store-2-line"></i>
                                                                 <span class="text"> <?= lang('pos_sales'); ?></span>
                                                             </a>
                                                         </li>
@@ -438,22 +392,10 @@
                                                             <span class="text"> <?= lang('add_sale'); ?></span>
                                                         </a>
                                                     </li>
-                                                    <li id="sales_sale_by_csv">
-                                                        <a class="submenu" href="<?= admin_url('sales/sale_by_csv'); ?>">
-                                                            <i class="fa fa-plus-circle"></i>
-                                                            <span class="text"> <?= lang('add_sale_by_csv'); ?></span>
-                                                        </a>
-                                                    </li>
                                                     <li id="sales_deliveries">
                                                         <a class="submenu" href="<?= admin_url('sales/deliveries'); ?>">
                                                             <i class="fa fa-truck"></i>
                                                             <span class="text"> <?= lang('deliveries'); ?></span>
-                                                        </a>
-                                                    </li>
-                                                    <li id="sales_gift_cards">
-                                                        <a class="submenu" href="<?= admin_url('sales/gift_cards'); ?>">
-                                                            <i class="fa fa-gift"></i>
-                                                            <span class="text"> <?= lang('list_gift_cards'); ?></span>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -483,14 +425,14 @@
 
                                             <li class="mm_purchases">
                                                 <a class="dropmenu" href="#">
-                                                    <i class="fa fa-star"></i>
+                                                    <i class="ri-bank-card-line"></i>
                                                     <span class="text"> <?= lang('purchases'); ?>
                                                     </span> <span class="chevron closed"></span>
                                                 </a>
                                                 <ul>
                                                     <li id="purchases_index">
                                                         <a class="submenu" href="<?= admin_url('purchases'); ?>">
-                                                            <i class="fa fa-star"></i>
+                                                            <i class="ri-bank-card-line"></i>
                                                             <span class="text"> <?= lang('list_purchases'); ?></span>
                                                         </a>
                                                     </li>
@@ -498,12 +440,6 @@
                                                         <a class="submenu" href="<?= admin_url('purchases/add'); ?>">
                                                             <i class="fa fa-plus-circle"></i>
                                                             <span class="text"> <?= lang('add_purchase'); ?></span>
-                                                        </a>
-                                                    </li>
-                                                    <li id="purchases_purchase_by_csv">
-                                                        <a class="submenu" href="<?= admin_url('purchases/purchase_by_csv'); ?>">
-                                                            <i class="fa fa-plus-circle"></i>
-                                                            <span class="text"> <?= lang('add_purchase_by_csv'); ?></span>
                                                         </a>
                                                     </li>
                                                     <li id="purchases_expenses">
@@ -538,17 +474,12 @@
                                                             <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_transfer'); ?></span>
                                                         </a>
                                                     </li>
-                                                    <li id="transfers_purchase_by_csv">
-                                                        <a class="submenu" href="<?= admin_url('transfers/transfer_by_csv'); ?>">
-                                                            <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_transfer_by_csv'); ?></span>
-                                                        </a>
-                                                    </li>
                                                 </ul>
                                             </li>
 
                                             <li class="mm_returns">
                                                 <a class="dropmenu" href="#">
-                                                    <i class="fa fa-random"></i>
+                                                    <i class="ri-shuffle-line"></i>
                                                     <span class="text"> <?= lang('returns'); ?> </span>
                                                     <span class="chevron closed"></span>
                                                 </a>
@@ -568,7 +499,7 @@
 
                                             <li class="mm_auth mm_customers mm_suppliers mm_billers">
                                                 <a class="dropmenu" href="#">
-                                                    <i class="fa fa-users"></i>
+                                                    <i class="ri-group-line"></i>
                                                     <span class="text"> <?= lang('people'); ?> </span>
                                                     <span class="chevron closed"></span>
                                                 </a>
@@ -577,44 +508,24 @@
                                                     ?>
                                                         <li id="auth_users">
                                                             <a class="submenu" href="<?= admin_url('users'); ?>">
-                                                                <i class="fa fa-users"></i><span class="text"> <?= lang('list_users'); ?></span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="auth_create_user">
-                                                            <a class="submenu" href="<?= admin_url('users/create_user'); ?>">
-                                                                <i class="fa fa-user-plus"></i><span class="text"> <?= lang('new_user'); ?></span>
+                                                                <i class="ri-team-line"></i><span class="text"> <?= lang('list_users'); ?></span>
                                                             </a>
                                                         </li>
                                                         <li id="billers_index">
                                                             <a class="submenu" href="<?= admin_url('billers'); ?>">
-                                                                <i class="fa fa-users"></i><span class="text"> <?= lang('list_billers'); ?></span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="billers_index">
-                                                            <a class="submenu" href="<?= admin_url('billers/add'); ?>" data-toggle="modal" data-target="#myModal">
-                                                                <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_biller'); ?></span>
+                                                                <i class="ri-user-shared-line"></i><span class="text"> <?= lang('list_billers'); ?></span>
                                                             </a>
                                                         </li>
                                                     <?php
                                                     } ?>
                                                     <li id="customers_index">
                                                         <a class="submenu" href="<?= admin_url('customers'); ?>">
-                                                            <i class="fa fa-users"></i><span class="text"> <?= lang('list_customers'); ?></span>
-                                                        </a>
-                                                    </li>
-                                                    <li id="customers_index">
-                                                        <a class="submenu" href="<?= admin_url('customers/add'); ?>" data-toggle="modal" data-target="#myModal">
-                                                            <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_customer'); ?></span>
+                                                            <i class="ri-parent-line"></i><span class="text"> <?= lang('list_customers'); ?></span>
                                                         </a>
                                                     </li>
                                                     <li id="suppliers_index">
                                                         <a class="submenu" href="<?= admin_url('suppliers'); ?>">
-                                                            <i class="fa fa-users"></i><span class="text"> <?= lang('list_suppliers'); ?></span>
-                                                        </a>
-                                                    </li>
-                                                    <li id="suppliers_index">
-                                                        <a class="submenu" href="<?= admin_url('suppliers/add'); ?>" data-toggle="modal" data-target="#myModal">
-                                                            <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_supplier'); ?></span>
+                                                            <i class="ri-luggage-cart-line"></i><span class="text"> <?= lang('list_suppliers'); ?></span>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -637,18 +548,18 @@
                                                         <span class="chevron closed"></span>
                                                     </a>
                                                     <ul>
-                                                        <li id="system_settings_index">
+                                                        <!-- <li id="system_settings_index">
                                                             <a href="<?= admin_url('system_settings') ?>">
                                                                 <i class="fa fa-cogs"></i><span class="text"> <?= lang('system_settings'); ?></span>
                                                             </a>
-                                                        </li>
+                                                        </li> -->
                                                         <?php if (POS) {
                                                         ?>
-                                                            <li id="pos_settings">
+                                                            <!-- <li id="pos_settings">
                                                                 <a href="<?= admin_url('pos/settings') ?>">
                                                                     <i class="fa fa-th-large"></i><span class="text"> <?= lang('pos_settings'); ?></span>
                                                                 </a>
-                                                            </li>
+                                                            </li> -->
                                                             <li id="promos_index">
                                                                 <a href="<?= admin_url('promos') ?>">
                                                                     <i class="fa fa-cogs"></i><span class="text"> <?= lang('promos'); ?></span>
@@ -666,11 +577,11 @@
                                                             </li>
                                                         <?php
                                                         } ?>
-                                                        <li id="system_settings_change_logo">
+                                                        <!-- <li id="system_settings_change_logo">
                                                             <a href="<?= admin_url('system_settings/change_logo') ?>" data-toggle="modal" data-target="#myModal">
                                                                 <i class="fa fa-upload"></i><span class="text"> <?= lang('change_logo'); ?></span>
                                                             </a>
-                                                        </li>
+                                                        </li> -->
                                                         <li id="system_settings_currencies">
                                                             <a href="<?= admin_url('system_settings/currencies') ?>">
                                                                 <i class="fa fa-money"></i><span class="text"> <?= lang('currencies'); ?></span>
@@ -718,20 +629,20 @@
                                                         </li>
                                                         <li id="system_settings_warehouses">
                                                             <a href="<?= admin_url('system_settings/warehouses') ?>">
-                                                                <i class="fa fa-building-o"></i><span class="text"> <?= lang('warehouses'); ?></span>
+                                                                <i class="fa fa-building-o"></i><span class="text"> Toko</span>
                                                             </a>
                                                         </li>
-                                                        <li id="system_settings_email_templates">
+                                                        <!-- <li id="system_settings_email_templates">
                                                             <a href="<?= admin_url('system_settings/email_templates') ?>">
                                                                 <i class="fa fa-envelope"></i><span class="text"> <?= lang('email_templates'); ?></span>
                                                             </a>
-                                                        </li>
+                                                        </li> -->
                                                         <li id="system_settings_user_groups">
                                                             <a href="<?= admin_url('system_settings/user_groups') ?>">
                                                                 <i class="fa fa-key"></i><span class="text"> <?= lang('group_permissions'); ?></span>
                                                             </a>
                                                         </li>
-                                                        <li id="site_logs_index">
+                                                        <!-- <li id="site_logs_index">
                                                             <a href="<?= admin_url('site_logs') ?>">
                                                                 <i class="fa fa-file-text"></i><span class="text"> <?= lang('site_logs'); ?></span>
                                                             </a>
@@ -741,16 +652,16 @@
                                                                 <i class="fa fa-database"></i><span class="text"> <?= lang('backups'); ?></span>
                                                             </a>
                                                         </li>
-                                                        <!-- <li id="system_settings_updates">
-                                            <a href="<?= admin_url('system_settings/updates') ?>">
-                                                <i class="fa fa-upload"></i><span class="text"> <?= lang('updates'); ?></span>
-                                            </a>
-                                        </li> -->
+                                                        <li id="system_settings_updates">
+                                                            <a href="<?= admin_url('system_settings/updates') ?>">
+                                                                <i class="fa fa-upload"></i><span class="text"> <?= lang('updates'); ?></span>
+                                                            </a>
+                                                        </li> -->
                                                     </ul>
                                                 </li>
                                             <?php
                                             } ?>
-                                            <li class="mm_reports">
+                                            <!-- <li class="mm_reports">
                                                 <a class="dropmenu" href="#">
                                                     <i class="fa fa-bar-chart-o"></i>
                                                     <span class="text"> <?= lang('reports'); ?> </span>
@@ -881,7 +792,7 @@
                                                         </a>
                                                     </li>
                                                 </ul>
-                                            </li>
+                                            </li> -->
                                             <?php if ($Owner && file_exists(APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'shop' . DIRECTORY_SEPARATOR . 'Shop.php')) {
                                             ?>
                                                 <li class="mm_shop_settings mm_api_settings">
