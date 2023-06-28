@@ -222,10 +222,7 @@
                                                 $category = $row->category_id;
                                                 echo '<tr><td colspan="100%" class="no-border"><strong>' . $row->category_name . '</strong></td></tr>';
                                             }
-                                            echo '<tr><td colspan="4" class="no-border">#' . $r . ': &nbsp;&nbsp;' . product_name($row->product_name, ($printer ? $printer->char_per_line : null)) . ($row->variant ? ' (' . $row->variant . ')' : '') . ($row->serial_no ? '<br>' . $row->serial_no : '') . '<span class="pull-right">' . ($row->tax_code ? '*' . $row->tax_code : '') . '</span></td></tr>';
-                                            echo '<tr><td class="no-border border-bottom">' . $this->sma->formatQuantity($row->unit_quantity) . ($row->product_unit_code ? $row->product_unit_code : '') . ' x ' . $this->sma->formatMoney($row->unit_price) . ($row->item_tax != 0 ? ' - ' . lang('tax') . ' <small>(' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ')</small> ' . $this->sma->formatMoney($row->item_tax) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') : '') . '</td></tr>';
-
-                                            // echo '<tr><td class="no-border border-bottom">' . $this->sma->formatQuantity($row->quantity) . ' x ';
+                                          // echo '<tr><td class="no-border border-bottom">' . $this->sma->formatQuantity($row->quantity) . ' x ';
                                             // if ($row->item_discount != 0) {
                                             //     echo '<del>' . $this->sma->formatMoney($row->net_unit_price + ($row->item_discount / $row->quantity) + ($row->item_tax / $row->quantity)) . '</del> ';
                                             // }
@@ -284,8 +281,6 @@
                                             <th><?= lang('grand_total'); ?></th>
                                             <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->grand_total + $inv->rounding) + $return_sale->grand_total) : ($inv->grand_total + $inv->rounding)); ?></th>
                                         </tr>
-                                        <tr>
-                                            <td> <?= ($row->tax_code ? '*' . $row->tax_code : '') ?> </td></tr>
                                     <?php
                                     } else {
                                     ?>
