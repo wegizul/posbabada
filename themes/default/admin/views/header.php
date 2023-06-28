@@ -560,6 +560,36 @@
                                                                     <i class="fa fa-th-large"></i><span class="text"> <?= lang('pos_settings'); ?></span>
                                                                 </a>
                                                             </li> -->
+                                                            <li id="system_settings_warehouses">
+                                                                <a href="<?= admin_url('system_settings/warehouses') ?>">
+                                                                    <i class="fa fa-building-o"></i><span class="text"><?= lang('warehouses'); ?></span>
+                                                                </a>
+                                                            </li>
+                                                            <li id="system_settings_units">
+                                                                <a href="<?= admin_url('system_settings/units') ?>">
+                                                                    <i class="fa fa-wrench"></i><span class="text"> <?= lang('units'); ?></span>
+                                                                </a>
+                                                            </li>
+                                                            <li id="system_settings_brands">
+                                                                <a href="<?= admin_url('system_settings/brands') ?>">
+                                                                    <i class="fa fa-th-list"></i><span class="text"> <?= lang('brands'); ?></span>
+                                                                </a>
+                                                            </li>
+                                                            <li id="system_settings_variants">
+                                                                <a href="<?= admin_url('system_settings/variants') ?>">
+                                                                    <i class="fa fa-tags"></i><span class="text"> <?= lang('variants'); ?></span>
+                                                                </a>
+                                                            </li>
+                                                            <li id="system_settings_categories">
+                                                                <a href="<?= admin_url('system_settings/categories') ?>">
+                                                                    <i class="fa fa-folder-open"></i><span class="text"> <?= lang('categories'); ?></span>
+                                                                </a>
+                                                            </li>
+                                                            <li id="system_settings_expense_categories">
+                                                                <a href="<?= admin_url('system_settings/expense_categories') ?>">
+                                                                    <i class="fa fa-folder-open"></i><span class="text"> <?= lang('expense_categories'); ?></span>
+                                                                </a>
+                                                            </li>
                                                             <li id="promos_index">
                                                                 <a href="<?= admin_url('promos') ?>">
                                                                     <i class="fa fa-cogs"></i><span class="text"> <?= lang('promos'); ?></span>
@@ -597,39 +627,9 @@
                                                                 <i class="fa fa-dollar"></i><span class="text"> <?= lang('price_groups'); ?></span>
                                                             </a>
                                                         </li>
-                                                        <li id="system_settings_categories">
-                                                            <a href="<?= admin_url('system_settings/categories') ?>">
-                                                                <i class="fa fa-folder-open"></i><span class="text"> <?= lang('categories'); ?></span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="system_settings_expense_categories">
-                                                            <a href="<?= admin_url('system_settings/expense_categories') ?>">
-                                                                <i class="fa fa-folder-open"></i><span class="text"> <?= lang('expense_categories'); ?></span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="system_settings_units">
-                                                            <a href="<?= admin_url('system_settings/units') ?>">
-                                                                <i class="fa fa-wrench"></i><span class="text"> <?= lang('units'); ?></span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="system_settings_brands">
-                                                            <a href="<?= admin_url('system_settings/brands') ?>">
-                                                                <i class="fa fa-th-list"></i><span class="text"> <?= lang('brands'); ?></span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="system_settings_variants">
-                                                            <a href="<?= admin_url('system_settings/variants') ?>">
-                                                                <i class="fa fa-tags"></i><span class="text"> <?= lang('variants'); ?></span>
-                                                            </a>
-                                                        </li>
                                                         <li id="system_settings_tax_rates">
                                                             <a href="<?= admin_url('system_settings/tax_rates') ?>">
                                                                 <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('tax_rates'); ?></span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="system_settings_warehouses">
-                                                            <a href="<?= admin_url('system_settings/warehouses') ?>">
-                                                                <i class="fa fa-building-o"></i><span class="text"> Toko</span>
                                                             </a>
                                                         </li>
                                                         <!-- <li id="system_settings_email_templates">

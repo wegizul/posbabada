@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 
 $lang['profit_estimate']          = 'Estimasi keuntungan';
-$lang['warehouse_stock_heading']  = 'Nilai Gudang Saham berdasarkan Biaya dan Harga. Silakan pilih gudang di kanan untuk mendapatkan nilai untuk gudang yang dipilih.';
+$lang['warehouse_stock_heading']  = 'Nilai Toko Saham berdasarkan Biaya dan Harga. Silakan pilih toko di kanan untuk mendapatkan nilai untuk toko yang dipilih.';
 $lang['alert_quantity']           = 'Warning Kuantitas';
 $lang['customize_report']         = 'Silakan sesuaikan laporan di bawah ini';
 $lang['start_date']               = 'Tanggal Awal';

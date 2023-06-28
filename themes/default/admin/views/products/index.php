@@ -170,18 +170,18 @@
                         </li>
                         <?php if (!$warehouse_id) {
                         ?>
-                            <li>
+                            <!-- <li>
                                 <a href="<?= admin_url('products/update_price') ?>" data-toggle="modal" data-target="#myModal">
                                     <i class="fa fa-file-excel-o"></i> <?= lang('update_price') ?>
                                 </a>
-                            </li>
+                            </li> -->
                         <?php
                         } ?>
-                        <li>
+                        <!-- <li>
                             <a href="#" id="labelProducts" data-action="labels">
                                 <i class="fa fa-print"></i> <?= lang('print_barcode_label') ?>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="#" id="sync_quantity" data-action="sync_quantity">
                                 <i class="fa fa-arrows-v"></i> <?= lang('sync_quantity') ?>
@@ -266,7 +266,7 @@
                             </tr>
                         </tbody>
 
-                        <tfoot class="dtFilter">
+                        <!-- <tfoot class="dtFilter">
                             <tr class="active">
                                 <th style="min-width:30px; width: 30px; text-align: center;">
                                     <input class="checkbox checkft" type="checkbox" name="check" />
@@ -295,7 +295,7 @@
                                 <th></th>
                                 <th style="width:65px; text-align:center;"><?= lang('actions') ?></th>
                             </tr>
-                        </tfoot>
+                        </tfoot> -->
                     </table>
                 </div>
             </div>
