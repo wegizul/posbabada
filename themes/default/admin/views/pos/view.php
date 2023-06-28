@@ -192,7 +192,7 @@
                             ?>
 
                             <div style="clear:both;"></div>
-                            <table class="table table-condensed">
+                            <table class="table">
                                 <tbody>
                                     <?php
                                     $r           = 1;
@@ -201,10 +201,10 @@
                                     foreach ($rows as $row) {
                                         if ($pos_settings->item_order == 1 && $category != $row->category_id) {
                                             $category = $row->category_id;
-                                            echo '<tr><td colspan="2" class="no-border border-bottom"><strong>' . $row->category_name . '</strong></td></tr>';
+                                            echo '<tr><td width="50%" class="no-border border-bottom"><strong>' . $row->category_name . '</strong></td></tr>';
                                         }
-                                        echo '<tr><td colspan="2" class="no-border border-bottom">#' . $r . ': &nbsp;&nbsp;' . product_name($row->product_name, ($printer ? $printer->char_per_line : null)) . '<span style="text-align:center"> ' . $this->sma->formatQuantity($row->unit_quantity) . ($row->product_unit_quantity ? $row->unit_quantity : '') . ' x ' . ($row->item_discount != 0 ? '(' . $this->sma->formatMoney($row->unit_price + ($row->item_discount / $row->unit_quantity)) . ' - ' . $this->sma->formatMoney($row->item_discount / $row->unit_quantity) . ')' : $this->sma->formatMoney($row->unit_price)) . '</span><span class="pull-right">' .  $this->sma->formatMoney($row->subtotal) . '</span></td></tr>';
-                                        echo '<tr><td class="no-border">' . ($row->item_tax != 0 ? ' [' . lang('tax') . ' <small>(' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ')</small> ' . $this->sma->formatMoney($row->item_tax) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') . ']' : '') . '</td><td colspan="4" class= "border-bottom">' . '</td></tr>';
+                                        echo '<tr><td colspan="4" class="no-border border-bottom">#' . $r . product_name($row->product_name, ($printer ? $printer->char_per_line : null)) . '<span style="margin-left:70px;"> ' . $this->sma->formatQuantity($row->unit_quantity) . ($row->product_unit_quantity ? $row->unit_quantity : '') . ' x ' . ($row->item_discount != 0 ? '(' . $this->sma->formatMoney($row->unit_price + ($row->item_discount / $row->unit_quantity)) . ' - ' . $this->sma->formatMoney($row->item_discount / $row->unit_quantity) . ')' : $this->sma->formatMoney($row->unit_price)) . '</span><span class="pull-right">' .  $this->sma->formatMoney($row->subtotal) . '</span></td></tr>';
+
 
                                         if (!empty($row->second_name)) {
                                             echo '<tr><td colspan="4" class="no-border">' . $row->second_name . '</td></tr>';
@@ -287,8 +287,10 @@
                                         <tr>
                                             <th><?= lang('grand_total'); ?></th>
                                             <th class="text-right"><?= $this->sma->formatMoney($return_sale ? ($inv->grand_total + $return_sale->grand_total) : $inv->grand_total); ?></th>
-                                        </tr>
-                                    <?php
+                                    </tr>
+                                        <tr>
+                                                <?php
+                                        echo '<tr><td class="no-border" >' . ($row->item_tax != 0 ? ' [' . lang('tax') . '(' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ')' . $this->sma->formatMoney($row->item_tax) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') . ']' : '') . '</td></tr><?=';
                                     }
                                     if ($inv->paid < ($inv->grand_total + $inv->rounding)) {
                                     ?>
