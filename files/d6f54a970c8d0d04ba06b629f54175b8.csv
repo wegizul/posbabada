@@ -1,0 +1,19 @@
+Name;Code;Barcode;Symbology;Brand;Category Code;Unit Code;Sale Unit Code;Purchase Unit Code;Cost;Price;Alert Quantity;Tax Rate Name;Tax Method;Image;Subcategory Code;Product Variants Separated by |;Custom Field 1;Custom Field 2;Custom Field 3;Custom Field 4;Custom Field 5;Custom Field 6;HSN Code
+Keripik Emak CW;102;;code128;Barang Dagang;C1;Bungkus;Bungkus;Bungkus;0;20000;0;PB1@10%;exclusive;;;;;;;;;;
+Keju Kraft Single 5 (Pcs);103;;code128;Barang Dagang;C1;Bungkus;Bungkus;Bungkus;0;13000;0;PB1@10%;exclusive;;;;;;;;;;
+Keripik Kentang Original;104;;code128;Barang Dagang;C1;Bungkus;Bungkus;Bungkus;0;20000;0;PB1@10%;exclusive;;;;;;;;;;
+Keripik Kentang Pedas Manis;105;;code128;Barang Dagang;C1;Bungkus;Bungkus;Bungkus;0;20000;0;PB1@10%;exclusive;;;;;;;;;;
+Keripik Ubi Putih Original;106;;code128;Barang Dagang;C1;Bungkus;Bungkus;Bungkus;0;20000;0;PB1@10%;exclusive;;;;;;;;;;
+Keripik Ubi Putih Pedas;107;;code128;Barang Dagang;C1;Bungkus;Bungkus;Bungkus;0;20000;0;PB1@10%;exclusive;;;;;;;;;;
+Keripik Pisang;108;;code128;Barang Dagang;C1;Bungkus;Bungkus;Bungkus;0;20000;0;PB1@10%;exclusive;;;;;;;;;;
+Bolu Gulung Rotte;1001;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;33000;5;PB1@10%;exclusive;;;;;;;;;;
+Bolu Besar Rotte;1002;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;55000;5;PB1@10%;exclusive;;;;;;;;;;
+Muffin Vanila Berry;1003;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;10000;5;PB1@10%;exclusive;;;;;;;;;;
+Muffin Double Chocolate;1004;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;10000;5;PB1@10%;exclusive;;;;;;;;;;
+Roti Sosis Abon Mini;1005;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;4500;0;PB1@10%;exclusive;;;;;;;;;;
+Roti Sosis Keju Mini;1006;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;4500;0;PB1@10%;exclusive;;;;;;;;;;
+Roti Isi Daging;1007;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;10000;0;PB1@10%;exclusive;;;;;;;;;;
+Donat Isi Ayam;1008;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;8000;0;PB1@10%;exclusive;;;;;;;;;;
+Chocolate Coffee Toast;1009;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;4000;0;PB1@10%;exclusive;;;;;;;;;;
+Almond Cheese Coffee Toast ;1010;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;4000;0;PB1@10%;exclusive;;;;;;;;;;
+Donat Premium;1011;;code128;Rotte Bakery ;C1;Pcs;Pcs;Pcs;0;7000;0;PB1@10%;exclusive;;;;;;;;;;
