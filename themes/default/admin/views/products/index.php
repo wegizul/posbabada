@@ -253,10 +253,10 @@
                                     }
                                 }
                                 ?>
-                                <th><?= lang('quantity') ?></th>
+                                <th>Qty</th>
                                 <th><?= lang('unit') ?></th>
                                 <th><?= lang('rack') ?></th>
-                                <th><?= lang('alert_quantity') ?></th>
+                                <th>Alert<br>Quantity</th>
                                 <th style="min-width:65px; text-align:center;"><?= lang('actions') ?></th>
                             </tr>
                         </thead>
