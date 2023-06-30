@@ -512,7 +512,7 @@
             ?>
         </div>
     </div>
-    <div class="modal fade in" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="payModalLabel" data-backdrop="static" aria-hidden="true">
+    <div class="modal fade in" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="" data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -524,7 +524,7 @@
                         <div class="col-md-10 col-sm-9">
                             <?php if ($Owner || $Admin || !$this->session->userdata('biller_id')) {
                             ?>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <?= lang('biller', 'biller'); ?>
                                     <?php
                                     foreach ($billers as $biller) {
@@ -536,7 +536,7 @@
                                         }
                                     }
                                     echo form_dropdown('biller', $bl, ($_POST['biller'] ?? $pos_settings->default_biller), 'class="form-control" id="posbiller" required="required"'); ?>
-                                </div>
+                                </div> -->
                             <?php
                             } else {
                                 $biller_input = [
@@ -665,9 +665,9 @@
                                 <table class="table table-bordered table-condensed table-striped" style="margin-bottom: 0;">
                                     <tbody>
                                         <tr>
-                                            <td width="25%"><?= lang('total_items'); ?></td>
+                                            <td width="25%">Total Barang</td>
                                             <td width="25%" class="text-right"><span id="item_count">0.00</span></td>
-                                            <td width="25%"><?= lang('total_payable'); ?></td>
+                                            <td width="25%">Total Pembayaran</td>
                                             <td width="25%" class="text-right"><span id="twt">0.00</span></td>
                                         </tr>
                                         <tr>
