@@ -32,14 +32,7 @@
 </head>
 
 <body>
-    <noscript>
-        <div class="global-site-notice noscript">
-            <div class="notice-inner">
-                <p><strong>JavaScript seems to be disabled in your browser.</strong><br>You must have JavaScript enabled in
-                    your browser to utilize the functionality of this website.</p>
-            </div>
-        </div>
-    </noscript>
+  
     <div id="loading"></div>
     <div id="app_wrapper">
         <header id="header" class="navbar">
