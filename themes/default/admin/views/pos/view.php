@@ -386,7 +386,7 @@
                                 . '<br>' . lang('total') . ' ' . lang('award_points') . ': ' . $customer->award_points . '</p>' : ''; ?>
                             <?= $inv->note ? '<p class="text-center">' . $this->sma->decode_html($inv->note) . '</p>' : ''; ?>
                             <?= $inv->staff_note ? '<p class="no-print"><strong>' . lang('staff_note') . ':</strong> ' . $this->sma->decode_html($inv->staff_note) . '</p>' : ''; ?>
-                            <?= $biller->invoice_footer ? '<p class="text-center">' . $this->sma->decode_html($biller->invoice_footer) . '</p>' : ''; ?>
+                            <?= $biller->invoice_footer ? '<p class="text-center">' . lang('Kritik dan Saran, Silahkan WA 08117050808 TERIMA KASIH'). '</p>' : ''; ?>
                         </div>
 
 
