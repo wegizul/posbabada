@@ -495,6 +495,16 @@ class Pos_model extends CI_Model
         return false;
     }
 
+    public function getWarehouse($id)
+    {
+        $q = $this->db->get_where('warehouses', ['id' => $id], 1);
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+
+        return false;
+    }
+
     public function getCosting()
     {
         $date = date('Y-m-d');
