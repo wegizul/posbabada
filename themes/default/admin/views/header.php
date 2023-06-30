@@ -668,14 +668,14 @@
                                                 </li>
                                             <?php
                                             } ?>
-                                            <!-- <li class="mm_reports">
+                                            <li class="mm_reports">
                                                 <a class="dropmenu" href="#">
                                                     <i class="fa fa-bar-chart-o"></i>
                                                     <span class="text"> <?= lang('reports'); ?> </span>
                                                     <span class="chevron closed"></span>
                                                 </a>
                                                 <ul>
-                                                    <li id="reports_index">
+                                                    <!-- <li id="reports_index">
                                                         <a href="<?= admin_url('reports') ?>">
                                                             <i class="fa fa-bars"></i><span class="text"> <?= lang('overview_chart'); ?></span>
                                                         </a>
@@ -689,7 +689,7 @@
                                                         <a href="<?= admin_url('reports/best_sellers') ?>">
                                                             <i class="fa fa-line-chart"></i><span class="text"> <?= lang('best_sellers'); ?></span>
                                                         </a>
-                                                    </li>
+                                                    </li> -->
                                                     <?php if (POS) {
                                                     ?>
                                                         <li id="reports_register">
@@ -701,7 +701,7 @@
                                                     } ?>
                                                     <li id="reports_quantity_alerts">
                                                         <a href="<?= admin_url('reports/quantity_alerts') ?>">
-                                                            <i class="fa fa-bar-chart-o"></i><span class="text"> <?= lang('product_quantity_alerts'); ?></span>
+                                                            <i class="fa fa-bar-chart-o"></i><span class="text"> Peringatan Kuantitas</span>
                                                         </a>
                                                     </li>
                                                     <?php if ($Settings->product_expiry) {
@@ -713,7 +713,7 @@
                                                         </li>
                                                     <?php
                                                     } ?>
-                                                    <li id="reports_products">
+                                                    <!-- <li id="reports_products">
                                                         <a href="<?= admin_url('reports/products') ?>">
                                                             <i class="fa fa-barcode"></i><span class="text"> <?= lang('products_report'); ?></span>
                                                         </a>
@@ -732,7 +732,7 @@
                                                         <a href="<?= admin_url('reports/brands') ?>">
                                                             <i class="fa fa-cubes"></i><span class="text"> <?= lang('brands_report'); ?></span>
                                                         </a>
-                                                    </li>
+                                                    </li> -->
                                                     <li id="reports_daily_sales">
                                                         <a href="<?= admin_url('reports/daily_sales') ?>">
                                                             <i class="fa fa-calendar"></i><span class="text"> <?= lang('daily_sales'); ?></span>
@@ -748,7 +748,7 @@
                                                             <i class="fa fa-heart"></i><span class="text"> <?= lang('sales_report'); ?></span>
                                                         </a>
                                                     </li>
-                                                    <li id="reports_payments">
+                                                    <!-- <li id="reports_payments">
                                                         <a href="<?= admin_url('reports/payments') ?>">
                                                             <i class="fa fa-money"></i><span class="text"> <?= lang('payments_report'); ?></span>
                                                         </a>
@@ -757,7 +757,7 @@
                                                         <a href="<?= admin_url('reports/tax') ?>">
                                                             <i class="fa fa-area-chart"></i><span class="text"> <?= lang('tax_report'); ?></span>
                                                         </a>
-                                                    </li>
+                                                    </li> -->
                                                     <li id="reports_profit_loss">
                                                         <a href="<?= admin_url('reports/profit_loss') ?>">
                                                             <i class="fa fa-money"></i><span class="text"> <?= lang('profit_and_loss'); ?></span>
@@ -778,7 +778,7 @@
                                                             <i class="fa fa-star"></i><span class="text"> <?= lang('purchases_report'); ?></span>
                                                         </a>
                                                     </li>
-                                                    <li id="reports_expenses">
+                                                    <!-- <li id="reports_expenses">
                                                         <a href="<?= admin_url('reports/expenses') ?>">
                                                             <i class="fa fa-star"></i><span class="text"> <?= lang('expenses_report'); ?></span>
                                                         </a>
@@ -797,9 +797,9 @@
                                                         <a href="<?= admin_url('reports/users') ?>">
                                                             <i class="fa fa-users"></i><span class="text"> <?= lang('staff_report'); ?></span>
                                                         </a>
-                                                    </li>
+                                                    </li> -->
                                                 </ul>
-                                            </li> -->
+                                            </li>
                                             <?php if ($Owner && file_exists(APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'shop' . DIRECTORY_SEPARATOR . 'Shop.php')) {
                                             ?>
                                                 <li class="mm_shop_settings mm_api_settings">
