@@ -1592,6 +1592,7 @@ class Pos extends MY_Controller
         $biller_id = $inv->biller_id;
         $customer_id = $inv->customer_id;
         $this->data['biller'] = $this->pos_model->getCompanyByID($biller_id);
+        $this->data['warehouse'] = $this->pos_model->getWarehouse($inv->warehouse_id);
         $this->data['customer'] = $this->pos_model->getCompanyByID($customer_id);
         $this->data['payments'] = $this->pos_model->getInvoicePayments($sale_id);
         $this->data['pos'] = $this->pos_model->getSetting();
