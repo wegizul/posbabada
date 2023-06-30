@@ -104,7 +104,7 @@
                                 <h3 style="text-transform:uppercase;"><?= $warehouse->company && $warehouse->company != '-' ? $warehouse->company : $warehouse->name; ?></h3>
                                 <?php
                                 echo '<p>' . $warehouse->address . ' ' . $warehouse->city . ' ' . $warehouse->postal_code . ' ' . $warehouse->state . ' ' . $warehouse->country .
-                                    lang('tel') . ': ' . $warehouse->phone;
+                                    lang('tel') . ': ' . $warehouse->phone . lang('email') . ': ' . $warehouse->email;
 
                                 // // comment or remove these extra info if you don't need
                                 // if (!empty($biller->cf1) && $biller->cf1 != '-') {
