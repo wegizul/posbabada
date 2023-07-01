@@ -32,7 +32,7 @@
 </head>
 
 <body>
-  
+
     <div id="loading"></div>
     <div id="app_wrapper">
         <header id="header" class="navbar">
