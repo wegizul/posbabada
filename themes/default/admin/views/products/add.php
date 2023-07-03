@@ -434,10 +434,10 @@ if (!empty($variants)) {
                         <input name="hide_pos" type="checkbox" class="checkbox" id="hide_pos" value="1" <?= isset($_POST['hide_pos']) ? 'checked="checked"' : '' ?> />
                         <label for="hide_pos" class="padding05"><?= lang('hide_in_pos') ?></label>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <input name="hide" type="checkbox" class="checkbox" id="hide" value="1" <?= isset($_POST['hide']) ? 'checked="checked"' : '' ?> />
                         <label for="hide" class="padding05"><?= lang('hide_in_shop') ?></label>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <input name="cf" type="checkbox" class="checkbox" id="extras" value="" <?= isset($_POST['cf']) ? 'checked="checked"' : '' ?> />

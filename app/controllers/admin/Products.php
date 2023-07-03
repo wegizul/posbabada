@@ -463,6 +463,141 @@ class Products extends MY_Controller
         }
     }
 
+    public function add_adjustment_stock_product($count_id = null)
+    {
+        $this->sma->checkPermissions('adjustments', true);
+        $this->form_validation->set_rules('warehouse', lang('warehouse'), 'required');
+
+        if (true == $this->form_validation->run()) {
+            if ($this->Owner || $this->Admin) {
+                $date = $this->sma->fld($this->input->post('date'));
+            } else {
+                $date = date('Y-m-d H:s:i');
+            }
+
+            $reference_no = $this->input->post('reference_no') ? $this->input->post('reference_no') : $this->site->getReference('qa');
+            $warehouse_id = $this->input->post('warehouse');
+            $note = $this->sma->clear_tags($this->input->post('note'));
+
+            $i = isset($_POST['product_id']) ? sizeof($_POST['product_id']) : 0;
+            for ($r = 0; $r < $i; $r++) {
+                $product_id = $_POST['product_id'][$r];
+                $type = $_POST['type'][$r];
+                $quantity = $_POST['quantity'][$r];
+                $serial = $_POST['serial'][$r];
+                $variant = isset($_POST['variant'][$r]) && !empty($_POST['variant'][$r]) ? $_POST['variant'][$r] : null;
+
+                if (!$this->Settings->overselling && 'subtraction' == $type && !$count_id) {
+                    if ($variant) {
+                        if ($op_wh_qty = $this->products_model->getProductWarehouseOptionQty($variant, $warehouse_id)) {
+                            if ($op_wh_qty->quantity < $quantity) {
+                                $this->session->set_flashdata('error', lang('warehouse_option_qty_is_less_than_damage'));
+                                redirect($_SERVER['HTTP_REFERER']);
+                            }
+                        } else {
+                            $this->session->set_flashdata('error', lang('warehouse_option_qty_is_less_than_damage'));
+                            redirect($_SERVER['HTTP_REFERER']);
+                        }
+                    }
+                    if ($wh_qty = $this->products_model->getProductQuantity($product_id, $warehouse_id)) {
+                        if ($wh_qty['quantity'] < $quantity) {
+                            $this->session->set_flashdata('error', lang('warehouse_qty_is_less_than_damage'));
+                            redirect($_SERVER['HTTP_REFERER']);
+                        }
+                    } else {
+                        $this->session->set_flashdata('error', lang('warehouse_qty_is_less_than_damage'));
+                        redirect($_SERVER['HTTP_REFERER']);
+                    }
+                }
+
+                $products[] = [
+                    'product_id'   => $product_id,
+                    'type'         => $type,
+                    'quantity'     => $quantity,
+                    'warehouse_id' => $warehouse_id,
+                    'option_id'    => $variant,
+                    'serial_no'    => $serial,
+                ];
+            }
+
+            if (empty($products)) {
+                $this->form_validation->set_rules('product', lang('products'), 'required');
+            } else {
+                krsort($products);
+            }
+
+            $data = [
+                'date'         => $date,
+                'reference_no' => $reference_no,
+                'warehouse_id' => $warehouse_id,
+                'note'         => $note,
+                'created_by'   => $this->session->userdata('user_id'),
+                'count_id'     => $this->input->post('count_id') ? $this->input->post('count_id') : null,
+            ];
+
+            if ($_FILES['document']['size'] > 0) {
+                $this->load->library('upload');
+                $config['upload_path'] = $this->digital_upload_path;
+                $config['allowed_types'] = $this->digital_file_types;
+                $config['max_size'] = $this->allowed_file_size;
+                $config['overwrite'] = false;
+                $config['encrypt_name'] = true;
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('document')) {
+                    $error = $this->upload->display_errors();
+                    $this->session->set_flashdata('error', $error);
+                    redirect($_SERVER['HTTP_REFERER']);
+                }
+                $photo = $this->upload->file_name;
+                $data['attachment'] = $photo;
+            }
+
+            // $this->sma->print_arrays($data, $products);
+        }
+
+        if (true == $this->form_validation->run() && $this->products_model->addAdjustment($data, $products)) {
+            $this->session->set_userdata('remove_qals', 1);
+            $this->session->set_flashdata('message', lang('quantity_adjusted'));
+            admin_redirect('products/quantity_adjustments');
+        } else {
+            if ($count_id) {
+                $stock_count = $this->products_model->getStouckCountByID($count_id);
+                $items = $this->products_model->getStockCountItems($count_id);
+                foreach ($items as $item) {
+                    $c = sha1(uniqid(mt_rand(), true));
+                    if ($item->counted != $item->expected) {
+                        $product = $this->site->getProductByID($item->product_id);
+                        $row = json_decode('{}');
+                        $row->id = $item->product_id;
+                        $row->code = $product->code;
+                        $row->name = $product->name;
+                        $row->qty = $item->counted - $item->expected;
+                        $row->type = $row->qty > 0 ? 'addition' : 'subtraction';
+                        $row->qty = $row->qty > 0 ? $row->qty : (0 - $row->qty);
+                        $options = $this->products_model->getProductOptions($product->id);
+                        $row->option = $item->product_variant_id ? $item->product_variant_id : 0;
+                        $row->serial = '';
+                        $ri = $this->Settings->item_addition ? $product->id : $c;
+
+                        $pr[$ri] = [
+                            'id' => $c, 'item_id' => $row->id, 'label' => $row->name . ' (' . $row->code . ')',
+                            'row'        => $row, 'options' => $options,
+                        ];
+                        $c++;
+                    }
+                }
+            }
+            $this->data['adjustment_items'] = $count_id ? json_encode($pr) : false;
+            $this->data['warehouse_id'] = $count_id ? $stock_count->warehouse_id : false;
+            $this->data['count_id'] = $count_id;
+            $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
+            $this->data['warehouses'] = $this->site->getAllWarehouses();
+            $bc = [['link' => base_url(), 'page' => lang('home')], ['link' => admin_url('products'), 'page' => lang('products')], ['link' => '#', 'page' => lang('add_adjustment')]];
+            $meta = ['page_title' => lang('add_adjustment'), 'bc' => $bc];
+            $this->page_construct('products/add_adjustment', $meta, $this->data);
+        }
+    }
+
     public function add_adjustment_by_csv()
     {
         $this->sma->checkPermissions('adjustments', true);

@@ -401,7 +401,7 @@
                                                 </ul>
                                             </li>
 
-                                            <li class="mm_quotes">
+                                            <!-- <li class="mm_quotes">
                                                 <a class="dropmenu" href="#">
                                                     <i class="fa fa-heart-o"></i>
                                                     <span class="text"> <?= lang('quotes'); ?> </span>
@@ -421,7 +421,7 @@
                                                         </a>
                                                     </li>
                                                 </ul>
-                                            </li>
+                                            </li> -->
 
                                             <li class="mm_purchases">
                                                 <a class="dropmenu" href="#">
@@ -457,7 +457,7 @@
                                                 </ul>
                                             </li>
 
-                                            <li class="mm_transfers">
+                                            <!-- <li class="mm_transfers">
                                                 <a class="dropmenu" href="#">
                                                     <i class="fa fa-star-o"></i>
                                                     <span class="text"> <?= lang('transfers'); ?> </span>
@@ -475,7 +475,7 @@
                                                         </a>
                                                     </li>
                                                 </ul>
-                                            </li>
+                                            </li> -->
 
                                             <li class="mm_returns">
                                                 <a class="dropmenu" href="#">

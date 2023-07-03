@@ -285,14 +285,16 @@
                                         </tr>
                                         <tr>
                                             <th colspan="3"><?= lang('grand_total'); ?></th>
-                                            <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->grand_total + $inv->rounding) + $return_sale->grand_total) : ($inv->grand_total + $inv->rounding)); ?></th>
+                                            <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?></th>
+                                            <!-- <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->grand_total + $inv->rounding) + $return_sale->grand_total) : ($inv->grand_total + $inv->rounding)); ?></th> -->
                                         </tr>
                                     <?php
                                     } else {
                                     ?>
                                         <tr>
                                             <th colspan="3"><?= lang('grand_total'); ?></th>
-                                            <th class="text-right"><?= $this->sma->formatMoney($return_sale ? ($inv->grand_total + $return_sale->grand_total) : $inv->grand_total); ?></th>
+                                            <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?></th>
+                                            <!-- <th class="text-right"><?= $this->sma->formatMoney($return_sale ? ($inv->grand_total + $return_sale->grand_total) : $inv->grand_total); ?></th> -->
                                         </tr>
                                     <?php
                                     }
@@ -317,10 +319,12 @@
                             if ($payments) {
                                 echo '<table class="table table-striped table-condensed"><tbody>';
                                 foreach ($payments as $payment) {
+                                    // print_r($inv->order_tax);
+                                    // die();
                                     echo '<tr>';
                                     if (($payment->paid_by == 'cash' || $payment->paid_by == 'deposit') && $payment->pos_paid) {
-                                        echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
-                                        echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
+                                        echo '<td>' . 'Bayar' . ': ' . lang($payment->paid_by) . '</td>';
+                                        echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid - $inv->order_tax) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
                                         echo '<td>' . 'Kembalian' . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance) : 0) . '</td>';
                                     } elseif (($payment->paid_by == 'CC' || $payment->paid_by == 'ppp' || $payment->paid_by == 'stripe') && $payment->cc_no) {
                                         echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
@@ -386,7 +390,7 @@
                                 . '<br>' . lang('total') . ' ' . lang('award_points') . ': ' . $customer->award_points . '</p>' : ''; ?>
                             <?= $inv->note ? '<p class="text-center">' . $this->sma->decode_html($inv->note) . '</p>' : ''; ?>
                             <?= $inv->staff_note ? '<p class="no-print"><strong>' . lang('staff_note') . ':</strong> ' . $this->sma->decode_html($inv->staff_note) . '</p>' : ''; ?>
-                            <p class="text-center" >Kritik dan Saran, Silahkan WA 08117050808 TERIMA KASIH</p>
+                            <p class="text-center">Kritik dan Saran, Silahkan WA 08117050808 TERIMA KASIH</p>
                         </div>
 
 

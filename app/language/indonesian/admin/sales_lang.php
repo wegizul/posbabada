@@ -22,13 +22,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * Thank you
  */
 
-$lang['add_sale']                        = 'Tambah Pembayaran';
-$lang['edit_sale']                       = 'Edit Pembayaran';
-$lang['delete_sale']                     = 'Hapus Pembayaran';
+$lang['add_sale']                        = 'Tambah Penjualan';
+$lang['edit_sale']                       = 'Edit Penjualan';
+$lang['delete_sale']                     = 'Hapus Penjualan';
 $lang['delete_sales']                    = 'Hapus Penjualan';
-$lang['sale_added']                      = 'Pembayaran sukses ditambah';
-$lang['sale_updated']                    = 'Pembayaran sukses diubah';
-$lang['sale_deleted']                    = 'Pembayaran sukses dihapus';
+$lang['sale_added']                      = 'Penjualan sukses ditambah';
+$lang['sale_updated']                    = 'Penjualan sukses diubah';
+$lang['sale_deleted']                    = 'Penjualan sukses dihapus';
 $lang['sales_deleted']                   = 'Penjualan sukses Hapus';
 $lang['incorrect_gift_card']             = 'Nomor Gift card salah atau kadaluwarsa.';
 $lang['gift_card_not_for_customer']      = 'Gift card bukan untuk pelanggan ini.';
@@ -37,8 +37,8 @@ $lang['add_payment']                     = 'Tambah Pembayaran';
 $lang['add_delivery']                    = 'Tambah Pengiriman';
 $lang['email_sale']                      = 'Email Pembayaran';
 $lang['return_sale']                     = 'Retur Pembayaran';
-$lang['sale_status']                     = 'Status Pembayaran';
-$lang['payment_term']                    = 'Syarat Pembayaran';
+$lang['sale_status']                     = 'Status Penjualan';
+$lang['payment_term']                    = 'Jangka Waktu Pembayaran';
 $lang['payment_term_tip']                = 'Silakan ketikkan jumlah hari (bilangan bulat) saja';
 $lang['sale_note']                       = 'Catatan Pembayaran';
 $lang['staff_note']                      = 'Catatan Staff';
@@ -140,7 +140,7 @@ $lang['sale_x_action']                   = 'Tindakan ini tidak dapat dilakukan u
 $lang['sale_already_returned']           = 'Penjualan sudah memiliki catatan pengembalian';
 $lang['sale_is_returned']                = 'Catatan penjualan dikembalikan ';
 $lang['payment_was_returned']            = 'Pembayaran telah dikembalikan';
-$lang['packing']                         = 'Pengepakan';
+$lang['packing']                         = 'Packing';
 $lang['delivering']                      = 'Pengiriman';
 $lang['delivered']                       = 'Terkirim';
 $lang['status_is_x_completed']           = 'Status penjualan tidak lengkap, Anda dapat menambahkan pesanan pengiriman hanya untuk penjualan yang telah selesai';
