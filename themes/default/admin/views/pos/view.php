@@ -319,7 +319,7 @@
                                 foreach ($payments as $payment) {
                                     echo '<tr>';
                                     if (($payment->paid_by == 'cash' || $payment->paid_by == 'deposit') && $payment->pos_paid) {
-                                        echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
+                                        echo '<td>' . 'Bayar' . ': ' . lang('Cash'). '</td>';
                                         echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
                                         echo '<td>' . 'Kembalian' . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance) : 0) . '</td>';
                                     } elseif (($payment->paid_by == 'CC' || $payment->paid_by == 'ppp' || $payment->paid_by == 'stripe') && $payment->cc_no) {
