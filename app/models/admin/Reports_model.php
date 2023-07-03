@@ -149,7 +149,7 @@ class Reports_model extends CI_Model
 
     public function getDailySales($year, $month, $warehouse_id = null)
     {
-        $myQuery = "SELECT DATE_FORMAT( date,  '%e' ) AS date, SUM( COALESCE( product_tax, 0 ) ) AS tax1, SUM( COALESCE( order_tax, 0 ) ) AS tax2, SUM( COALESCE( grand_total, 0 ) ) AS total, SUM( COALESCE( total_discount, 0 ) ) AS discount, SUM( COALESCE( shipping, 0 ) ) AS shipping
+        $myQuery = "SELECT DATE_FORMAT( date,  '%e' ) AS date, SUM( COALESCE( product_tax, 0 ) ) AS tax1, SUM( COALESCE( order_tax, 0 ) ) AS tax2, SUM( COALESCE( grand_total, 0 ) ) AS total, SUM( COALESCE( total_discount, 0 ) ) AS discount, SUM( COALESCE( shipping, 0 ) ) AS shipping, COUNT(reference_no) AS transaksi
             FROM " . $this->db->dbprefix('sales') . ' WHERE ';
         if ($warehouse_id) {
             $myQuery .= " warehouse_id = {$warehouse_id} AND ";
@@ -411,7 +411,7 @@ class Reports_model extends CI_Model
 
     public function getStaffDailySales($user_id, $year, $month, $warehouse_id = null)
     {
-        $myQuery = "SELECT DATE_FORMAT( date,  '%e' ) AS date, SUM( COALESCE( product_tax, 0 ) ) AS tax1, SUM( COALESCE( order_tax, 0 ) ) AS tax2, SUM( COALESCE( grand_total, 0 ) ) AS total, SUM( COALESCE( total_discount, 0 ) ) AS discount, SUM( COALESCE( shipping, 0 ) ) AS shipping
+        $myQuery = "SELECT DATE_FORMAT( date,  '%e' ) AS date, SUM( COALESCE( product_tax, 0 ) ) AS tax1, SUM( COALESCE( order_tax, 0 ) ) AS tax2, SUM( COALESCE( grand_total, 0 ) ) AS total, SUM( COALESCE( total_discount, 0 ) ) AS discount, SUM( COALESCE( shipping, 0 ) ) AS shipping, COUNT(reference_no) AS transaksi
             FROM " . $this->db->dbprefix('sales') . ' WHERE ';
         if ($warehouse_id) {
             $myQuery .= " warehouse_id = {$warehouse_id} AND ";

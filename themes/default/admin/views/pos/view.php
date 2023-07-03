@@ -319,17 +319,10 @@
                             if ($payments) {
                                 echo '<table class="table table-striped table-condensed"><tbody>';
                                 foreach ($payments as $payment) {
-                                    // print_r($inv->order_tax);
-                                    // die();
                                     echo '<tr>';
                                     if (($payment->paid_by == 'cash' || $payment->paid_by == 'deposit') && $payment->pos_paid) {
-<<<<<<< HEAD
                                         echo '<td>' . 'Bayar' . ': ' . lang($payment->paid_by) . '</td>';
                                         echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid - $inv->order_tax) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
-=======
-                                        echo '<td>' . 'Bayar' . ': ' . lang('Cash'). '</td>';
-                                        echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
->>>>>>> c59447f58939e4caa6ac6c9087d58af24e3a7e06
                                         echo '<td>' . 'Kembalian' . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance) : 0) . '</td>';
                                     } elseif (($payment->paid_by == 'CC' || $payment->paid_by == 'ppp' || $payment->paid_by == 'stripe') && $payment->cc_no) {
                                         echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
