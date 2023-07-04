@@ -401,7 +401,7 @@
                                                 </ul>
                                             </li>
 
-                                            <!-- <li class="mm_quotes">
+                                            <li class="mm_quotes">
                                                 <a class="dropmenu" href="#">
                                                     <i class="fa fa-heart-o"></i>
                                                     <span class="text"> <?= lang('quotes'); ?> </span>
@@ -421,7 +421,7 @@
                                                         </a>
                                                     </li>
                                                 </ul>
-                                            </li> -->
+                                            </li>
 
                                             <li class="mm_purchases">
                                                 <a class="dropmenu" href="#">
@@ -706,7 +706,7 @@
                                                         </li>
                                                     <?php
                                                     } ?>
-                                                    <!-- <li id="reports_products">
+                                                    <li id="reports_products">
                                                         <a href="<?= admin_url('reports/products') ?>">
                                                             <i class="fa fa-barcode"></i><span class="text"> <?= lang('products_report'); ?></span>
                                                         </a>
@@ -725,7 +725,7 @@
                                                         <a href="<?= admin_url('reports/brands') ?>">
                                                             <i class="fa fa-cubes"></i><span class="text"> <?= lang('brands_report'); ?></span>
                                                         </a>
-                                                    </li> -->
+                                                    </li>
                                                     <li id="reports_daily_sales">
                                                         <a href="<?= admin_url('reports/daily_sales') ?>">
                                                             <i class="fa fa-calendar"></i><span class="text"> <?= lang('daily_sales'); ?></span>
