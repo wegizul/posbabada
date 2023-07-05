@@ -46,32 +46,59 @@ if ($this->input->post('cf6')) {
 }
 ?>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         function spb(x) {
             v = x.split('__');
-            return '('+formatQuantity2(v[0])+') <strong>'+formatMoney(v[1])+'</strong>';
+            return '(' + formatQuantity2(v[0]) + ') <strong>' + formatMoney(v[1]) + '</strong>';
         }
         oTable = $('#PrRData').dataTable({
-            "aaSorting": [[3, "desc"], [2, "desc"]],
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "<?= lang('all') ?>"]],
+            "aaSorting": [
+                [3, "desc"],
+                [2, "desc"]
+            ],
+            "aLengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "<?= lang('all') ?>"]
+            ],
             "iDisplayLength": <?= $Settings->rows_per_page ?>,
-            'bProcessing': true, 'bServerSide': true,
+            'bProcessing': true,
+            'bServerSide': true,
             'sAjaxSource': '<?= admin_url('reports/getProductsReport/?v=1' . $v) ?>',
-            'fnServerData': function (sSource, aoData, fnCallback) {
+            'fnServerData': function(sSource, aoData, fnCallback) {
                 aoData.push({
                     "name": "<?= $this->security->get_csrf_token_name() ?>",
                     "value": "<?= $this->security->get_csrf_hash() ?>"
                 });
-                $.ajax({'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback});
+                $.ajax({
+                    'dataType': 'json',
+                    'type': 'POST',
+                    'url': sSource,
+                    'data': aoData,
+                    'success': fnCallback
+                });
             },
-            'fnRowCallback': function (nRow, aData, iDisplayIndex) {
+            'fnRowCallback': function(nRow, aData, iDisplayIndex) {
                 nRow.id = aData[6];
                 nRow.className = "product_link2";
                 return nRow;
             },
-            "aoColumns": [null, null, {"mRender": spb}, {"mRender": spb}, {"mRender": currencyFormat}, {"mRender": spb}],
-            "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
-                var pq = 0, sq = 0, bq = 0, pa = 0, sa = 0, ba = 0, pl = 0;
+            "aoColumns": [null, null, {
+                "mRender": spb
+            }, {
+                "mRender": spb
+            }, {
+                "mRender": currencyFormat
+            }, {
+                "mRender": spb
+            }],
+            "fnFooterCallback": function(nRow, aaData, iStart, iEnd, aiDisplay) {
+                var pq = 0,
+                    sq = 0,
+                    bq = 0,
+                    pa = 0,
+                    sa = 0,
+                    ba = 0,
+                    pl = 0;
                 for (var i = 0; i < aaData.length; i++) {
                     p = (aaData[aiDisplay[i]][2]).split('__');
                     s = (aaData[aiDisplay[i]][3]).split('__');
@@ -85,40 +112,51 @@ if ($this->input->post('cf6')) {
                     pl += parseFloat(aaData[aiDisplay[i]][4]);
                 }
                 var nCells = nRow.getElementsByTagName('th');
-                nCells[2].innerHTML = '<div class="text-right">('+formatQuantity2(pq)+') '+formatMoney(pa)+'</div>';
-                nCells[3].innerHTML = '<div class="text-right">('+formatQuantity2(sq)+') '+formatMoney(sa)+'</div>';
+                nCells[2].innerHTML = '<div class="text-right">(' + formatQuantity2(pq) + ') ' + formatMoney(pa) + '</div>';
+                nCells[3].innerHTML = '<div class="text-right">(' + formatQuantity2(sq) + ') ' + formatMoney(sa) + '</div>';
                 nCells[4].innerHTML = currencyFormat(parseFloat(pl));
-                nCells[5].innerHTML = '<div class="text-right">('+formatQuantity2(bq)+') '+formatMoney(ba)+'</div>';
+                nCells[5].innerHTML = '<div class="text-right">(' + formatQuantity2(bq) + ') ' + formatMoney(ba) + '</div>';
             }
-        }).fnSetFilteringDelay().dtFilter([
-            {column_number: 0, filter_default_label: "[<?=lang('product_code');?>]", filter_type: "text", data: []},
-            {column_number: 1, filter_default_label: "[<?=lang('product_name');?>]", filter_type: "text", data: []},
+        }).fnSetFilteringDelay().dtFilter([{
+                column_number: 0,
+                filter_default_label: "[<?= lang('product_code'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 1,
+                filter_default_label: "[<?= lang('product_name'); ?>]",
+                filter_type: "text",
+                data: []
+            },
         ], "footer");
     });
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#form').hide();
-        $('.toggle_down').click(function () {
+        $('.toggle_down').click(function() {
             $("#form").slideDown();
             return false;
         });
-        $('.toggle_up').click(function () {
+        $('.toggle_up').click(function() {
             $("#form").slideUp();
             return false;
         });
     });
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         // $('#category').select2({allowClear: true, placeholder: "<?= lang('select'); ?>", minimumResultsForSearch: 7}).select2('destroy');
         $("#subcategory").select2("destroy").empty().attr("placeholder", "<?= lang('select_category_to_load') ?>").select2({
             allowClear: true,
-            placeholder: "<?= lang('select_category_to_load') ?>", data: [
-                {id: '', text: '<?= lang('select_category_to_load') ?>'}
-            ]
+            placeholder: "<?= lang('select_category_to_load') ?>",
+            data: [{
+                id: '',
+                text: '<?= lang('select_category_to_load') ?>'
+            }]
         });
-        $('#category').change(function () {
+        $('#category').change(function() {
             var v = $(this).val();
             if (v) {
                 $.ajax({
@@ -126,57 +164,68 @@ if ($this->input->post('cf6')) {
                     async: false,
                     url: "<?= admin_url('products/getSubCategories') ?>/" + v,
                     dataType: "json",
-                    success: function (scdata) {
+                    success: function(scdata) {
                         if (scdata != null) {
-                            $("#subcategory").select2("destroy").empty().attr("placeholder", "<?= lang('select_subcategory') ?>").select2({allowClear: true,
+                            $("#subcategory").select2("destroy").empty().attr("placeholder", "<?= lang('select_subcategory') ?>").select2({
+                                allowClear: true,
                                 placeholder: "<?= lang('select_category_to_load') ?>",
                                 data: scdata
                             });
                         } else {
-                            $("#subcategory").select2("destroy").empty().attr("placeholder", "<?= lang('no_subcategory') ?>").select2({allowClear: true,
+                            $("#subcategory").select2("destroy").empty().attr("placeholder", "<?= lang('no_subcategory') ?>").select2({
+                                allowClear: true,
                                 placeholder: "<?= lang('no_subcategory') ?>",
-                                data: [{id: '', text: '<?= lang('no_subcategory') ?>'}]
+                                data: [{
+                                    id: '',
+                                    text: '<?= lang('no_subcategory') ?>'
+                                }]
                             });
                         }
                     },
-                    error: function () {
+                    error: function() {
                         bootbox.alert('<?= lang('ajax_error') ?>');
                     }
                 });
             } else {
-                $("#subcategory").select2("destroy").empty().attr("placeholder", "<?= lang('select_category_to_load') ?>").select2({allowClear: true,
+                $("#subcategory").select2("destroy").empty().attr("placeholder", "<?= lang('select_category_to_load') ?>").select2({
+                    allowClear: true,
                     placeholder: "<?= lang('select_category_to_load') ?>",
-                    data: [{id: '', text: '<?= lang('select_category_to_load') ?>'}]
+                    data: [{
+                        id: '',
+                        text: '<?= lang('select_category_to_load') ?>'
+                    }]
                 });
             }
         });
         <?php if (isset($_POST['category']) && !empty($_POST['category'])) {
-    ?>
-        $.ajax({
-            type: "get", async: false,
-            url: "<?= admin_url('products/getSubCategories') ?>/" + <?= $_POST['category'] ?>,
-            dataType: "json",
-            success: function (scdata) {
-                if (scdata != null) {
-                    $("#subcategory").select2("destroy").empty().attr("placeholder", "<?= lang('select_subcategory') ?>").select2({allowClear: true,
-                        placeholder: "<?= lang('no_subcategory') ?>",
-                        data: scdata
-                    });
+        ?>
+            $.ajax({
+                type: "get",
+                async: false,
+                url: "<?= admin_url('products/getSubCategories') ?>/" + <?= $_POST['category'] ?>,
+                dataType: "json",
+                success: function(scdata) {
+                    if (scdata != null) {
+                        $("#subcategory").select2("destroy").empty().attr("placeholder", "<?= lang('select_subcategory') ?>").select2({
+                            allowClear: true,
+                            placeholder: "<?= lang('no_subcategory') ?>",
+                            data: scdata
+                        });
+                    }
                 }
-            }
-        });
+            });
         <?php
-} ?>
+        } ?>
     });
 </script>
 
 <div class="box">
     <div class="box-header">
         <h2 class="blue"><i class="fa-fw fa fa-barcode"></i><?= lang('products_report'); ?> <?php
-            if ($this->input->post('start_date')) {
-                echo 'From ' . $this->input->post('start_date') . ' to ' . $this->input->post('end_date');
-            }
-            ?></h2>
+                                                                                            if ($this->input->post('start_date')) {
+                                                                                                echo 'From ' . $this->input->post('start_date') . ' to ' . $this->input->post('end_date');
+                                                                                            }
+                                                                                            ?></h2>
 
         <div class="box-icon">
             <ul class="btn-tasks">
@@ -217,13 +266,13 @@ if ($this->input->post('cf6')) {
 
                     <?php echo admin_form_open('reports/products', 'autocomplete="off"'); ?>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <!-- <div class="col-sm-4">
                             <div class="form-group">
                                 <?= lang('product', 'suggest_product'); ?>
                                 <?php echo form_input('sproduct', ($_POST['sproduct'] ?? ''), 'class="form-control" id="suggest_product"'); ?>
-                                <input type="hidden" name="product" value="<?= $_POST['product'] ?? '' ?>" id="report_product_id"/>
+                                <input type="hidden" name="product" value="<?= $_POST['product'] ?? '' ?>" id="report_product_id" />
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <?= lang('category', 'category') ?>
@@ -237,17 +286,17 @@ if ($this->input->post('cf6')) {
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <div class="form-group">
                                 <?= lang('subcategory', 'subcategory') ?>
                                 <div class="controls" id="subcat_data"> <?php
-                                    echo form_input('subcategory', ($_POST['subcategory'] ?? ''), 'class="form-control" id="subcategory"  placeholder="' . lang('select_category_to_load') . '"');
-                                    ?>
+                                                                        echo form_input('subcategory', ($_POST['subcategory'] ?? ''), 'class="form-control" id="subcategory"  placeholder="' . lang('select_category_to_load') . '"');
+                                                                        ?>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="col-sm-4">
+                        <!-- <div class="col-sm-4">
                             <div class="form-group">
                                 <?= lang('brand', 'brand') ?>
                                 <?php
@@ -258,7 +307,7 @@ if ($this->input->post('cf6')) {
                                 echo form_dropdown('brand', $bt, ($_POST['brand'] ?? ''), 'class="form-control select" id="brand" placeholder="' . lang('select') . ' ' . lang('brand') . '" style="width:100%"')
                                 ?>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -273,7 +322,7 @@ if ($this->input->post('cf6')) {
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <div class="form-group all">
                                 <?= lang('pcf1', 'cf1') ?>
                                 <?= form_input('cf1', ($_POST['cf1'] ?? ''), 'class="form-control tip" id="cf1"') ?>
@@ -313,7 +362,8 @@ if ($this->input->post('cf6')) {
                                 <?= lang('pcf6', 'cf6') ?>
                                 <?= form_input('cf6', ($_POST['cf6'] ?? ''), 'class="form-control tip" id="cf6"') ?>
                             </div>
-                        </div>
+                        </div> -->
+
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="control-label" for="user"><?= lang('created_by'); ?></label>
@@ -340,8 +390,7 @@ if ($this->input->post('cf6')) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <div
-                            class="controls"> <?php echo form_submit('submit_report', $this->lang->line('submit'), 'class="btn btn-primary"'); ?> </div>
+                        <div class="controls"> <?php echo form_submit('submit_report', $this->lang->line('submit'), 'class="btn btn-primary"'); ?> </div>
                     </div>
                     <?php echo form_close(); ?>
 
@@ -350,33 +399,31 @@ if ($this->input->post('cf6')) {
                 <div class="clearfix"></div>
 
                 <div class="table-responsive">
-                    <table id="PrRData"
-                           class="table table-striped table-bordered table-condensed table-hover dfTable reports-table"
-                           style="margin-bottom:5px;">
+                    <table id="PrRData" class="table table-striped table-bordered table-condensed table-hover dfTable reports-table" style="margin-bottom:5px;">
                         <thead>
-                        <tr class="active">
-                            <th><?= lang('product_code'); ?></th>
-                            <th><?= lang('product_name'); ?></th>
-                            <th><?= lang('purchased'); ?></th>
-                            <th><?= lang('sold'); ?></th>
-                            <th><?= lang('profit_loss'); ?></th>
-                            <th><?= lang('stock_in_hand'); ?></th>
-                        </tr>
+                            <tr class="active">
+                                <th><?= lang('product_code'); ?></th>
+                                <th><?= lang('product_name'); ?></th>
+                                <!-- <th><?= lang('purchased'); ?></th> -->
+                                <th><?= lang('sold'); ?></th>
+                                <th><?= lang('profit_loss'); ?></th>
+                                <th><?= lang('stock_in_hand'); ?></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td colspan="6" class="dataTables_empty"><?= lang('loading_data_from_server') ?></td>
-                        </tr>
+                            <tr>
+                                <td colspan="6" class="dataTables_empty"><?= lang('loading_data_from_server') ?></td>
+                            </tr>
                         </tbody>
                         <tfoot class="dtFilter">
-                        <tr class="active">
-                            <th></th>
-                            <th></th>
-                            <th><?= lang('purchased'); ?></th>
-                            <th><?= lang('sold'); ?></th>
-                            <th><?= lang('profit_loss'); ?></th>
-                            <th><?= lang('stock_in_hand'); ?></th>
-                        </tr>
+                            <tr class="active">
+                                <th></th>
+                                <th></th>
+                                <th><?= lang('purchased'); ?></th>
+                                <th><?= lang('sold'); ?></th>
+                                <th><?= lang('profit_loss'); ?></th>
+                                <th><?= lang('stock_in_hand'); ?></th>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -388,21 +435,21 @@ if ($this->input->post('cf6')) {
 
 <script type="text/javascript" src="<?= $assets ?>js/html2canvas.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#pdf').click(function (event) {
+    $(document).ready(function() {
+        $('#pdf').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?=admin_url('reports/getProductsReport/pdf/?v=1' . $v)?>";
+            window.location.href = "<?= admin_url('reports/getProductsReport/pdf/?v=1' . $v) ?>";
             return false;
         });
-        $('#xls').click(function (event) {
+        $('#xls').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?=admin_url('reports/getProductsReport/0/xls/?v=1' . $v)?>";
+            window.location.href = "<?= admin_url('reports/getProductsReport/0/xls/?v=1' . $v) ?>";
             return false;
         });
-        $('#image').click(function (event) {
+        $('#image').click(function(event) {
             event.preventDefault();
             html2canvas($('.box'), {
-                onrendered: function (canvas) {
+                onrendered: function(canvas) {
                     openImg(canvas.toDataURL());
                 }
             });

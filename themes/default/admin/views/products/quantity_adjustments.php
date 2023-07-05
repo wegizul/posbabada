@@ -134,7 +134,7 @@
                     </a>
                     <ul class="dropdown-menu pull-right tasks-menus" role="menu" aria-labelledby="dLabel">
                         <li>
-                            <a href="<?= admin_url('products/add_adjustment_stock_product') ?>">
+                            <a href="<?= admin_url('products/add_adjustment') ?>">
                                 <i class="fa fa-plus-circle"></i> Management Stock
                             </a>
                         </li>
