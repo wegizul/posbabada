@@ -1764,7 +1764,7 @@ class Products extends MY_Controller
                 $arrResult = [];
                 $handle = fopen($this->digital_upload_path . $csv, 'r');
                 if ($handle) {
-                    while (($row = fgetcsv($handle, 5000, ',')) !== false) {
+                    while (($row = fgetcsv($handle, 5000, ';')) !== false) {
                         $arrResult[] = $row;
                     }
                     fclose($handle);
