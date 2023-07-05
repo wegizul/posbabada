@@ -206,15 +206,19 @@
                                             echo '<tr><td colspan="100%" class="no-border"><strong>' . $row->category_name . '</strong></td></tr>';
                                         }
                                         echo '<tr><td colspan="2" class="no-border">#' . $r . ': &nbsp;&nbsp;' . product_name($row->product_name, ($printer ? $printer->char_per_line : null)) . ($row->variant ? ' (' . $row->variant . ')' : ''), ($row->serial_no ? '<br>' . $row->serial_no : '') . '</td>';
-                                        echo '<td class="no-border border-bottom">' . $this->sma->formatQuantity($row->unit_quantity) . ' x ' . ($row->item_discount != 0 ? '(' . $this->sma->formatMoney($row->unit_price + ($row->item_discount / $row->unit_quantity)) . ' - ' . $this->sma->formatMoney($row->item_discount / $row->unit_quantity) . ')' : $this->sma->formatMoney($row->unit_price)) . '</td><td class="no-border border-bottom text-right">' . $this->sma->formatMoney($row->subtotal) . '</td></tr>';
+                                        echo '<td class="no-border border-bottom">' . $this->sma->formatQuantity($row->unit_quantity) . ' x ' . ($row->item_discount != 0 ? $this->sma->formatMoney($row->unit_price + ($row->item_discount / $row->unit_quantity))  : $this->sma->formatMoney($row->unit_price)) . '</td><td class="no-border border-bottom text-right">' . $this->sma->formatMoney($row->subtotal) . '</td></tr>';
                                         if (!empty($row->second_name)) {
                                             echo '<tr><td colspan="2" class="no-border">' . $row->second_name . '</td></tr>';
                                         }
                                         if (!empty($row->comment)) {
                                             echo '<tr><td colspan="2" class="no-border">' . $row->comment . '</td></tr>';
+                                        } 
+                                        if ($row->item_discount != 0) {
+                                            echo '<tr><td colspan="4" class="no-border">' . 'Disc ' .$row->product_name.' ( - ' . $this->sma->formatMoney($row->item_discount / $row->unit_quantity) .') </td></tr>';
                                         }
-
+                                       
                                         $r++;
+
                                     }
                                     if ($return_rows) {
                                         echo '<tr class="warning"><td colspan="100%" class="no-border"><strong>' . lang('returned_items') . '</strong></td></tr>';
@@ -248,8 +252,9 @@
                                     // if ($inv->order_tax != 0) {
                                     //     echo '<tr><th colspan="3">' . lang('tax') . '</th><th class="text-right">' . $this->sma->formatMoney($return_sale ? ($inv->order_tax + $return_sale->order_tax) : $inv->order_tax) . '</th></tr>';
                                     // }
-                                    if ($inv->order_discount != 0) {
-                                        echo '<tr><th colspan="3">' . lang('order_discount') . '</th><th class="text-right">' . $this->sma->formatMoney($return_sale ? ($inv->order_discount + $return_sale->order_discount) : $inv->order_discount) . '</th></tr>';
+                                    // print_r($inv);die();
+                                    if ($inv->order_discount == 0) {
+                                        echo '<tr><th colspan="3">' . lang('Total_Discount') . '</th><th class="text-right">' . '-' .$this->sma->formatMoney($inv->total_discount) . '</th></tr>';
                                     }
 
                                     if ($inv->shipping != 0) {
@@ -322,7 +327,7 @@
                                     echo '<tr>';
                                     if (($payment->paid_by == 'cash' || $payment->paid_by == 'deposit') && $payment->pos_paid) {
                                         echo '<td>' . 'Bayar' . ': ' . lang($payment->paid_by) . '</td>';
-                                        echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
+                                        echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid-$inv->order_tax) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
                                         echo '<td>' . 'Kembalian' . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance  + $inv->order_tax) : 0) . '</td>';
                                     } elseif (($payment->paid_by == 'CC' || $payment->paid_by == 'ppp' || $payment->paid_by == 'stripe') && $payment->cc_no) {
                                         echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
