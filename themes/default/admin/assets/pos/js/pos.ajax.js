@@ -1566,13 +1566,13 @@ function loadItems() {
         total_discount = formatDecimal(order_discount + product_discount);
 
         // Totals calculations after item addition
-        var gtotal = parseFloat(total + invoice_tax - order_discount + parseFloat(shipping));
+        var gtotal = parseFloat(total - order_discount + parseFloat(shipping));
         $('#total').text(formatMoney(total));
         $('#titems').text(an - 1 + ' (' + formatQty(parseFloat(count) - 1) + ')');
         $('#total_items').val(parseFloat(count) - 1);
         $('#tds').text('(' + formatMoney(product_discount) + ') ' + formatMoney(order_discount));
         if (site.settings.tax2 != 0) {
-            $('#ttax2').text(formatMoney(invoice_tax));
+            $('#ttax2').text(0);
         }
         $('#tship').text(parseFloat(shipping) > 0 ? formatMoney(shipping) : '');
         $('#gtotal').text(formatMoney(gtotal));
