@@ -306,13 +306,13 @@
                                     if ($inv->paid < ($inv->grand_total + $inv->rounding)) {
                                     ?>
                                         <tr>
-                                            <th><?= lang('paid_amount'); ?></th>
+                                            <!-- <th><?= lang('paid_amount'); ?></th>
                                             <th class="text-right"><?= $this->sma->formatMoney($return_sale ? ($inv->paid + $return_sale->paid) : $inv->paid); ?></th>
                                         </tr>
                                         <tr>
                                             <th><?= lang('due_amount'); ?></th>
                                             <th class="text-right"><?= $this->sma->formatMoney(($return_sale ? (($inv->grand_total + $inv->rounding) + $return_sale->grand_total) : ($inv->grand_total + $inv->rounding)) - ($return_sale ? ($inv->paid + $return_sale->paid) : $inv->paid)); ?></th>
-                                        </tr>
+                                        </tr> -->
                                     <?php
                                     } ?>
                                     <tr>
@@ -327,7 +327,7 @@
                                     echo '<tr>';
                                     if (($payment->paid_by == 'cash' || $payment->paid_by == 'deposit') && $payment->pos_paid) {
                                         echo '<td>' . 'Bayar' . ': ' . lang($payment->paid_by) . '</td>';
-                                        echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid-$inv->order_tax) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
+                                        echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
                                         echo '<td>' . 'Kembalian' . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance  + $inv->order_tax) : 0) . '</td>';
                                     } elseif (($payment->paid_by == 'CC' || $payment->paid_by == 'ppp' || $payment->paid_by == 'stripe') && $payment->cc_no) {
                                         echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
