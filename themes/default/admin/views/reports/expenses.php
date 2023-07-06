@@ -27,7 +27,7 @@ if ($this->input->post('end_date')) {
 ?>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         function attachment(x) {
             if (x != null) {
                 return '<a href="' + site.url + 'assets/uploads/' + x + '" target="_blank"><i class="fa fa-chain"></i></a>';
@@ -36,25 +36,44 @@ if ($this->input->post('end_date')) {
         }
 
         oTable = $('#EXPData').dataTable({
-            "aaSorting": [[0, "desc"]],
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "<?= lang('all') ?>"]],
+            "aaSorting": [
+                [0, "desc"]
+            ],
+            "aLengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "<?= lang('all') ?>"]
+            ],
             "iDisplayLength": <?= $Settings->rows_per_page ?>,
-            'bProcessing': true, 'bServerSide': true,
+            'bProcessing': true,
+            'bServerSide': true,
             'sAjaxSource': '<?= admin_url('reports/getExpensesReport/?v=1' . $v); ?>',
-            'fnServerData': function (sSource, aoData, fnCallback) {
+            'fnServerData': function(sSource, aoData, fnCallback) {
                 aoData.push({
                     "name": "<?= $this->security->get_csrf_token_name() ?>",
                     "value": "<?= $this->security->get_csrf_hash() ?>"
                 });
-                $.ajax({'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback});
+                $.ajax({
+                    'dataType': 'json',
+                    'type': 'POST',
+                    'url': sSource,
+                    'data': aoData,
+                    'success': fnCallback
+                });
             },
-            'fnRowCallback': function (nRow, aData, iDisplayIndex) {
+            'fnRowCallback': function(nRow, aData, iDisplayIndex) {
                 nRow.id = aData[7];
                 nRow.className = "expense_link2";
                 return nRow;
             },
-            "aoColumns": [{"mRender": fld}, null, null, {"mRender": currencyFormat}, null, null, {"bSortable": false, "mRender": attachment}],
-            "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
+            "aoColumns": [{
+                "mRender": fld
+            }, null, null, {
+                "mRender": currencyFormat
+            }, null, null, {
+                "bSortable": false,
+                "mRender": attachment
+            }],
+            "fnFooterCallback": function(nRow, aaData, iStart, iEnd, aiDisplay) {
                 var total = 0;
                 for (var i = 0; i < aaData.length; i++) {
                     total += parseFloat(aaData[aiDisplay[i]][3]);
@@ -62,25 +81,48 @@ if ($this->input->post('end_date')) {
                 var nCells = nRow.getElementsByTagName('th');
                 nCells[3].innerHTML = currencyFormat(total);
             }
-        }).fnSetFilteringDelay().dtFilter([
-            {column_number: 0, filter_default_label: "[<?=lang('date');?> (yyyy-mm-dd)]", filter_type: "text", data: []},
-            {column_number: 1, filter_default_label: "[<?=lang('reference');?>]", filter_type: "text", data: []},
-            {column_number: 2, filter_default_label: "[<?=lang('category');?>]", filter_type: "text", data: []},
-            {column_number: 4, filter_default_label: "[<?=lang('note');?>]", filter_type: "text", data: []},
-            {column_number: 5, filter_default_label: "[<?=lang('created_by');?>]", filter_type: "text", data: []},
+        }).fnSetFilteringDelay().dtFilter([{
+                column_number: 0,
+                filter_default_label: "[<?= lang('date'); ?> (yyyy-mm-dd)]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 1,
+                filter_default_label: "[<?= lang('reference'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 2,
+                filter_default_label: "[<?= lang('category'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 4,
+                filter_default_label: "[<?= lang('note'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 5,
+                filter_default_label: "[<?= lang('created_by'); ?>]",
+                filter_type: "text",
+                data: []
+            },
         ], "footer");
 
     });
-
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#form').hide();
-        $('.toggle_down').click(function () {
+        $('.toggle_down').click(function() {
             $("#form").slideDown();
             return false;
         });
-        $('.toggle_up').click(function () {
+        $('.toggle_up').click(function() {
             $("#form").slideUp();
             return false;
         });
@@ -89,10 +131,10 @@ if ($this->input->post('end_date')) {
 <div class="box">
     <div class="box-header">
         <h2 class="blue"><i class="fa-fw fa fa-dollar"></i><?= lang('expenses_report'); ?> <?php
-            if ($this->input->post('start_date')) {
-                echo 'From ' . $this->input->post('start_date') . ' to ' . $this->input->post('end_date');
-            }
-            ?>
+                                                                                            if ($this->input->post('start_date')) {
+                                                                                                echo 'From ' . $this->input->post('start_date') . ' to ' . $this->input->post('end_date');
+                                                                                            }
+                                                                                            ?>
         </h2>
 
         <div class="box-icon">
@@ -116,11 +158,11 @@ if ($this->input->post('end_date')) {
                         <i class="icon fa fa-file-excel-o"></i>
                     </a>
                 </li>
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                     <a href="#" id="image" class="tip" title="<?= lang('save_image') ?>">
                         <i class="icon fa fa-file-picture-o"></i>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -197,39 +239,42 @@ if ($this->input->post('end_date')) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <div
-                            class="controls"> <?php echo form_submit('submit_report', $this->lang->line('submit'), 'class="btn btn-primary"'); ?> </div>
+                        <div class="controls"> <?php echo form_submit('submit_report', $this->lang->line('submit'), 'class="btn btn-primary"'); ?> </div>
                     </div>
                     <?php echo form_close(); ?>
 
                 </div>
                 <div class="clearfix"></div>
                 <div class="table-responsive">
-                    <table id="EXPData" cellpadding="0" cellspacing="0" border="0"
-                           class="table table-bordered table-hover table-striped">
+                    <table id="EXPData" cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-hover table-striped">
                         <thead>
-                        <tr class="active">
-                            <th class="col-xs-2"><?= lang('date'); ?></th>
-                            <th class="col-xs-2"><?= lang('reference'); ?></th>
-                            <th class="col-xs-2"><?= lang('category'); ?></th>
-                            <th class="col-xs-1"><?= lang('amount'); ?></th>
-                            <th class="col-xs-3"><?= lang('note'); ?></th>
-                            <th class="col-xs-2"><?= lang('created_by'); ?></th>
-                            <th style="min-width:30px; width: 30px; text-align: center;"><i class="fa fa-chain"></i>
-                            </th>
-                        </tr>
+                            <tr class="active">
+                                <th class="col-xs-2"><?= lang('date'); ?></th>
+                                <th class="col-xs-2"><?= lang('reference'); ?></th>
+                                <th class="col-xs-2"><?= lang('category'); ?></th>
+                                <th class="col-xs-1"><?= lang('amount'); ?></th>
+                                <th class="col-xs-3"><?= lang('note'); ?></th>
+                                <th class="col-xs-2"><?= lang('created_by'); ?></th>
+                                <th style="min-width:30px; width: 30px; text-align: center;"><i class="fa fa-chain"></i>
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td colspan="8" class="dataTables_empty"><?= lang('loading_data_from_server'); ?></td>
-                        </tr>
+                            <tr>
+                                <td colspan="8" class="dataTables_empty"><?= lang('loading_data_from_server'); ?></td>
+                            </tr>
                         </tbody>
                         <tfoot class="dtFilter">
-                        <tr class="active">
-                            <th></th><th></th><th></th><th></th><th></th><th></th>
-                            <th style="min-width:30px; width: 30px; text-align: center;"><i class="fa fa-chain"></i>
-                            </th>
-                        </tr>
+                            <tr class="active">
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th style="min-width:30px; width: 30px; text-align: center;"><i class="fa fa-chain"></i>
+                                </th>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -239,21 +284,21 @@ if ($this->input->post('end_date')) {
 </div>
 <script type="text/javascript" src="<?= $assets ?>js/html2canvas.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#pdf').click(function (event) {
+    $(document).ready(function() {
+        $('#pdf').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?=admin_url('reports/getExpensesReport/pdf/?v=1' . $v)?>";
+            window.location.href = "<?= admin_url('reports/getExpensesReport/pdf/?v=1' . $v) ?>";
             return false;
         });
-        $('#xls').click(function (event) {
+        $('#xls').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?=admin_url('reports/getExpensesReport/0/xls/?v=1' . $v)?>";
+            window.location.href = "<?= admin_url('reports/getExpensesReport/0/xls/?v=1' . $v) ?>";
             return false;
         });
-        $('#image').click(function (event) {
+        $('#image').click(function(event) {
             event.preventDefault();
             html2canvas($('.box'), {
-                onrendered: function (canvas) {
+                onrendered: function(canvas) {
                     openImg(canvas.toDataURL());
                 }
             });

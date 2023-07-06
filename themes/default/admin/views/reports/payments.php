@@ -45,8 +45,9 @@ if ($this->input->post('end_date')) {
 }
 ?>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         var pb = <?= json_encode($pb); ?>;
+
         function paid_by(x) {
             return (x != null) ? (pb[x] ? pb[x] : x) : x;
         }
@@ -56,20 +57,46 @@ if ($this->input->post('end_date')) {
         }
 
         oTable = $('#PayRData').dataTable({
-            "aaSorting": [[0, "desc"]],
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "<?= lang('all') ?>"]],
+            "aaSorting": [
+                [0, "desc"]
+            ],
+            "aLengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "<?= lang('all') ?>"]
+            ],
             "iDisplayLength": <?= $Settings->rows_per_page ?>,
-            'bProcessing': true, 'bServerSide': true,
+            'bProcessing': true,
+            'bServerSide': true,
             'sAjaxSource': '<?= admin_url('reports/getPaymentsReport/?v=1' . $v) ?>',
-            'fnServerData': function (sSource, aoData, fnCallback) {
+            'fnServerData': function(sSource, aoData, fnCallback) {
                 aoData.push({
                     "name": "<?= $this->security->get_csrf_token_name() ?>",
                     "value": "<?= $this->security->get_csrf_hash() ?>"
                 });
-                $.ajax({'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback});
+                $.ajax({
+                    'dataType': 'json',
+                    'type': 'POST',
+                    'url': sSource,
+                    'data': aoData,
+                    'success': fnCallback
+                });
             },
-            "aoColumns": [{"mRender": fld}, null, {"mRender": ref}, {"mRender": ref}, {"mRender": paid_by}, {"mRender": currencyFormat}, {"mRender": row_status}, {"bVisible": false}],
-            'fnRowCallback': function (nRow, aData, iDisplayIndex) {
+            "aoColumns": [{
+                "mRender": fld
+            }, null, {
+                "mRender": ref
+            }, {
+                "mRender": ref
+            }, {
+                "mRender": paid_by
+            }, {
+                "mRender": currencyFormat
+            }, {
+                "mRender": row_status
+            }, {
+                "bVisible": false
+            }],
+            'fnRowCallback': function(nRow, aData, iDisplayIndex) {
                 nRow.id = aData[7];
                 nRow.className = "payment_link";
                 if (aData[6] == 'sent') {
@@ -79,7 +106,7 @@ if ($this->input->post('end_date')) {
                 }
                 return nRow;
             },
-            "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
+            "fnFooterCallback": function(nRow, aaData, iStart, iEnd, aiDisplay) {
                 var total = 0;
                 for (var i = 0; i < aaData.length; i++) {
                     // if (aaData[aiDisplay[i]][6] == 'sent' || aaData[aiDisplay[i]][6] == 'returned')
@@ -91,103 +118,150 @@ if ($this->input->post('end_date')) {
                 var nCells = nRow.getElementsByTagName('th');
                 nCells[5].innerHTML = currencyFormat(parseFloat(total));
             }
-        }).fnSetFilteringDelay().dtFilter([
-            {column_number: 0, filter_default_label: "[<?=lang('date');?> (yyyy-mm-dd)]", filter_type: "text", data: []},
-            {column_number: 1, filter_default_label: "[<?=lang('payment_ref');?>]", filter_type: "text", data: []},
-            {column_number: 2, filter_default_label: "[<?=lang('sale_ref');?>]", filter_type: "text", data: []},
-            {column_number: 3, filter_default_label: "[<?=lang('purchase_ref');?>]", filter_type: "text", data: []},
-            {column_number: 4, filter_default_label: "[<?=lang('paid_by');?>]", filter_type: "text", data: []},
-            {column_number: 6, filter_default_label: "[<?=lang('type');?>]", filter_type: "text", data: []},
+        }).fnSetFilteringDelay().dtFilter([{
+                column_number: 0,
+                filter_default_label: "[<?= lang('date'); ?> (yyyy-mm-dd)]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 1,
+                filter_default_label: "[<?= lang('payment_ref'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 2,
+                filter_default_label: "[<?= lang('sale_ref'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 3,
+                filter_default_label: "[<?= lang('purchase_ref'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 4,
+                filter_default_label: "[<?= lang('paid_by'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 6,
+                filter_default_label: "[<?= lang('type'); ?>]",
+                filter_type: "text",
+                data: []
+            },
         ], "footer");
 
     });
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#form').hide();
         <?php if ($this->input->post('biller')) {
-    ?>
-        $('#rbiller').select2({ allowClear: true });
+        ?>
+            $('#rbiller').select2({
+                allowClear: true
+            });
         <?php
-} ?>
+        } ?>
         <?php if ($this->input->post('supplier')) {
         ?>
-        $('#rsupplier').val(<?= $this->input->post('supplier') ?>).select2({
-            minimumInputLength: 1,
-            allowClear: true,
-            initSelection: function (element, callback) {
-                $.ajax({
-                    type: "get", async: false,
-                    url: "<?= admin_url('suppliers/getSupplier') ?>/" + $(element).val(),
-                    dataType: "json",
-                    success: function (data) {
-                        callback(data[0]);
-                    }
-                });
-            },
-            ajax: {
-                url: site.base_url + "suppliers/suggestions",
-                dataType: 'json',
-                quietMillis: 15,
-                data: function (term, page) {
-                    return {
-                        term: term,
-                        limit: 10
-                    };
+            $('#rsupplier').val(<?= $this->input->post('supplier') ?>).select2({
+                minimumInputLength: 1,
+                allowClear: true,
+                initSelection: function(element, callback) {
+                    $.ajax({
+                        type: "get",
+                        async: false,
+                        url: "<?= admin_url('suppliers/getSupplier') ?>/" + $(element).val(),
+                        dataType: "json",
+                        success: function(data) {
+                            callback(data[0]);
+                        }
+                    });
                 },
-                results: function (data, page) {
-                    if (data.results != null) {
-                        return {results: data.results};
-                    } else {
-                        return {results: [{id: '', text: 'No Match Found'}]};
+                ajax: {
+                    url: site.base_url + "suppliers/suggestions",
+                    dataType: 'json',
+                    quietMillis: 15,
+                    data: function(term, page) {
+                        return {
+                            term: term,
+                            limit: 10
+                        };
+                    },
+                    results: function(data, page) {
+                        if (data.results != null) {
+                            return {
+                                results: data.results
+                            };
+                        } else {
+                            return {
+                                results: [{
+                                    id: '',
+                                    text: 'No Match Found'
+                                }]
+                            };
+                        }
                     }
                 }
-            }
-        });
-        $('#rsupplier').val(<?= $this->input->post('supplier') ?>);
+            });
+            $('#rsupplier').val(<?= $this->input->post('supplier') ?>);
         <?php
-    } ?>
+        } ?>
         <?php if ($this->input->post('customer')) {
         ?>
-        $('#rcustomer').val(<?= $this->input->post('customer') ?>).select2({
-            minimumInputLength: 1,
-            allowClear: true,
-            initSelection: function (element, callback) {
-                $.ajax({
-                    type: "get", async: false,
-                    url: "<?= admin_url('customers/getCustomer') ?>/" + $(element).val(),
-                    dataType: "json",
-                    success: function (data) {
-                        callback(data[0]);
-                    }
-                });
-            },
-            ajax: {
-                url: site.base_url + "customers/suggestions",
-                dataType: 'json',
-                quietMillis: 15,
-                data: function (term, page) {
-                    return {
-                        term: term,
-                        limit: 10
-                    };
+            $('#rcustomer').val(<?= $this->input->post('customer') ?>).select2({
+                minimumInputLength: 1,
+                allowClear: true,
+                initSelection: function(element, callback) {
+                    $.ajax({
+                        type: "get",
+                        async: false,
+                        url: "<?= admin_url('customers/getCustomer') ?>/" + $(element).val(),
+                        dataType: "json",
+                        success: function(data) {
+                            callback(data[0]);
+                        }
+                    });
                 },
-                results: function (data, page) {
-                    if (data.results != null) {
-                        return {results: data.results};
-                    } else {
-                        return {results: [{id: '', text: 'No Match Found'}]};
+                ajax: {
+                    url: site.base_url + "customers/suggestions",
+                    dataType: 'json',
+                    quietMillis: 15,
+                    data: function(term, page) {
+                        return {
+                            term: term,
+                            limit: 10
+                        };
+                    },
+                    results: function(data, page) {
+                        if (data.results != null) {
+                            return {
+                                results: data.results
+                            };
+                        } else {
+                            return {
+                                results: [{
+                                    id: '',
+                                    text: 'No Match Found'
+                                }]
+                            };
+                        }
                     }
                 }
-            }
-        });
+            });
         <?php
-    } ?>
-        $('.toggle_down').click(function () {
+        } ?>
+        $('.toggle_down').click(function() {
             $("#form").slideDown();
             return false;
         });
-        $('.toggle_up').click(function () {
+        $('.toggle_up').click(function() {
             $("#form").slideUp();
             return false;
         });
@@ -197,9 +271,9 @@ if ($this->input->post('end_date')) {
 <div class="box">
     <div class="box-header">
         <h2 class="blue"><i class="fa-fw fa fa-money"></i><?= lang('payments_report'); ?> <?php
-            if ($this->input->post('start_date')) {
-                echo 'From ' . $this->input->post('start_date') . ' to ' . $this->input->post('end_date');
-            } ?>
+                                                                                            if ($this->input->post('start_date')) {
+                                                                                                echo 'From ' . $this->input->post('start_date') . ' to ' . $this->input->post('end_date');
+                                                                                            } ?>
         </h2>
 
         <div class="box-icon">
@@ -223,11 +297,11 @@ if ($this->input->post('end_date')) {
                         <i class="icon fa fa-file-excel-o"></i>
                     </a>
                 </li>
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                     <a href="#" id="image" class="tip" title="<?= lang('save_image') ?>">
                         <i class="icon fa fa-file-picture-o"></i>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -251,12 +325,12 @@ if ($this->input->post('end_date')) {
 
                         <div class="col-sm-4">
                             <div class="form-group">
-                            <?=lang('paid_by', 'paid_by');?>
+                                <?= lang('paid_by', 'paid_by'); ?>
                                 <select name="paid_by" id="paid_by" class="form-control paid_by">
                                     <?= $this->sma->paid_opts($this->input->post('paid_by'), false, true); ?>
-                                    <?=$pos_settings && $pos_settings->paypal_pro ? '<option value="ppp">' . lang('paypal_pro') . '</option>' : '';?>
-                                    <?=$pos_settings && $pos_settings->stripe ? '<option value="stripe">' . lang('stripe') . '</option>' : '';?>
-                                    <?=$pos_settings && $pos_settings->authorize ? '<option value="authorize">' . lang('authorize') . '</option>' : '';?>
+                                    <?= $pos_settings && $pos_settings->paypal_pro ? '<option value="ppp">' . lang('paypal_pro') . '</option>' : ''; ?>
+                                    <?= $pos_settings && $pos_settings->stripe ? '<option value="stripe">' . lang('stripe') . '</option>' : ''; ?>
+                                    <?= $pos_settings && $pos_settings->authorize ? '<option value="authorize">' . lang('authorize') . '</option>' : ''; ?>
                                 </select>
                             </div>
                         </div>
@@ -346,8 +420,7 @@ if ($this->input->post('end_date')) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <div
-                            class="controls"> <?php echo form_submit('submit_report', $this->lang->line('submit'), 'class="btn btn-primary"'); ?> </div>
+                        <div class="controls"> <?php echo form_submit('submit_report', $this->lang->line('submit'), 'class="btn btn-primary"'); ?> </div>
                     </div>
                     <?php echo form_close(); ?>
 
@@ -356,30 +429,36 @@ if ($this->input->post('end_date')) {
 
 
                 <div class="table-responsive">
-                    <table id="PayRData"
-                           class="table table-bordered table-hover table-striped table-condensed reports-table">
+                    <table id="PayRData" class="table table-bordered table-hover table-striped table-condensed reports-table">
 
                         <thead>
-                        <tr>
-                            <th><?= lang('date'); ?></th>
-                            <th><?= lang('payment_ref'); ?></th>
-                            <th><?= lang('sale_ref'); ?></th>
-                            <th><?= lang('purchase_ref'); ?></th>
-                            <th><?= lang('paid_by'); ?></th>
-                            <th><?= lang('amount'); ?></th>
-                            <th><?= lang('type'); ?></th>
-                            <th><?= lang('id'); ?></th>
-                        </tr>
+                            <tr>
+                                <th><?= lang('date'); ?></th>
+                                <th><?= lang('payment_ref'); ?></th>
+                                <th><?= lang('sale_ref'); ?></th>
+                                <th><?= lang('purchase_ref'); ?></th>
+                                <th><?= lang('paid_by'); ?></th>
+                                <th><?= lang('amount'); ?></th>
+                                <th><?= lang('type'); ?></th>
+                                <th><?= lang('id'); ?></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td colspan="7" class="dataTables_empty"><?= lang('loading_data_from_server') ?></td>
-                        </tr>
+                            <tr>
+                                <td colspan="7" class="dataTables_empty"><?= lang('loading_data_from_server') ?></td>
+                            </tr>
                         </tbody>
                         <tfoot class="dtFilter">
-                        <tr class="active">
-                            <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
-                        </tr>
+                            <tr class="active">
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -390,21 +469,21 @@ if ($this->input->post('end_date')) {
 </div>
 <script type="text/javascript" src="<?= $assets ?>js/html2canvas.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#pdf').click(function (event) {
+    $(document).ready(function() {
+        $('#pdf').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?=admin_url('reports/getPaymentsReport/pdf/?v=1' . $v)?>";
+            window.location.href = "<?= admin_url('reports/getPaymentsReport/pdf/?v=1' . $v) ?>";
             return false;
         });
-        $('#xls').click(function (event) {
+        $('#xls').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?=admin_url('reports/getPaymentsReport/0/xls/?v=1' . $v)?>";
+            window.location.href = "<?= admin_url('reports/getPaymentsReport/0/xls/?v=1' . $v) ?>";
             return false;
         });
-        $('#image').click(function (event) {
+        $('#image').click(function(event) {
             event.preventDefault();
             html2canvas($('.box'), {
-                onrendered: function (canvas) {
+                onrendered: function(canvas) {
                     openImg(canvas.toDataURL());
                 }
             });
