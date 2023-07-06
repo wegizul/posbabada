@@ -1567,13 +1567,13 @@ class Reports extends MY_Controller
                 $this->excel->getActiveSheet()->setTitle(lang('products_report'));
                 $this->excel->getActiveSheet()->SetCellValue('A1', lang('product_code'));
                 $this->excel->getActiveSheet()->SetCellValue('B1', lang('product_name'));
-                $this->excel->getActiveSheet()->SetCellValue('C1', lang('purchased'));
-                $this->excel->getActiveSheet()->SetCellValue('D1', lang('sold'));
-                $this->excel->getActiveSheet()->SetCellValue('E1', lang('balance'));
-                $this->excel->getActiveSheet()->SetCellValue('F1', lang('purchased_amount'));
-                $this->excel->getActiveSheet()->SetCellValue('G1', lang('sold_amount'));
-                $this->excel->getActiveSheet()->SetCellValue('H1', lang('profit_loss'));
-                $this->excel->getActiveSheet()->SetCellValue('I1', lang('stock_in_hand'));
+                // $this->excel->getActiveSheet()->SetCellValue('C1', lang('purchased'));
+                $this->excel->getActiveSheet()->SetCellValue('C1', lang('sold'));
+                // $this->excel->getActiveSheet()->SetCellValue('E1', lang('balance'));
+                // $this->excel->getActiveSheet()->SetCellValue('F1', lang('purchased_amount'));
+                $this->excel->getActiveSheet()->SetCellValue('D1', lang('sold_amount'));
+                $this->excel->getActiveSheet()->SetCellValue('E1', lang('profit_loss'));
+                $this->excel->getActiveSheet()->SetCellValue('F1', lang('stock_in_hand'));
 
                 $row = 2;
                 $sQty = 0;
@@ -1586,31 +1586,37 @@ class Reports extends MY_Controller
                 foreach ($data as $data_row) {
                     $this->excel->getActiveSheet()->SetCellValue('A' . $row, $data_row->code);
                     $this->excel->getActiveSheet()->SetCellValue('B' . $row, $data_row->name);
-                    $this->excel->getActiveSheet()->SetCellValue('C' . $row, $data_row->PurchasedQty);
-                    $this->excel->getActiveSheet()->SetCellValue('D' . $row, $data_row->SoldQty);
-                    $this->excel->getActiveSheet()->SetCellValue('E' . $row, $data_row->BalacneQty);
-                    $this->excel->getActiveSheet()->SetCellValue('F' . $row, $data_row->TotalPurchase);
-                    $this->excel->getActiveSheet()->SetCellValue('G' . $row, $data_row->TotalSales);
-                    $this->excel->getActiveSheet()->SetCellValue('H' . $row, $data_row->Profit);
-                    $this->excel->getActiveSheet()->SetCellValue('I' . $row, $data_row->TotalBalance);
+                    // $this->excel->getActiveSheet()->SetCellValue('C' . $row, $data_row->PurchasedQty);
+                    $this->excel->getActiveSheet()->SetCellValue('C' . $row, $data_row->SoldQty);
+                    // $this->excel->getActiveSheet()->SetCellValue('E' . $row, $data_row->BalacneQty);
+                    // $this->excel->getActiveSheet()->SetCellValue('F' . $row, $data_row->TotalPurchase);
+                    $this->excel->getActiveSheet()->SetCellValue('D' . $row, $data_row->TotalSales);
+                    $this->excel->getActiveSheet()->SetCellValue('E' . $row, $data_row->Profit);
+                    // $this->excel->getActiveSheet()->SetCellValue('I' . $row, $data_row->TotalBalance);
+                    $this->excel->getActiveSheet()->SetCellValue('F' . $row, $data_row->BalacneQty);
                     $pQty += $data_row->PurchasedQty;
                     $sQty += $data_row->SoldQty;
                     $bQty += $data_row->BalacneQty;
                     $pAmt += $data_row->TotalPurchase;
                     $sAmt += $data_row->TotalSales;
-                    $bAmt += $data_row->TotalBalance;
+                    // $bAmt += $data_row->TotalBalance;
+                    $bAmt += $data_row->BalacneQty;
                     $pl += $data_row->Profit;
                     $row++;
                 }
-                $this->excel->getActiveSheet()->getStyle('C' . $row . ':I' . $row)->getBorders()
+                $this->excel->getActiveSheet()->getStyle('C' . $row . ':F' . $row)->getBorders()
                     ->getTop()->setBorderStyle('medium');
-                $this->excel->getActiveSheet()->SetCellValue('C' . $row, $pQty);
-                $this->excel->getActiveSheet()->SetCellValue('D' . $row, $sQty);
-                $this->excel->getActiveSheet()->SetCellValue('E' . $row, $bQty);
-                $this->excel->getActiveSheet()->SetCellValue('F' . $row, $pAmt);
-                $this->excel->getActiveSheet()->SetCellValue('G' . $row, $sAmt);
-                $this->excel->getActiveSheet()->SetCellValue('H' . $row, $pl);
-                $this->excel->getActiveSheet()->SetCellValue('I' . $row, $bAmt);
+                // $this->excel->getActiveSheet()->SetCellValue('C' . $row, $pQty);
+                // $this->excel->getActiveSheet()->SetCellValue('D' . $row, $sQty);
+                // $this->excel->getActiveSheet()->SetCellValue('E' . $row, $bQty);
+                // $this->excel->getActiveSheet()->SetCellValue('F' . $row, $pAmt);
+                // $this->excel->getActiveSheet()->SetCellValue('G' . $row, $sAmt);
+                // $this->excel->getActiveSheet()->SetCellValue('H' . $row, $pl);
+                // $this->excel->getActiveSheet()->SetCellValue('I' . $row, $bAmt);
+                $this->excel->getActiveSheet()->SetCellValue('C' . $row, $sQty);
+                $this->excel->getActiveSheet()->SetCellValue('D' . $row, $sAmt);
+                $this->excel->getActiveSheet()->SetCellValue('E' . $row, $pl);
+                $this->excel->getActiveSheet()->SetCellValue('F' . $row, $bAmt);
 
                 $this->excel->getActiveSheet()->getColumnDimension('A')->setWidth(35);
                 $this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(35);
@@ -1618,9 +1624,9 @@ class Reports extends MY_Controller
                 $this->excel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
                 $this->excel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
                 $this->excel->getActiveSheet()->getColumnDimension('F')->setWidth(25);
-                $this->excel->getActiveSheet()->getColumnDimension('G')->setWidth(25);
-                $this->excel->getActiveSheet()->getColumnDimension('H')->setWidth(25);
-                $this->excel->getActiveSheet()->getColumnDimension('I')->setWidth(25);
+                // $this->excel->getActiveSheet()->getColumnDimension('G')->setWidth(25);
+                // $this->excel->getActiveSheet()->getColumnDimension('H')->setWidth(25);
+                // $this->excel->getActiveSheet()->getColumnDimension('I')->setWidth(25);
                 $this->excel->getDefaultStyle()->getAlignment()->setVertical('center');
                 $this->excel->getActiveSheet()->getStyle('C2:G' . $row)->getAlignment()->setWrapText(true);
                 $filename = 'products_report';
@@ -1632,11 +1638,19 @@ class Reports extends MY_Controller
         } else {
             $this->load->library('datatables');
             $this->datatables
+                // ->select($this->db->dbprefix('products') . '.code, ' . $this->db->dbprefix('products') . ".name,
+                // CONCAT(COALESCE( PCosts.purchasedQty, 0 ), '__', COALESCE( PCosts.totalPurchase, 0 )) as purchased,
+                // CONCAT(COALESCE( PSales.soldQty, 0 ), '__', COALESCE( PSales.totalSale, 0 )) as sold,
+                // (COALESCE( PSales.totalSale, 0 ) - COALESCE( PCosts.totalPurchase, 0 )) as Profit,
+                // CONCAT(COALESCE( PCosts.balacneQty, 0 ), '__', COALESCE( PCosts.balacneValue, 0 )) as balance, {$this->db->dbprefix('products')}.id as id", false)
+                // ->from('products')
+                // ->join($sp, 'products.id = PSales.product_id', 'left')
+                // ->join($pp, 'products.id = PCosts.product_id', 'left')
+                // ->where('products.type !=', 'combo')
+                // ->group_by('products.code');
                 ->select($this->db->dbprefix('products') . '.code, ' . $this->db->dbprefix('products') . ".name,
-                CONCAT(COALESCE( PCosts.purchasedQty, 0 ), '__', COALESCE( PCosts.totalPurchase, 0 )) as purchased,
                 CONCAT(COALESCE( PSales.soldQty, 0 ), '__', COALESCE( PSales.totalSale, 0 )) as sold,
-                (COALESCE( PSales.totalSale, 0 ) - COALESCE( PCosts.totalPurchase, 0 )) as Profit,
-                CONCAT(COALESCE( PCosts.balacneQty, 0 ), '__', COALESCE( PCosts.balacneValue, 0 )) as balance, {$this->db->dbprefix('products')}.id as id", false)
+                CONCAT(COALESCE( PCosts.balacneQty, 0 )) as balance, {$this->db->dbprefix('products')}.id as id", false)
                 ->from('products')
                 ->join($sp, 'products.id = PSales.product_id', 'left')
                 ->join($pp, 'products.id = PCosts.product_id', 'left')
@@ -2193,9 +2207,10 @@ class Reports extends MY_Controller
         } else {
             $this->load->library('datatables');
             $this->datatables
-                ->select('date, closed_at, CONCAT(' . $this->db->dbprefix('users') . ".first_name, ' ', " . $this->db->dbprefix('users') . ".last_name, '<br>', " . $this->db->dbprefix('users') . ".email) as user, cash_in_hand, CONCAT(total_cc_slips, ' (', total_cc_slips_submitted, ')'), CONCAT(total_cheques, ' (', total_cheques_submitted, ')'), CONCAT(total_cash, ' (', total_cash_submitted, ')'), note", false)
+                ->select('date, closed_at, CONCAT(' . $this->db->dbprefix('users') . ".first_name, ' ', " . $this->db->dbprefix('users') . ".last_name, '<br>', " . $this->db->dbprefix('users') . ".email) as user, CONCAT(" . $this->db->dbprefix('warehouses') . ".name) as warehouse ,cash_in_hand, CONCAT(total_cash, ' (', total_cash_submitted, ')'), note", false)
                 ->from('pos_register')
-                ->join('users', 'users.id=pos_register.user_id', 'left');
+            ->join('users', 'users.id=pos_register.user_id', 'left')
+            ->join('warehouses', 'warehouses.id=pos_register.warehouse_id', 'left');
 
             if ($user) {
                 $this->datatables->where('pos_register.user_id', $user);

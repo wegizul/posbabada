@@ -51,6 +51,11 @@ if ($this->input->post('cf6')) {
             v = x.split('__');
             return '(' + formatQuantity2(v[0]) + ') <strong>' + formatMoney(v[1]) + '</strong>';
         }
+
+        function spt(x) {
+            v = x.split('__');
+            return formatQuantity2(v[0]);
+        }
         oTable = $('#PrRData').dataTable({
             "aaSorting": [
                 [3, "desc"],
@@ -78,19 +83,20 @@ if ($this->input->post('cf6')) {
                 });
             },
             'fnRowCallback': function(nRow, aData, iDisplayIndex) {
-                nRow.id = aData[6];
+                nRow.id = aData[4];
                 nRow.className = "product_link2";
                 return nRow;
             },
             "aoColumns": [null, null, {
                 "mRender": spb
+                // },
+                // {
+                //     "mRender": spb
+                // }, {
+                //     "mRender": currencyFormat
             }, {
-                "mRender": spb
-            }, {
-                "mRender": currencyFormat
-            }, {
-                "mRender": spb
-            }],
+                "mRender": spt
+            }, ],
             "fnFooterCallback": function(nRow, aaData, iStart, iEnd, aiDisplay) {
                 var pq = 0,
                     sq = 0,
@@ -100,9 +106,12 @@ if ($this->input->post('cf6')) {
                     ba = 0,
                     pl = 0;
                 for (var i = 0; i < aaData.length; i++) {
-                    p = (aaData[aiDisplay[i]][2]).split('__');
-                    s = (aaData[aiDisplay[i]][3]).split('__');
-                    b = (aaData[aiDisplay[i]][5]).split('__');
+                    p = (aaData[aiDisplay[i]][1]).split('__');
+                    s = (aaData[aiDisplay[i]][2]).split('__');
+                    b = (aaData[aiDisplay[i]][3]).split('__');
+                    // p = (aaData[aiDisplay[i]][2]).split('__');
+                    // s = (aaData[aiDisplay[i]][3]).split('__');
+                    // b = (aaData[aiDisplay[i]][5]).split('__');
                     pq += parseFloat(p[0]);
                     pa += parseFloat(p[1]);
                     sq += parseFloat(s[0]);
@@ -112,10 +121,12 @@ if ($this->input->post('cf6')) {
                     pl += parseFloat(aaData[aiDisplay[i]][4]);
                 }
                 var nCells = nRow.getElementsByTagName('th');
-                nCells[2].innerHTML = '<div class="text-right">(' + formatQuantity2(pq) + ') ' + formatMoney(pa) + '</div>';
-                nCells[3].innerHTML = '<div class="text-right">(' + formatQuantity2(sq) + ') ' + formatMoney(sa) + '</div>';
-                nCells[4].innerHTML = currencyFormat(parseFloat(pl));
-                nCells[5].innerHTML = '<div class="text-right">(' + formatQuantity2(bq) + ') ' + formatMoney(ba) + '</div>';
+                nCells[2].innerHTML = '<div class="text-right">(' + formatQuantity2(sq) + ') ' + formatMoney(sa) + '</div>';
+                nCells[3].innerHTML = '<div class="text-right">' + formatQuantity2(bq) + '</div>';
+                // nCells[2].innerHTML = '<div class="text-right">(' + formatQuantity2(pq) + ') ' + formatMoney(pa) + '</div>';
+                // nCells[3].innerHTML = '<div class="text-right">(' + formatQuantity2(sq) + ') ' + formatMoney(sa) + '</div>';
+                // nCells[4].innerHTML = currencyFormat(parseFloat(pl));
+                // nCells[5].innerHTML = '<div class="text-right">(' + formatQuantity2(bq) + ') ' + formatMoney(ba) + '</div>';
             }
         }).fnSetFilteringDelay().dtFilter([{
                 column_number: 0,
@@ -248,11 +259,11 @@ if ($this->input->post('cf6')) {
                         <i class="icon fa fa-file-excel-o"></i>
                     </a>
                 </li>
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                     <a href="#" id="image" class="tip" title="<?= lang('save_image') ?>">
                         <i class="icon fa fa-file-picture-o"></i>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -405,23 +416,23 @@ if ($this->input->post('cf6')) {
                                 <th><?= lang('product_code'); ?></th>
                                 <th><?= lang('product_name'); ?></th>
                                 <!-- <th><?= lang('purchased'); ?></th> -->
-                                <th><?= lang('sold'); ?></th>
-                                <th><?= lang('profit_loss'); ?></th>
-                                <th><?= lang('stock_in_hand'); ?></th>
+                                <th>Terjual (Qty) Harga</th>
+                                <!-- <th><?= lang('profit_loss'); ?></th> -->
+                                <th>Stok Akhir</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="6" class="dataTables_empty"><?= lang('loading_data_from_server') ?></td>
+                                <td colspan="4" class="dataTables_empty"><?= lang('loading_data_from_server') ?></td>
                             </tr>
                         </tbody>
                         <tfoot class="dtFilter">
                             <tr class="active">
                                 <th></th>
                                 <th></th>
-                                <th><?= lang('purchased'); ?></th>
+                                <!-- <th><?= lang('purchased'); ?></th> -->
                                 <th><?= lang('sold'); ?></th>
-                                <th><?= lang('profit_loss'); ?></th>
+                                <!-- <th><?= lang('profit_loss'); ?></th> -->
                                 <th><?= lang('stock_in_hand'); ?></th>
                             </tr>
                         </tfoot>

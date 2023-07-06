@@ -29,43 +29,86 @@ if ($this->input->post('end_date')) {
 
 ?>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         oTable = $('#dmpData').dataTable({
-            "aaSorting": [[0, "desc"]],
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "<?= lang('all') ?>"]],
+            "aaSorting": [
+                [0, "desc"]
+            ],
+            "aLengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "<?= lang('all') ?>"]
+            ],
             "iDisplayLength": <?= $Settings->rows_per_page ?>,
-            'bProcessing': true, 'bServerSide': true,
+            'bProcessing': true,
+            'bServerSide': true,
             'sAjaxSource': '<?= admin_url('reports/getAdjustmentReport/?v=1' . $v); ?>',
-            'fnServerData': function (sSource, aoData, fnCallback) {
+            'fnServerData': function(sSource, aoData, fnCallback) {
                 aoData.push({
                     "name": "<?= $this->security->get_csrf_token_name() ?>",
                     "value": "<?= $this->security->get_csrf_hash() ?>"
                 });
-                $.ajax({'dataType': 'json', 'type': 'POST', 'url': sSource, 'data': aoData, 'success': fnCallback});
+                $.ajax({
+                    'dataType': 'json',
+                    'type': 'POST',
+                    'url': sSource,
+                    'data': aoData,
+                    'success': fnCallback
+                });
             },
-            "aoColumns": [{"mRender": fld}, null, null, null, {"mRender": decode_html}, {"bSortable": false, "mRender": pqFormat}],
-            'fnRowCallback': function (nRow, aData, iDisplayIndex) {
+            "aoColumns": [{
+                "mRender": fld
+            }, null, null, null, {
+                "mRender": decode_html
+            }, {
+                "bSortable": false,
+                "mRender": pqFormat
+            }],
+            'fnRowCallback': function(nRow, aData, iDisplayIndex) {
                 nRow.id = aData[6];
                 nRow.className = "adjustment_link2";
                 return nRow;
             },
-        }).fnSetFilteringDelay().dtFilter([
-            {column_number: 0, filter_default_label: "[<?=lang('date');?> (yyyy-mm-dd)]", filter_type: "text", data: []},
-            {column_number: 1, filter_default_label: "[<?=lang('reference_no');?>]", filter_type: "text", data: []},
-            {column_number: 2, filter_default_label: "[<?=lang('warehouse');?>]", filter_type: "text", data: []},
-            {column_number: 3, filter_default_label: "[<?=lang('created_by');?>]", filter_type: "text", data: []},
-            {column_number: 4, filter_default_label: "[<?=lang(' note');?>]", filter_type: "text", data: []},
+        }).fnSetFilteringDelay().dtFilter([{
+                column_number: 0,
+                filter_default_label: "[<?= lang('date'); ?> (yyyy-mm-dd)]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 1,
+                filter_default_label: "[<?= lang('reference_no'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 2,
+                filter_default_label: "[<?= lang('warehouse'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 3,
+                filter_default_label: "[<?= lang('created_by'); ?>]",
+                filter_type: "text",
+                data: []
+            },
+            {
+                column_number: 4,
+                filter_default_label: "[<?= lang(' note'); ?>]",
+                filter_type: "text",
+                data: []
+            },
         ], "footer");
     });
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#form').hide();
-        $('.toggle_down').click(function () {
+        $('.toggle_down').click(function() {
             $("#form").slideDown();
             return false;
         });
-        $('.toggle_up').click(function () {
+        $('.toggle_up').click(function() {
             $("#form").slideUp();
             return false;
         });
@@ -75,10 +118,10 @@ if ($this->input->post('end_date')) {
 <div class="box">
     <div class="box-header">
         <h2 class="blue"><i class="fa-fw fa fa-filter"></i><?= lang('adjustments_report'); ?><?php
-            if ($this->input->post('start_date')) {
-                echo 'From ' . $this->input->post('start_date') . ' to ' . $this->input->post('end_date');
-            }
-            ?>
+                                                                                                if ($this->input->post('start_date')) {
+                                                                                                    echo 'From ' . $this->input->post('start_date') . ' to ' . $this->input->post('end_date');
+                                                                                                }
+                                                                                                ?>
         </h2>
         <div class="box-icon">
             <ul class="btn-tasks">
@@ -101,11 +144,11 @@ if ($this->input->post('end_date')) {
                         <i class="icon fa fa-file-excel-o"></i>
                     </a>
                 </li>
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                     <a href="#" id="image" class="tip" title="<?= lang('save_image') ?>">
                         <i class="icon fa fa-file-picture-o"></i>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -122,7 +165,7 @@ if ($this->input->post('end_date')) {
                             <div class="form-group">
                                 <?= lang('product', 'suggest_product'); ?>
                                 <?php echo form_input('sproduct', (isset($_POST['sproduct']) ? $_POST['sproduct'] : ''), 'class="form-control" id="suggest_product"'); ?>
-                                <input type="hidden" name="product" value="<?= isset($_POST['product']) ? $_POST['product'] : '' ?>" id="report_product_id"/>
+                                <input type="hidden" name="product" value="<?= isset($_POST['product']) ? $_POST['product'] : '' ?>" id="report_product_id" />
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -158,7 +201,7 @@ if ($this->input->post('end_date')) {
                             </div>
                         </div>
                         <?php if ($Settings->product_serial) {
-                                    ?>
+                        ?>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <?= lang('serial_no', 'serial'); ?>
@@ -166,7 +209,7 @@ if ($this->input->post('end_date')) {
                                 </div>
                             </div>
                         <?php
-                                } ?>
+                        } ?>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <?= lang('start_date', 'start_date'); ?>
@@ -181,8 +224,7 @@ if ($this->input->post('end_date')) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <div
-                            class="controls"> <?php echo form_submit('submit_report', $this->lang->line('submit'), 'class="btn btn-primary"'); ?> </div>
+                        <div class="controls"> <?php echo form_submit('submit_report', $this->lang->line('submit'), 'class="btn btn-primary"'); ?> </div>
                     </div>
                     <?php echo form_close(); ?>
 
@@ -192,25 +234,29 @@ if ($this->input->post('end_date')) {
                 <div class="table-responsive">
                     <table id="dmpData" class="table table-bordered table-condensed table-hover table-striped">
                         <thead>
-                        <tr>
-                            <th class="col-xs-2"><?= lang('date'); ?></th>
-                            <th class="col-xs-2"><?= lang('reference_no'); ?></th>
-                            <th class="col-xs-2"><?= lang('warehouse'); ?></th>
-                            <th class="col-xs-1"><?= lang('created_by'); ?></th>
-                            <th><?= lang('note'); ?></th>
-                            <th class="col-xs-2"><?= lang('products'); ?></th>
-                        </tr>
+                            <tr>
+                                <th class="col-xs-2"><?= lang('date'); ?></th>
+                                <th class="col-xs-2"><?= lang('reference_no'); ?></th>
+                                <th class="col-xs-2"><?= lang('warehouse'); ?></th>
+                                <th class="col-xs-1"><?= lang('created_by'); ?></th>
+                                <th><?= lang('note'); ?></th>
+                                <th class="col-xs-2"><?= lang('products'); ?></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td colspan="8" class="dataTables_empty"><?= lang('loading_data_from_server') ?></td>
-                        </tr>
+                            <tr>
+                                <td colspan="8" class="dataTables_empty"><?= lang('loading_data_from_server') ?></td>
+                            </tr>
                         </tbody>
                         <tfoot class="dtFilter">
-                        <tr class="active">
-                            <th></th><th></th><th></th><th></th><th></th>
-                            <th><?= lang('products'); ?></th>
-                        </tr>
+                            <tr class="active">
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th><?= lang('products'); ?></th>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -220,21 +266,21 @@ if ($this->input->post('end_date')) {
 </div>
 <script type="text/javascript" src="<?= $assets ?>js/html2canvas.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#pdf').click(function (event) {
+    $(document).ready(function() {
+        $('#pdf').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?=admin_url('reports/getAdjustmentReport/pdf/?v=1' . $v)?>";
+            window.location.href = "<?= admin_url('reports/getAdjustmentReport/pdf/?v=1' . $v) ?>";
             return false;
         });
-        $('#xls').click(function (event) {
+        $('#xls').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?=admin_url('reports/getAdjustmentReport/0/xls/?v=1' . $v)?>";
+            window.location.href = "<?= admin_url('reports/getAdjustmentReport/0/xls/?v=1' . $v) ?>";
             return false;
         });
-        $('#image').click(function (event) {
+        $('#image').click(function(event) {
             event.preventDefault();
             html2canvas($('.box'), {
-                onrendered: function (canvas) {
+                onrendered: function(canvas) {
                     openImg(canvas.toDataURL());
                 }
             });

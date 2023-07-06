@@ -66,25 +66,25 @@
         <div class="box-icon">
             <ul class="btn-tasks">
                 <?php if (!empty($warehouses) && !$this->session->userdata('warehouse_id')) {
-    ?>
+                ?>
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon fa fa-building-o tip" data-placement="left" title="<?=lang('warehouses')?>"></i></a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon fa fa-building-o tip" data-placement="left" title="<?= lang('warehouses') ?>"></i></a>
                         <ul class="dropdown-menu pull-right tasks-menus" role="menu" aria-labelledby="dLabel">
-                            <li><a href="<?=admin_url('reports/daily_sales/0/' . $year . '/' . $month)?>"><i class="fa fa-building-o"></i> <?=lang('all_warehouses')?></a></li>
+                            <li><a href="<?= admin_url('reports/daily_sales/0/' . $year . '/' . $month) ?>"><i class="fa fa-building-o"></i> <?= lang('all_warehouses') ?></a></li>
                             <li class="divider"></li>
                             <?php
-                                foreach ($warehouses as $warehouse) {
-                                    echo '<li><a href="' . admin_url('reports/daily_sales/' . $warehouse->id . '/' . $year . '/' . $month) . '"><i class="fa fa-building"></i>' . $warehouse->name . '</a></li>';
-                                } ?>
+                            foreach ($warehouses as $warehouse) {
+                                echo '<li><a href="' . admin_url('reports/daily_sales/' . $warehouse->id . '/' . $year . '/' . $month) . '"><i class="fa fa-building"></i>' . $warehouse->name . '</a></li>';
+                            } ?>
                         </ul>
                     </li>
                 <?php
-} ?>
-                <li class="dropdown">
+                } ?>
+                <!-- <li class="dropdown">
                     <a href="#" id="image" class="tip" title="<?= lang('save_image') ?>">
                         <i class="icon fa fa-file-picture-o"></i>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -102,25 +102,25 @@
 </div>
 <script type="text/javascript" src="<?= $assets ?>js/html2canvas.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('.table .day_num').click(function () {
+    $(document).ready(function() {
+        $('.table .day_num').click(function() {
             var day = $(this).html();
-            var date = '<?= $year . '-' . $month . '-'; ?>'+day;
-            var href = '<?= admin_url('reports/profit'); ?>/'+date+'/<?= ($warehouse_id ? $warehouse_id : ''); ?>';
-            $.get(href, function( data ) {
+            var date = '<?= $year . '-' . $month . '-'; ?>' + day;
+            var href = '<?= admin_url('reports/profit'); ?>/' + date + '/<?= ($warehouse_id ? $warehouse_id : ''); ?>';
+            $.get(href, function(data) {
                 $("#myModal").html(data).modal();
             });
 
         });
-        $('#pdf').click(function (event) {
+        $('#pdf').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?=admin_url('reports/daily_sales/' . ($warehouse_id ? $warehouse_id : 0) . '/' . $year . '/' . $month . '/pdf')?>";
+            window.location.href = "<?= admin_url('reports/daily_sales/' . ($warehouse_id ? $warehouse_id : 0) . '/' . $year . '/' . $month . '/pdf') ?>";
             return false;
         });
-        $('#image').click(function (event) {
+        $('#image').click(function(event) {
             event.preventDefault();
             html2canvas($('.box'), {
-                onrendered: function (canvas) {
+                onrendered: function(canvas) {
                     openImg(canvas.toDataURL());
                 }
             });
