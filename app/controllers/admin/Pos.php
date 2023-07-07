@@ -1166,6 +1166,7 @@ class Pos extends MY_Controller
             // $this->data['biller'] = $this->site->getCompanyByID($this->pos_settings->default_biller);
             $this->data['billers'] = $this->site->getAllCompanies('biller');
             $this->data['warehouses'] = $this->site->getAllWarehouses();
+            $this->data['warehouses_kasir'] = $this->pos_model->getWarehouseKasir($this->session->userdata('warehouse_id'));
             $this->data['tax_rates'] = $this->site->getAllTaxRates();
             $this->data['user'] = $this->site->getUser();
             $this->data['tcp'] = $this->pos_model->products_count($this->pos_settings->default_category);
