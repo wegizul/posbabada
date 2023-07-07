@@ -200,8 +200,8 @@ if ($this->input->post('end_date')) {
                                 ?>
                             </div>
                         </div>
-                        <?php if ($Settings->product_serial) {
-                        ?>
+                        <!-- <?php if ($Settings->product_serial) {
+                                ?>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <?= lang('serial_no', 'serial'); ?>
@@ -209,7 +209,7 @@ if ($this->input->post('end_date')) {
                                 </div>
                             </div>
                         <?php
-                        } ?>
+                                } ?> -->
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <?= lang('start_date', 'start_date'); ?>

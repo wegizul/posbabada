@@ -1018,6 +1018,15 @@ class Pos_model extends CI_Model
         return false;
     }
 
+    public function getWarehouseKasir($id)
+    {
+        $q = $this->db->get_where('warehouses', ['id' => $id], 1);
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+        return false;
+    }
+
     public function getTodayAuthorizeSales()
     {
         $date = date('Y-m-d 00:00:00');
