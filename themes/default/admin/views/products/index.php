@@ -15,6 +15,39 @@
     ?>#PRData td:nth-child(8) {
         text-align: right;
     }
+<?php } 
+?>
+    .scrollbar {
+  margin-left: 30px;
+  float: left;
+  height: 400px;
+  background: #fff;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+}
+.force-overflow {
+  min-height: 450px;
+}
+.scrollbar-warning::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+
+.scrollbar-warning::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.scrollbar-warning::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #FF8800;
+}
+
+.scrollbar-warning {
+  scrollbar-color: #FF8800 #F5F5F5;
+}
 
 </style>
 <script>
