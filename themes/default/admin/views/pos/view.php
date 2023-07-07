@@ -212,13 +212,12 @@
                                         }
                                         if (!empty($row->comment)) {
                                             echo '<tr><td colspan="2" class="no-border">' . $row->comment . '</td></tr>';
-                                        } 
-                                        if ($row->item_discount != 0) {
-                                            echo '<tr><td colspan="4" class="no-border">' . 'Disc ' .$row->product_name.' ( - ' . $this->sma->formatMoney($row->item_discount / $row->unit_quantity) .') </td></tr>';
                                         }
-                                       
-                                        $r++;
+                                        if ($row->item_discount != 0) {
+                                            echo '<tr><td colspan="4" class="no-border">' . 'Disc ' . $row->product_name . ' ( - ' . $this->sma->formatMoney($row->item_discount / $row->unit_quantity) . ') </td></tr>';
+                                        }
 
+                                        $r++;
                                     }
                                     if ($return_rows) {
                                         echo '<tr class="warning"><td colspan="100%" class="no-border"><strong>' . lang('returned_items') . '</strong></td></tr>';
@@ -248,13 +247,15 @@
                                         <th colspan="3"><?= lang('total'); ?></th>
                                         <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?></th>
                                     </tr>
+
                                     <?php
                                     // if ($inv->order_tax != 0) {
                                     //     echo '<tr><th colspan="3">' . lang('tax') . '</th><th class="text-right">' . $this->sma->formatMoney($return_sale ? ($inv->order_tax + $return_sale->order_tax) : $inv->order_tax) . '</th></tr>';
                                     // }
-                                    // print_r($inv);die();
-                                    if ($inv->order_discount == 0) {
-                                        echo '<tr><th colspan="3">' . lang('Total_Discount') . '</th><th class="text-right">' . '-' .$this->sma->formatMoney($inv->total_discount) . '</th></tr>';
+                                    // print_r($inv->product_discount);
+                                    // die();
+                                    if ($inv->product_discount != 0) {
+                                        echo '<tr><th colspan="3">' . lang('Total_Discount') . '</th><th class="text-right">' . '-' . $this->sma->formatMoney($inv->total_discount) . '</th></tr>';
                                     }
 
                                     if ($inv->shipping != 0) {
@@ -290,33 +291,33 @@
                                         </tr>
                                         <tr>
                                             <th colspan="3"><?= lang('grand_total'); ?></th>
-                                            <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?></th>
-                                            <!-- <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->grand_total + $inv->rounding) + $return_sale->grand_total) : ($inv->grand_total + $inv->rounding)); ?></th> -->
+                                            <!-- <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?></th> -->
+                                            <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->grand_total + $inv->rounding) + $return_sale->grand_total) : ($inv->grand_total + $inv->rounding)); ?></th>
                                         </tr>
                                     <?php
                                     } else {
                                     ?>
                                         <tr>
                                             <th colspan="3"><?= lang('grand_total'); ?></th>
-                                            <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?></th>
-                                            <!-- <th class="text-right"><?= $this->sma->formatMoney($return_sale ? ($inv->grand_total + $return_sale->grand_total) : $inv->grand_total); ?></th> -->
+                                            <!-- <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?></th> -->
+                                            <th class="text-right"><?= $this->sma->formatMoney($return_sale ? ($inv->grand_total + $return_sale->grand_total) : $inv->grand_total); ?></th>
                                         </tr>
                                     <?php
                                     }
                                     if ($inv->paid < ($inv->grand_total + $inv->rounding)) {
                                     ?>
                                         <tr>
-                                            <!-- <th><?= lang('paid_amount'); ?></th>
+                                            <th><?= lang('paid_amount'); ?></th>
                                             <th class="text-right"><?= $this->sma->formatMoney($return_sale ? ($inv->paid + $return_sale->paid) : $inv->paid); ?></th>
                                         </tr>
                                         <tr>
                                             <th><?= lang('due_amount'); ?></th>
                                             <th class="text-right"><?= $this->sma->formatMoney(($return_sale ? (($inv->grand_total + $inv->rounding) + $return_sale->grand_total) : ($inv->grand_total + $inv->rounding)) - ($return_sale ? ($inv->paid + $return_sale->paid) : $inv->paid)); ?></th>
-                                        </tr> -->
+                                        </tr>
                                     <?php
                                     } ?>
                                     <tr>
-                                        <td colspan="4"><?= ($row->item_tax != 0 ? ' [' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ' (10%) ' . $this->sma->formatMoney($return_sale ? ($inv->order_tax + $return_sale->order_tax) : $inv->order_tax) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') . ']' : '') ?></td>
+                                        <td colspan="4"><?= ($row->item_tax != 0 ? ' [' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ' (10%) ' . $this->sma->formatMoney($return_sale ? ($inv->product_tax + $return_sale->product_tax) : $inv->product_tax) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') . ']' : '') ?></td>
                                     </tr>
                                 </tfoot>
                             </table>

@@ -263,7 +263,8 @@
                                             'value' => $this->session->userdata('warehouse_id'),
                                         ];
 
-                                        echo form_input($warehouse_input);
+                                        // echo form_input($warehouse_input);
+                                        echo form_input('warehouse', $warehouses_kasir->id, 'class="form-control" id="poswarehouse" placeholder="' . $warehouses_kasir->name . '"');
                                     }
                                     ?>
                                     <div class="form-group" id="ui">

@@ -16,84 +16,14 @@
         text-align: right;
     }
 
-    .scrollbar {
-  margin-left: 150px;
-  float: left;
-  height: 600px;
-  background: #fff;
-  overflow-y: scroll;
-  margin-bottom: 60px;
-}
-
-.scrollbar-warning::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5F5;
-  border-radius: 10px;
-}
-
-.scrollbar-warning::-webkit-scrollbar {
-  width: 12px;
-  background-color: #F5F5F5;
-}
-
-.scrollbar-warning::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #FF8800;
-}
-
-.scrollbar-warning {
-  scrollbar-color: #FF8800 #F5F5F5;
-}
-
     <?php
     } ?>.scrollbar {
-        margin-left: 30px;
+        margin-left: 150px;
         float: left;
-        height: 700px;
+        height: 400px;
         background: #fff;
         overflow-y: scroll;
-        margin-bottom: 25px;
-    }
-
-    .force-overflow {
-        min-height: 450px;
-    }
-
-    .scrollbar-primary::-webkit-scrollbar {
-        width: 12px;
-        background-color: #F5F5F5;
-    }
-
-    .scrollbar-primary::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #4285F4;
-    }
-
-    .scrollbar-primary {
-        scrollbar-color: #4285F4 #F5F5F5;
-    }
-
-    .scrollbar-danger::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #F5F5F5;
-        border-radius: 10px;
-    }
-
-    .scrollbar-danger::-webkit-scrollbar {
-        width: 12px;
-        background-color: #F5F5F5;
-    }
-
-    .scrollbar-danger::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #ff3547;
-    }
-
-    .scrollbar-danger {
-        scrollbar-color: #ff3547 #F5F5F5;
+        margin-bottom: 60px;
     }
 
     .scrollbar-warning::-webkit-scrollbar-track {
@@ -115,90 +45,6 @@
 
     .scrollbar-warning {
         scrollbar-color: #FF8800 #F5F5F5;
-    }
-
-    .scrollbar-success::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #F5F5F5;
-        border-radius: 10px;
-    }
-
-    .scrollbar-success::-webkit-scrollbar {
-        width: 12px;
-        background-color: #F5F5F5;
-    }
-
-    .scrollbar-success::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #00C851;
-    }
-
-    .scrollbar-success {
-        scrollbar-color: #00C851 #F5F5F5;
-    }
-
-    .scrollbar-info::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #F5F5F5;
-        border-radius: 10px;
-    }
-
-    .scrollbar-info::-webkit-scrollbar {
-        width: 12px;
-        background-color: #F5F5F5;
-    }
-
-    .scrollbar-info::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #33b5e5;
-    }
-
-    .scrollbar-info {
-        scrollbar-color: #33b5e5 #F5F5F5;
-    }
-
-    .scrollbar-default::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #F5F5F5;
-        border-radius: 10px;
-    }
-
-    .scrollbar-default::-webkit-scrollbar {
-        width: 12px;
-        background-color: #F5F5F5;
-    }
-
-    .scrollbar-default::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #2BBBAD;
-    }
-
-    .scrollbar-default {
-        scrollbar-color: #2BBBAD #F5F5F5;
-    }
-
-    .scrollbar-secondary::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #F5F5F5;
-        border-radius: 10px;
-    }
-
-    .scrollbar-secondary::-webkit-scrollbar {
-        width: 12px;
-        background-color: #F5F5F5;
-    }
-
-    .scrollbar-secondary::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-        background-color: #aa66cc;
-    }
-
-    .scrollbar-secondary {
-        scrollbar-color: #aa66cc #F5F5F5;
     }
 </style>
 <script>
@@ -389,7 +235,7 @@
                 </li>
                 <?php if (!empty($warehouses)) {
                 ?>
-                    <li class="dropdown" >
+                    <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon fa fa-building-o tip" data-placement="left" title="<?= lang('warehouses') ?>"></i></a>
                         <ul class="dropdown-menu pull-right tasks-menus scrollbar scrollbar-warning" role="menu" aria-labelledby="dLabel">
                             <li><a href="<?= admin_url('products') ?>"><i class="fa fa-building-o"></i> <?= lang('all_warehouses') ?></a></li>
