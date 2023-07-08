@@ -256,15 +256,9 @@
                                         </div>
                                     <?php
                                     } else {
-                                        $warehouse_input = [
-                                            'type'  => 'hidden',
-                                            'name'  => 'warehouse',
-                                            'id'    => 'poswarehouse',
-                                            'value' => $this->session->userdata('warehouse_id'),
-                                        ];
-
-                                        // echo form_input($warehouse_input);
-                                        echo form_input('warehouse', $warehouses_kasir->id, 'class="form-control" id="poswarehouse" placeholder="' . $warehouses_kasir->name . '"');
+                                        echo "<select name='warehouse' id='poswarehouse' class='form-control' readonly>
+                                                <option value='" . $warehouses_kasir->id . "'>" . $warehouses_kasir->name . "</option>
+                                            </select>";
                                     }
                                     ?>
                                     <div class="form-group" id="ui">
@@ -1494,14 +1488,11 @@
             ?>
 
             $('#payment').click(function() {
-                <?php if ($sid) {
-                ?>
+                <?php if ($sid) { ?>
                     suspend = $('<span></span>');
                     suspend.html('<input type="hidden" name="delete_id" value="<?php echo $sid; ?>" />');
                     suspend.appendTo("#hidesuspend");
-                <?php
-                }
-                ?>
+                <?php } ?>
                 var twt = formatDecimal((total + invoice_tax) - order_discount + shipping);
                 if (count == 1) {
                     bootbox.alert('<?= lang('x_total'); ?>');
