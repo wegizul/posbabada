@@ -206,7 +206,7 @@
                                             echo '<tr><td colspan="100%" class="no-border"><strong>' . $row->category_name . '</strong></td></tr>';
                                         }
                                         echo '<tr><td colspan="2" class="no-border">#' . $r . ': &nbsp;&nbsp;' . product_name($row->product_name, ($printer ? $printer->char_per_line : null)) . ($row->variant ? ' (' . $row->variant . ')' : ''), ($row->serial_no ? '<br>' . $row->serial_no : '') . '</td>';
-                                        echo '<td class="no-border border-bottom">' . $this->sma->formatQuantity($row->unit_quantity) . ' x ' . ($row->item_discount != 0 ? $this->sma->formatMoney($row->unit_price + ($row->item_discount / $row->unit_quantity))  : $this->sma->formatMoney($row->unit_price)) . '</td><td class="no-border border-bottom text-right">' . $this->sma->formatMoney($row->subtotal) . '</td></tr>';
+                                        echo '<td class="no-border border-bottom">' . $this->sma->formatQuantity($row->unit_quantity) . ' x ' . ($row->item_discount != 0 ? $this->sma->formatMoney($row->unit_price + ($row->item_discount / $row->unit_quantity))  : $this->sma->formatMoney($row->unit_price)) . '</td><td class="no-border border-bottom text-right">' . ($row->item_discount != 0 ? $this->sma->formatMoney($row->unit_price + $row->item_discount)  : $this->sma->formatMoney($row->subtotal)) . '</td></tr>';
                                         if (!empty($row->second_name)) {
                                             echo '<tr><td colspan="2" class="no-border">' . $row->second_name . '</td></tr>';
                                         }
@@ -245,7 +245,7 @@
                                 <tfoot>
                                     <tr>
                                         <th colspan="3"><?= lang('total'); ?></th>
-                                        <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax)); ?></th>
+                                        <th class="text-right"><?= $this->sma->formatMoney($return_sale ? (($inv->total + $inv->product_tax) + ($return_sale->total + $return_sale->product_tax)) : ($inv->total + $inv->product_tax + $inv->total_discount)); ?></th>
                                     </tr>
 
                                     <?php
