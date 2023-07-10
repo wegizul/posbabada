@@ -88,7 +88,7 @@ if ($this->input->post('cf6')) {
                 return nRow;
             },
             "aoColumns": [null, null, {
-                "mRender": spb
+                "mRender": spt
                 // },
                 // {
                 //     "mRender": spb
@@ -121,7 +121,7 @@ if ($this->input->post('cf6')) {
                     pl += parseFloat(aaData[aiDisplay[i]][4]);
                 }
                 var nCells = nRow.getElementsByTagName('th');
-                nCells[2].innerHTML = '<div class="text-right">(' + formatQuantity2(sq) + ') ' + formatMoney(sa) + '</div>';
+                nCells[2].innerHTML = '<div class="text-right">' + formatQuantity2(sq) + '</div>';
                 nCells[3].innerHTML = '<div class="text-right">' + formatQuantity2(bq) + '</div>';
                 // nCells[2].innerHTML = '<div class="text-right">(' + formatQuantity2(pq) + ') ' + formatMoney(pa) + '</div>';
                 // nCells[3].innerHTML = '<div class="text-right">(' + formatQuantity2(sq) + ') ' + formatMoney(sa) + '</div>';
@@ -416,7 +416,7 @@ if ($this->input->post('cf6')) {
                                 <th><?= lang('product_code'); ?></th>
                                 <th><?= lang('product_name'); ?></th>
                                 <!-- <th><?= lang('purchased'); ?></th> -->
-                                <th>Terjual (Qty) Harga</th>
+                                <th>Terjual (Qty)</th>
                                 <!-- <th><?= lang('profit_loss'); ?></th> -->
                                 <th>Stok Akhir</th>
                             </tr>

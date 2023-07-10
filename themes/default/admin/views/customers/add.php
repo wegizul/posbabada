@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                    <label class="control-label" for="customer_group"><?php echo $this->lang->line('customer_group'); ?></label>
+                        <label class="control-label" for="customer_group"><?php echo $this->lang->line('customer_group'); ?></label>
                         <?php
                         foreach ($customer_groups as $customer_group) {
                             $cgs[$customer_group->id] = $customer_group->name;
@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group company">
-                        <?= lang('company', 'company'); ?>
+                        <b>No. Kartu *</b>
                         <?php echo form_input('company', '', 'class="form-control tip" id="company" data-bv-notempty="true"'); ?>
                     </div>
                     <div class="form-group person">
@@ -61,11 +61,11 @@
                 </div>-->
                     <div class="form-group">
                         <?= lang('email_address', 'email_address'); ?>
-                        <input type="email" name="email" class="form-control" required="required" id="email_address"/>
+                        <input type="email" name="email" class="form-control" required="required" id="email_address" />
                     </div>
                     <div class="form-group">
                         <?= lang('phone', 'phone'); ?>
-                        <input type="tel" name="phone" class="form-control" required="required" id="phone"/>
+                        <input type="tel" name="phone" class="form-control" required="required" id="phone" />
                     </div>
                     <div class="form-group">
                         <?= lang('address', 'address'); ?>
@@ -137,23 +137,26 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function (e) {
+    $(document).ready(function(e) {
         $('#add-customer-form').bootstrapValidator({
             feedbackIcons: {
                 valid: 'fa fa-check',
                 invalid: 'fa fa-times',
                 validating: 'fa fa-refresh'
-            }, excluded: [':disabled']
+            },
+            excluded: [':disabled']
         });
-        $('select.select').select2({minimumResultsForSearch: 7});
+        $('select.select').select2({
+            minimumResultsForSearch: 7
+        });
         fields = $('.modal-content').find('.form-control');
-        $.each(fields, function () {
+        $.each(fields, function() {
             var id = $(this).attr('id');
             var iname = $(this).attr('name');
             var iid = '#' + id;
             if (!!$(this).attr('data-bv-notempty') || !!$(this).attr('required')) {
                 $("label[for='" + id + "']").append(' *');
-                $(document).on('change', iid, function () {
+                $(document).on('change', iid, function() {
                     $('form[data-toggle="validator"]').bootstrapValidator('revalidateField', iname);
                 });
             }
