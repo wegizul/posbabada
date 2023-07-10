@@ -330,11 +330,10 @@
                                         echo '<td>' . 'Bayar' . ': ' . lang($payment->paid_by) . '</td>';
                                         echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
                                         echo '<td>' . 'Kembalian' . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance  + $inv->order_tax) : 0) . '</td>';
-                                    } elseif (($payment->paid_by == 'CC' || $payment->paid_by == 'ppp' || $payment->paid_by == 'stripe') && $payment->cc_no) {
-                                        echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
-                                        echo '<td>' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
-                                        echo '<td>' . lang('no') . ': ' . 'xxxx xxxx xxxx ' . substr($payment->cc_no, -4) . '</td>';
-                                        echo '<td>' . lang('name') . ': ' . $payment->cc_holder . '</td>';
+                                    } elseif (($payment->paid_by == 'Gofood' || $payment->paid_by == 'gofood') && $payment->pos_paid) {
+                                        echo '<td>' . 'Bayar' . ': ' . lang($payment->paid_by) . '</td>';
+                                        echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
+                                        echo '<td>' . 'Kembalian' . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance  + $inv->order_tax) : 0) . '</td>';
                                     } elseif ($payment->paid_by == 'Cheque' && $payment->cheque_no) {
                                         echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
                                         echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
@@ -360,14 +359,13 @@
                                     $payment->amount = (0 - $payment->amount);
                                     echo '<tr>';
                                     if (($payment->paid_by == 'cash' || $payment->paid_by == 'deposit') && $payment->pos_paid) {
-                                        echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
+                                        echo '<td>' . 'Bayar' . ': ' . lang($payment->paid_by) . '</td>';
                                         echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
-                                        echo '<td>' . lang('change') . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance) : 0) . '</td>';
-                                    } elseif (($payment->paid_by == 'CC' || $payment->paid_by == 'ppp' || $payment->paid_by == 'stripe') && $payment->cc_no) {
-                                        echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
-                                        echo '<td>' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
-                                        echo '<td>' . lang('no') . ': ' . 'xxxx xxxx xxxx ' . substr($payment->cc_no, -4) . '</td>';
-                                        echo '<td>' . lang('name') . ': ' . $payment->cc_holder . '</td>';
+                                        echo '<td>' . 'Kembalian' . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance  + $inv->order_tax) : 0) . '</td>';
+                                    } elseif (($payment->paid_by == 'Gofood')) {
+                                        echo '<td>' . 'Bayar' . ': ' . lang($payment->paid_by) . '</td>';
+                                        echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid == 0 ? $payment->amount : $payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';
+                                        echo '<td>' . 'Kembalian' . ': ' . ($payment->pos_balance > 0 ? $this->sma->formatMoney($payment->pos_balance  + $inv->order_tax) : 0) . '</td>';
                                     } elseif ($payment->paid_by == 'Cheque' && $payment->cheque_no) {
                                         echo '<td>' . lang('paid_by') . ': ' . lang($payment->paid_by) . '</td>';
                                         echo '<td colspan="2">' . lang('amount') . ': ' . $this->sma->formatMoney($payment->pos_paid) . ($payment->return_id ? ' (' . lang('returned') . ')' : '') . '</td>';

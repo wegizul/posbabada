@@ -341,10 +341,10 @@ class Sma
         $opts .= '
         <option value="cash"' . ($paid_by && 'cash' == $paid_by ? ' selected="selected"' : '') . '>' . lang('cash') . '</option>
         <option value="gift_card"' . ($paid_by && 'gift_card' == $paid_by ? ' selected="selected"' : '') . '>' . lang('gift_card') . '</option>
-        <option value=' . ($paid_by && 'CC' == $paid_by ? ' selected="selected"' : '') . '>' . 'GoFood' . '</option>
-        <option value=' . ($paid_by && 'CC' == $paid_by ? ' selected="selected"' : '') . '>' . 'OVO' . '</option>
-        <option value=' . ($paid_by && 'CC' == $paid_by ? ' selected="selected"' : '') . '>' . 'Shopee Pay' . '</option>
-        <option value=' . ($paid_by && 'CC' == $paid_by ? ' selected="selected"' : '') . '>' . 'Dana' . '</option>
+        <option value="gofood"' . ($paid_by && 'Gofood' == $paid_by ? ' selected="selected"' : '') . '>' . 'GoFood' . '</option>
+        <option value=' . ($paid_by && 'OVO' == $paid_by ? ' selected="selected"' : '') . '>' . 'OVO' . '</option>
+        <option value=' . ($paid_by && 'Shopee pay' == $paid_by ? ' selected="selected"' : '') . '>' . 'Shopee Pay' . '</option>
+        <option value=' . ($paid_by && 'Dana' == $paid_by ? ' selected="selected"' : '') . '>' . 'Dana' . '</option>
         <option value="Cheque"' . ($paid_by && 'Cheque' == $paid_by ? ' selected="selected"' : '') . '>' . lang('cheque') . '</option>
         <option value="other"' . ($paid_by && 'other' == $paid_by ? ' selected="selected"' : '') . '>' . lang('other') . '</option>';
         if (!$purchase) {
