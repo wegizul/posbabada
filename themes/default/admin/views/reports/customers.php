@@ -61,7 +61,7 @@
             }
         }).fnSetFilteringDelay().dtFilter([{
                 column_number: 0,
-                filter_default_label: "[<?= lang('company'); ?>]",
+                filter_default_label: "[No. Kartu]",
                 filter_type: "text",
                 data: []
             },
@@ -107,7 +107,7 @@
                     <table id="CusData" cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-condensed table-hover table-striped reports-table">
                         <thead>
                             <tr class="primary">
-                                <th><?= lang('company'); ?></th>
+                                <th>No. Kartu</th>
                                 <th><?= lang('name'); ?></th>
                                 <th><?= lang('phone'); ?></th>
                                 <th><?= lang('email_address'); ?></th>

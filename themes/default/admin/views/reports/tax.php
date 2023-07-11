@@ -525,11 +525,11 @@ if ($this->input->post('end_date')) {
                                 <i class="icon fa fa-file-excel-o"></i>
                             </a>
                         </li>
-                        <li class="dropdown">
+                        <!-- <li class="dropdown">
                             <a href="#" id="image1" class="tip" title="<?= lang('save_image') ?>">
                                 <i class="icon fa fa-file-picture-o"></i>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
