@@ -342,12 +342,12 @@
                                                             <span class="text"> <?= lang('add_product'); ?></span>
                                                         </a>
                                                     </li>
-                                                    <li id="products_import_csv">
+                                                    <!-- <li id="products_import_csv">
                                                         <a class="submenu" href="<?= admin_url('products/import_csv'); ?>">
                                                             <i class="ri-download-2-fill"></i>
                                                             <span class="text"> <?= lang('import_products'); ?></span>
                                                         </a>
-                                                    </li>
+                                                    </li> -->
                                                     <li id="products_quantity_adjustments">
                                                         <a class="submenu" href="<?= admin_url('products/quantity_adjustments'); ?>">
                                                             <i class="fa fa-filter"></i>
@@ -678,11 +678,11 @@
                                                             <i class="fa fa-building"></i><span class="text"> <?= lang('warehouse_stock'); ?></span>
                                                         </a>
                                                     </li>
-                                                    <li id="reports_best_sellers">
+                                                    <!-- <li id="reports_best_sellers">
                                                         <a href="<?= admin_url('reports/best_sellers') ?>">
                                                             <i class="fa fa-line-chart"></i><span class="text"> <?= lang('best_sellers'); ?></span>
                                                         </a>
-                                                    </li>
+                                                    </li> -->
                                                     <?php if (POS) {
                                                     ?>
                                                         <li id="reports_register">

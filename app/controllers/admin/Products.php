@@ -602,7 +602,7 @@ class Products extends MY_Controller
     {
         $this->sma->checkPermissions('adjustments', true);
         $this->form_validation->set_rules('warehouse', lang('warehouse'), 'required');
-
+        
         if (true == $this->form_validation->run()) {
             if ($this->Owner || $this->Admin) {
                 $date = $this->sma->fld($this->input->post('date'));
