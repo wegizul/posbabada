@@ -1257,6 +1257,7 @@ class Pos extends MY_Controller
                 'date'         => date('Y-m-d H:i:s'),
                 'cash_in_hand' => $this->input->post('cash_in_hand'),
                 'user_id'      => $this->session->userdata('user_id'),
+                'warehouse_id'      => $this->session->userdata('warehouse_id'),
                 'status'       => 'open',
             ];
         }
