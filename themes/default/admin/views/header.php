@@ -731,14 +731,14 @@
                                                             <i class="fa fa-calendar"></i><span class="text"> <?= lang('daily_sales'); ?></span>
                                                         </a>
                                                     </li>
-                                                    <!-- <li id="reports_monthly_sales">
-                                                        <a href="<?= admin_url('reports/monthly_sales') ?>">
-                                                            <i class="fa fa-calendar"></i><span class="text"> <?= lang('monthly_sales'); ?></span>
-                                                        </a>
-                                                    </li> -->
                                                     <li id="reports_sales">
                                                         <a href="<?= admin_url('reports/sales') ?>">
                                                             <i class="fa fa-heart"></i><span class="text"> <?= lang('sales_report'); ?></span>
+                                                        </a>
+                                                    </li>
+                                                    <li id="reports_monthly_sales">
+                                                        <a href="<?= admin_url('reports/toko_sales') ?>">
+                                                            <i class="fa fa-line-chart"></i><span class="text"> Laporan Penjualan Pertoko</span>
                                                         </a>
                                                     </li>
                                                     <li id="reports_payments">

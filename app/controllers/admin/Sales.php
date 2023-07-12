@@ -2466,7 +2466,16 @@ class Sales extends MY_Controller
                 $units    = $this->site->getUnitsByBUID($row->base_unit);
                 $tax_rate = $this->site->getTaxRateByID($row->tax_rate);
 
-                $pr[] = ['id' => sha1($c . $r), 'item_id' => $row->id, 'label' => $row->name . ' (' . $row->code . ')', 'category' => $row->category_id,
+                $ket = '';
+                if ($row->quantity < 5 && $row->quantity > 0) {
+                    $ket = "[Stok Hampir Habis " . $row->quantity . "]";
+                } else if ($row->quantity == 0) {
+                    $ket = "[Stok Habis]";
+                } else {
+                    $ket =  "[Stok " . $row->quantity . "]";
+                }
+                $pr[] = [
+                    'id' => sha1($c . $r), 'item_id' => $row->id, 'label' => $row->name . ' (' . $row->code . ') ' . $ket, 'category' => $row->category_id,
                     'row'     => $row, 'combo_items' => $combo_items, 'tax_rate' => $tax_rate, 'units' => $units, 'options' => $options, ];
                 $r++;
             }
