@@ -426,8 +426,14 @@ class Auth extends MY_Controller
     public function login($m = null)
     {
         if ($this->loggedIn) {
+            if ($this->ion_auth->in_group('owner')) {
             $this->session->set_flashdata('error', $this->session->flashdata('error'));
             admin_redirect('welcome');
+            }
+            if ($this->ion_auth->in_group('sales')) {
+                $this->session->set_flashdata('error', $this->session->flashdata('error'));
+                admin_redirect('admin/pos');
+            }
         }
         $this->data['title'] = lang('login');
 
@@ -455,7 +461,12 @@ class Auth extends MY_Controller
                 }
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 $referrer = ($this->session->userdata('requested_page') && 'admin' != $this->session->userdata('requested_page')) ? $this->session->userdata('requested_page') : 'welcome';
+                $referrer_pos = ($this->session->userdata('requested_page') && 'admin' != $this->session->userdata('requested_page')) ? $this->session->userdata('requested_page') : 'pos';
+                if ($this->ion_auth->in_group('owner')) {
                 admin_redirect($referrer);
+                } else {
+                    admin_redirect($referrer_pos);
+                }
             } else {
                 $this->session->set_flashdata('error', $this->ion_auth->errors());
                 admin_redirect('login');
