@@ -859,6 +859,111 @@ class Pos_model extends CI_Model
         return false;
     }
 
+    public function getRegisterDana($date, $user_id = null)
+    {
+        if (!$date) {
+            $date = $this->session->userdata('register_open_time');
+        }
+        if (!$user_id) {
+            $user_id = $this->session->userdata('user_id');
+        }
+        $this->db->select('COALESCE( grand_total, 0 ) AS total, SUM( COALESCE( amount, 0 ) ) AS paid', false)
+            ->join('sales', 'sales.id=payments.sale_id', 'left')
+            ->where('type', 'received')->where('payments.date >', $date)->where('paid_by', 'Dana');
+        $this->db->where('payments.created_by', $user_id)->group_by('payments.sale_id');
+
+        $qu = $this->db->get_compiled_select('payments');
+        $q  = $this->db->select('SUM(sp.total) as total, SUM(sp.paid) as paid')->from("({$qu}) sp")->get();
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+        return false;
+    }
+
+    public function getRegisterOvo($date, $user_id = null)
+    {
+        if (!$date) {
+            $date = $this->session->userdata('register_open_time');
+        }
+        if (!$user_id) {
+            $user_id = $this->session->userdata('user_id');
+        }
+        $this->db->select('COALESCE( grand_total, 0 ) AS total, SUM( COALESCE( amount, 0 ) ) AS paid', false)
+            ->join('sales', 'sales.id=payments.sale_id', 'left')
+            ->where('type', 'received')->where('payments.date >', $date)->where('paid_by', 'Ovo');
+        $this->db->where('payments.created_by', $user_id)->group_by('payments.sale_id');
+
+        $qu = $this->db->get_compiled_select('payments');
+        $q  = $this->db->select('SUM(sp.total) as total, SUM(sp.paid) as paid')->from("({$qu}) sp")->get();
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+        return false;
+    }
+
+    public function getRegisterGoFood($date, $user_id = null)
+    {
+        if (!$date) {
+            $date = $this->session->userdata('register_open_time');
+        }
+        if (!$user_id) {
+            $user_id = $this->session->userdata('user_id');
+        }
+        $this->db->select('COALESCE( grand_total, 0 ) AS total, SUM( COALESCE( amount, 0 ) ) AS paid', false)
+            ->join('sales', 'sales.id=payments.sale_id', 'left')
+            ->where('type', 'received')->where('payments.date >', $date)->where('paid_by', 'Gofood');
+        $this->db->where('payments.created_by', $user_id)->group_by('payments.sale_id');
+
+        $qu = $this->db->get_compiled_select('payments');
+        $q  = $this->db->select('SUM(sp.total) as total, SUM(sp.paid) as paid')->from("({$qu}) sp")->get();
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+        return false;
+    }
+
+    public function getRegisterQris($date, $user_id = null)
+    {
+        if (!$date) {
+            $date = $this->session->userdata('register_open_time');
+        }
+        if (!$user_id) {
+            $user_id = $this->session->userdata('user_id');
+        }
+        $this->db->select('COALESCE( grand_total, 0 ) AS total, SUM( COALESCE( amount, 0 ) ) AS paid', false)
+            ->join('sales', 'sales.id=payments.sale_id', 'left')
+            ->where('type', 'received')->where('payments.date >', $date)->where('paid_by', 'QRis');
+        $this->db->where('payments.created_by', $user_id)->group_by('payments.sale_id');
+
+        $qu = $this->db->get_compiled_select('payments');
+        $q  = $this->db->select('SUM(sp.total) as total, SUM(sp.paid) as paid')->from("({$qu}) sp")->get();
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+        return false;
+    }
+
+    public function getRegisterShopeePay($date, $user_id = null)
+    {
+        if (!$date) {
+            $date = $this->session->userdata('register_open_time');
+        }
+        if (!$user_id) {
+            $user_id = $this->session->userdata('user_id');
+        }
+        $this->db->select('COALESCE( grand_total, 0 ) AS total, SUM( COALESCE( amount, 0 ) ) AS paid', false)
+            ->join('sales', 'sales.id=payments.sale_id', 'left')
+            ->where('type', 'received')->where('payments.date >', $date)->where('paid_by', 'Shopee_pay');
+        $this->db->where('payments.created_by', $user_id)->group_by('payments.sale_id');
+
+        $qu = $this->db->get_compiled_select('payments');
+        $q  = $this->db->select('SUM(sp.total) as total, SUM(sp.paid) as paid')->from("({$qu}) sp")->get();
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+        return false;
+    }
+
     public function getRegisterPPPSales($date, $user_id = null)
     {
         if (!$date) {

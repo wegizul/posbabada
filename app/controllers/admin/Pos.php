@@ -363,6 +363,11 @@ class Pos extends MY_Controller
             $this->data['pppsales'] = $this->pos_model->getRegisterPPPSales($register_open_time, $user_id);
             $this->data['stripesales'] = $this->pos_model->getRegisterStripeSales($register_open_time, $user_id);
             $this->data['othersales'] = $this->pos_model->getRegisterOtherSales($register_open_time);
+            $this->data['dana'] = $this->pos_model->getRegisterDana($register_open_time, $user_id);
+            $this->data['ovo'] = $this->pos_model->getRegisterOvo($register_open_time, $user_id);
+            $this->data['shopee'] = $this->pos_model->getRegisterShopeePay($register_open_time, $user_id);
+            $this->data['gofood'] = $this->pos_model->getRegisterGoFood($register_open_time, $user_id);
+            $this->data['qris'] = $this->pos_model->getRegisterQris($register_open_time, $user_id);
             $this->data['authorizesales'] = $this->pos_model->getRegisterAuthorizeSales($register_open_time, $user_id);
             $this->data['totalsales'] = $this->pos_model->getRegisterSales($register_open_time, $user_id);
             $this->data['refunds'] = $this->pos_model->getRegisterRefunds($register_open_time, $user_id);
