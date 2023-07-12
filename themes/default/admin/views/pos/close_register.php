@@ -36,7 +36,7 @@
                         </h4>
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td style="border-bottom: 1px solid #EEE;">
                         <h4><?= lang('ch_sale'); ?>:</h4>
                     </td>
@@ -65,14 +65,54 @@
                             <span><?= $this->sma->formatMoney($gcsales->paid ? $gcsales->paid : '0.00') . ' (' . $this->sma->formatMoney($gcsales->total ? $gcsales->total : '0.00') . ')'; ?></span>
                         </h4>
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td style="border-bottom: 1px solid #EEE;">
-                        <h4><?= lang('other'); ?>:</h4>
+                        <h4>Pembayaran Dana :</h4>
                     </td>
                     <td style="text-align:right;border-bottom: 1px solid #EEE;">
                         <h4>
-                            <span><?= $this->sma->formatMoney($othersales->paid ? $othersales->paid : '0.00') . ' (' . $this->sma->formatMoney($othersales->total ? $othersales->total : '0.00') . ')'; ?></span>
+                            <span><?= $this->sma->formatMoney($dana->paid ? $dana->paid : '0.00') . ' (' . $this->sma->formatMoney($dana->total ? $dana->total : '0.00') . ')'; ?></span>
+                        </h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #EEE;">
+                        <h4>Pembayaran ShopeePay :</h4>
+                    </td>
+                    <td style="text-align:right;border-bottom: 1px solid #EEE;">
+                        <h4>
+                            <span><?= $this->sma->formatMoney($shopee->paid ? $shopee->paid : '0.00') . ' (' . $this->sma->formatMoney($shopee->total ? $shopee->total : '0.00') . ')'; ?></span>
+                        </h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #EEE;">
+                        <h4>Pembayaran GoFood :</h4>
+                    </td>
+                    <td style="text-align:right;border-bottom: 1px solid #EEE;">
+                        <h4>
+                            <span><?= $this->sma->formatMoney($gofood->paid ? $gofood->paid : '0.00') . ' (' . $this->sma->formatMoney($gofood->total ? $gofood->total : '0.00') . ')'; ?></span>
+                        </h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #EEE;">
+                        <h4>Pembayaran OVO :</h4>
+                    </td>
+                    <td style="text-align:right;border-bottom: 1px solid #EEE;">
+                        <h4>
+                            <span><?= $this->sma->formatMoney($ovo->paid ? $ovo->paid : '0.00') . ' (' . $this->sma->formatMoney($ovo->total ? $ovo->total : '0.00') . ')'; ?></span>
+                        </h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #EEE;">
+                        <h4>Pembayaran QRIS :</h4>
+                    </td>
+                    <td style="text-align:right;border-bottom: 1px solid #EEE;">
+                        <h4>
+                            <span><?= $this->sma->formatMoney($qris->paid ? $qris->paid : '0.00') . ' (' . $this->sma->formatMoney($qris->total ? $qris->total : '0.00') . ')'; ?></span>
                         </h4>
                     </td>
                 </tr>
@@ -189,12 +229,22 @@
                     <div class="form-group">
                         <?= lang('total_cash', 'total_cash_submitted'); ?>
                         <?= form_hidden('total_cash', $total_cash_amount); ?>
-                        <?= form_input('total_cash_submitted', ($_POST['total_cash_submitted'] ?? $total_cash_amount), 'class="form-control input-tip" id="total_cash_submitted" required="required" readonly'); ?>
+                        <?= form_input('total_cash_submitted', ($_POST['total_cash_submitted'] ?? $this->sma->formatMoney($total_cash_amount)), 'class="form-control input-tip" id="total_cash_submitted" required="required" readonly'); ?>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <?= lang('total_cheques', 'total_cheques_submitted'); ?>
                         <?= form_hidden('total_cheques', $chsales->total_cheques ?? 0); ?>
                         <?= form_input('total_cheques_submitted', ($_POST['total_cheques_submitted'] ?? $chsales->total_cheques ?? 0), 'class="form-control input-tip" id="total_cheques_submitted" required="required" readonly'); ?>
+                    </div> -->
+                    <div class="form-group">
+                        <b>Total Dana *</b>
+                        <?= form_hidden('total_dana', $dana->total ?? 0); ?>
+                        <?= form_input('total_dana_submitted', ($_POST['total_dana_submitted'] ?? $this->sma->formatMoney($dana->total) ?? 0), 'class="form-control input-tip" id="total_dana_submitted" required="required" readonly'); ?>
+                    </div>
+                    <div class="form-group">
+                        <b>Total ShopeePay *</b>
+                        <?= form_hidden('total_shopee', $shopee->total ?? 0); ?>
+                        <?= form_input('total_shopee_submitted', ($_POST['total_shopee_submitted'] ?? $this->sma->formatMoney($shopee->total) ?? 0), 'class="form-control input-tip" id="total_shopee_submitted" required="required" readonly'); ?>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -216,10 +266,25 @@
                         </div>
                     <?php
                     } ?>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <?= lang('total_cc_slips', 'total_cc_slips_submitted'); ?>
                         <?= form_hidden('total_cc_slips', $ccsales->total_cc_slips); ?>
                         <?= form_input('total_cc_slips_submitted', ($_POST['total_cc_slips_submitted'] ?? $ccsales->total_cc_slips ?? 0), 'class="form-control input-tip" id="total_cc_slips_submitted" required="required" readonly'); ?>
+                    </div> -->
+                    <div class="form-group">
+                        <b>Total GoFood *</b>
+                        <?= form_hidden('total_gofood', $gofood->total ?? 0); ?>
+                        <?= form_input('total_gofood_submitted', ($_POST['total_gofood_submitted'] ?? $this->sma->formatMoney($gofood->total) ?? 0), 'class="form-control input-tip" id="total_gofood_submitted" required="required" readonly'); ?>
+                    </div>
+                    <div class="form-group">
+                        <b>Total OVO *</b>
+                        <?= form_hidden('total_ovo', $ovo->total ?? 0); ?>
+                        <?= form_input('total_ovo_submitted', ($_POST['total_ovo_submitted'] ?? $this->sma->formatMoney($ovo->total) ?? 0), 'class="form-control input-tip" id="total_ovo_submitted" required="required" readonly'); ?>
+                    </div>
+                    <div class="form-group">
+                        <b>Total QRIS *</b>
+                        <?= form_hidden('total_qris', $qris->total ?? 0); ?>
+                        <?= form_input('total_qris_submitted', ($_POST['total_qris_submitted'] ?? $this->sma->formatMoney($qris->total) ?? 0), 'class="form-control input-tip" id="total_qris_submitted" required="required" readonly'); ?>
                     </div>
                 </div>
             </div>
