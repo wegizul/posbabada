@@ -134,19 +134,9 @@
                                 <i class="fa fa-th"></i>
                             </a>
                         </li>
-                        <li class="dropdown hidden-small">
-                            <a class="btn bdarkGreen pos-tip" id="register_details" title="<span><?= lang('register_details') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/register_details') ?>" data-toggle="modal" data-target="#myModal">
-                                <i class="fa fa-check-circle"></i>
-                            </a>
-                        </li>
                         <li class="dropdown">
                             <a class="btn borange pos-tip" id="close_register" title="<span><?= lang('close_register') ?></span>" data-placement="bottom" data-html="true" data-backdrop="static" href="<?= admin_url('pos/close_register') ?>" data-toggle="modal" data-target="#myModal">
                                 <i class="fa fa-times-circle"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown hidden-small">
-                            <a class="btn borange pos-tip" id="add_expense" title="<span><?= lang('add_expense') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('purchases/add_expense') ?>" data-toggle="modal" data-target="#myModal">
-                                <i class="fa fa-dollar"></i>
                             </a>
                         </li>
                         <?php if ($Owner) {
@@ -161,6 +151,16 @@
                         ?>
                         <?php if ($Owner || $Admin) {
                         ?>
+                            <li class="dropdown hidden-small">
+                                <a class="btn bdarkGreen pos-tip" id="register_details" title="<span><?= lang('register_details') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/register_details') ?>" data-toggle="modal" data-target="#myModal">
+                                    <i class="fa fa-check-circle"></i>
+                                </a>
+                            </li>
+                            <li class="dropdown hidden-small">
+                                <a class="btn borange pos-tip" id="add_expense" title="<span><?= lang('add_expense') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('purchases/add_expense') ?>" data-toggle="modal" data-target="#myModal">
+                                    <i class="fa fa-dollar"></i>
+                                </a>
+                            </li>
                             <li class="dropdown">
                                 <a class="btn bdarkGreen pos-tip" id="today_sale" title="<span><?= lang('today_sale') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/today_sale') ?>" data-toggle="modal" data-target="#myModal">
                                     <i class="fa fa-heart"></i>
@@ -358,10 +358,10 @@
                                         <div class="row">
                                             <div class="col-xs-4" style="padding: 0;">
                                                 <div class="btn-group-vertical btn-block">
-                                                    <button type="button" class="btn btn-warning btn-block btn-flat" id="suspend">
+                                                    <!-- <button type="button" class="btn btn-warning btn-block btn-flat" id="suspend">
                                                         <?= lang('suspend'); ?>
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger btn-block btn-flat" id="reset">
+                                                    </button> -->
+                                                    <button type="button" class="btn btn-danger btn-block btn-flat" id="reset" style="height:67px;">
                                                         <?= lang('cancel'); ?>
                                                     </button>
                                                 </div>
