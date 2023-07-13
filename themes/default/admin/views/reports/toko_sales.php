@@ -37,6 +37,9 @@ if ($this->input->post('end_date')) {
 
 <script>
     $(document).ready(function() {
+        function spt(x) {
+            return '<div class="text-right">' + formatQuantity2(x) + '</div>';
+        }
         oTable = $('#SlRData').dataTable({
             "aaSorting": [
                 [0, "desc"]
@@ -63,32 +66,26 @@ if ($this->input->post('end_date')) {
                 });
             },
             'fnRowCallback': function(nRow, aData, iDisplayIndex) {
-                nRow.id = aData[5];
-                nRow.className = (aData[5] > 0) ? "invoice_link2" : "invoice_link2 warning";
+                nRow.id = aData[3];
+                nRow.className = (aData[3] > 0) ? "invoice_link2" : "invoice_link2 warning";
                 return nRow;
             },
             "aoColumns": [null, {
                 "mRender": currencyFormat
             }, {
-                "mRender": currencyFormat
-            }, {
-                "mRender": currencyFormat
-            }, {
-                "mRender": row_status
+                "mRender": spt
             }],
             "fnFooterCallback": function(nRow, aaData, iStart, iEnd, aiDisplay) {
                 var gtotal = 0,
-                    paid = 0,
+                    items = 0,
                     balance = 0;
                 for (var i = 0; i < aaData.length; i++) {
                     gtotal += parseFloat(aaData[aiDisplay[i]][1]);
-                    paid += parseFloat(aaData[aiDisplay[i]][2]);
-                    balance += parseFloat(aaData[aiDisplay[i]][3]);
+                    items += parseFloat(aaData[aiDisplay[i]][2]);
                 }
                 var nCells = nRow.getElementsByTagName('th');
                 nCells[1].innerHTML = currencyFormat(parseFloat(gtotal));
-                nCells[2].innerHTML = currencyFormat(parseFloat(paid));
-                nCells[3].innerHTML = currencyFormat(parseFloat(balance));
+                nCells[2].innerHTML = '<div class="text-right">' + formatQuantity2(items) + '</div>';
             }
         }).fnSetFilteringDelay().dtFilter([{
             column_number: 1,
@@ -205,53 +202,9 @@ if ($this->input->post('end_date')) {
 
                 <div id="form">
 
-                    <?php echo admin_form_open('reports/sales', 'autocomplete="off"'); ?>
+                    <?php echo admin_form_open('reports/toko_sales', 'autocomplete="off"'); ?>
                     <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <?= lang('product', 'suggest_product'); ?>
-                                <?php echo form_input('sproduct', (isset($_POST['sproduct']) ? $_POST['sproduct'] : ''), 'class="form-control" id="suggest_product"'); ?>
-                                <input type="hidden" name="product" value="<?= isset($_POST['product']) ? $_POST['product'] : '' ?>" id="report_product_id" />
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label class="control-label" for="reference_no"><?= lang('reference_no'); ?></label>
-                                <?php echo form_input('reference_no', (isset($_POST['reference_no']) ? $_POST['reference_no'] : ''), 'class="form-control tip" id="reference_no"'); ?>
 
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label class="control-label" for="user"><?= lang('created_by'); ?></label>
-                                <?php
-                                $us[''] = lang('select') . ' ' . lang('user');
-                                foreach ($users as $user) {
-                                    $us[$user->id] = $user->first_name . ' ' . $user->last_name;
-                                }
-                                echo form_dropdown('user', $us, (isset($_POST['user']) ? $_POST['user'] : ''), 'class="form-control" id="user" data-placeholder="' . $this->lang->line('select') . ' ' . $this->lang->line('user') . '"');
-                                ?>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label class="control-label" for="customer"><?= lang('customer'); ?></label>
-                                <?php echo form_input('customer', (isset($_POST['customer']) ? $_POST['customer'] : ''), 'class="form-control" id="customer" data-placeholder="' . $this->lang->line('select') . ' ' . $this->lang->line('customer') . '"'); ?>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label class="control-label" for="biller"><?= lang('biller'); ?></label>
-                                <?php
-                                $bl[''] = lang('select') . ' ' . lang('biller');
-                                foreach ($billers as $biller) {
-                                    $bl[$biller->id] = $biller->company && $biller->company != '-' ? $biller->company : $biller->name;
-                                }
-                                echo form_dropdown('biller', $bl, (isset($_POST['biller']) ? $_POST['biller'] : ''), 'class="form-control" id="biller" data-placeholder="' . $this->lang->line('select') . ' ' . $this->lang->line('biller') . '"');
-                                ?>
-                            </div>
-                        </div>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="control-label" for="warehouse"><?= lang('warehouse'); ?></label>
@@ -264,16 +217,6 @@ if ($this->input->post('end_date')) {
                                 ?>
                             </div>
                         </div>
-                        <?php if ($Settings->product_serial) {
-                        ?>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <?= lang('serial_no', 'serial'); ?>
-                                    <?= form_input('serial', '', 'class="form-control tip" id="serial"'); ?>
-                                </div>
-                            </div>
-                        <?php
-                        } ?>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <?= lang('start_date', 'start_date'); ?>
@@ -299,11 +242,9 @@ if ($this->input->post('end_date')) {
                     <table id="SlRData" class="table table-bordered table-hover table-striped table-condensed reports-table">
                         <thead>
                             <tr>
-                                <th><?= lang('biller'); ?></th>
+                                <th>Toko</th>
                                 <th><?= lang('grand_total'); ?></th>
-                                <th><?= lang('paid'); ?></th>
-                                <th><?= lang('balance'); ?></th>
-                                <th><?= lang('payment_status'); ?></th>
+                                <th>Total Transaksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -315,9 +256,7 @@ if ($this->input->post('end_date')) {
                             <tr class="active">
                                 <th></th>
                                 <th><?= lang('grand_total'); ?></th>
-                                <th><?= lang('paid'); ?></th>
-                                <th><?= lang('balance'); ?></th>
-                                <th></th>
+                                <th>Total Transaksi</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -331,12 +270,12 @@ if ($this->input->post('end_date')) {
     $(document).ready(function() {
         $('#pdf').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?= admin_url('reports/getSalesReport/pdf/?v=1' . $v) ?>";
+            window.location.href = "<?= admin_url('reports/getSalesTokoReport/pdf/?v=1' . $v) ?>";
             return false;
         });
         $('#xls').click(function(event) {
             event.preventDefault();
-            window.location.href = "<?= admin_url('reports/getSalesReport/0/xls/?v=1' . $v) ?>";
+            window.location.href = "<?= admin_url('reports/getSalesTokoReport/0/xls/?v=1' . $v) ?>";
             return false;
         });
         $('#image').click(function(event) {
