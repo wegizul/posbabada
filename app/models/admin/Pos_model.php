@@ -1545,4 +1545,23 @@ class Pos_model extends CI_Model
         }
         return false;
     }
+
+    public function ambil_toko($user)
+    {
+        $this->db->from('users');
+        $this->db->where('id', $user);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    public function ambil_kacab($toko)
+    {
+        $this->db->from('users');
+        $this->db->where('warehouse_id', $toko);
+        $this->db->where('group_id', 8);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
 }
