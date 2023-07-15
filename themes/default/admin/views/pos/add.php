@@ -53,6 +53,7 @@
     </noscript>
 
     <div id="wrapper">
+        <?= $this->session->flashdata('error'); ?>
         <header id="header" class="navbar">
             <div class="container">
                 <a class="navbar-brand" href="<?= admin_url() ?>"><img src="<?= base_url('assets/uploads/logos/logo.png') ?>" width="150px"></a>
@@ -135,7 +136,8 @@
                             </a>
                         </li>
                         <li class="dropdown">
-                            <a class="btn borange pos-tip" id="close_register" title="<span><?= lang('close_register') ?></span>" data-placement="bottom" data-html="true" data-backdrop="static" href="<?= admin_url('pos/close_register') ?>" data-toggle="modal" data-target="#myModal">
+                            <a class="btn borange pos-tip" id="close_register" title="<span><?= lang('close_register') ?></span>" data-placement="bottom" data-html="true" data-backdrop="static" href="<?= admin_url('pos/close_register_ver') ?>" data-toggle="modal" data-target="#myModal">
+                                <!-- <a class="btn borange pos-tip" id="close_register" title="<span><?= lang('close_register') ?></span>" data-placement="bottom" data-html="true" data-backdrop="static" href="<?= admin_url('pos/close_register') ?>" data-toggle="modal" data-target="#myModal"> -->
                                 <i class="fa fa-times-circle"></i>
                             </a>
                         </li>

@@ -304,6 +304,59 @@ class Pos extends MY_Controller
         $this->sma->send_json(['res' => 0]);
     }
 
+    public function close_register_ver($user_id = null)
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        $pass = rand(1000, 5000);
+        $this->data['pass_cr'] = $pass;
+
+        $ambil_toko = $this->pos_model->ambil_toko($user_id);
+        $ambil_kacab = $this->pos_model->ambil_kacab($ambil_toko->warehouse_id);
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => $ambil_kacab->phone,
+                'message' => 'Password Close Register ' . $pass,
+                'countryCode' => '62',
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: qN-D8zeIRuJuk881jZDr' //change TOKEN to your actual token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        // echo $response;
+
+        $this->load->view($this->theme . 'pos/close_register_ver', $this->data);
+    }
+
+    public function close_register_process()
+    {
+        $user_id = $this->session->userdata('user_id');
+        $input_pass = $this->input->post('pass_cr');
+        $pass_asli = $this->input->post('pass_hiden');
+
+        if ($input_pass == $pass_asli) {
+            admin_redirect('pos/close_register');
+        } else {
+            $this->session->set_flashdata('error', "Password Salah !!");
+            admin_redirect('pos');
+        }
+    }
+
     public function close_register($user_id = null)
     {
         $this->sma->checkPermissions('index');
@@ -311,8 +364,8 @@ class Pos extends MY_Controller
             $user_id = $this->session->userdata('user_id');
         }
         $this->form_validation->set_rules('total_cash', lang('total_cash'), 'trim|required|numeric');
-        $this->form_validation->set_rules('total_cheques', lang('total_cheques'), 'trim|numeric');
-        $this->form_validation->set_rules('total_cc_slips', lang('total_cc_slips'), 'trim|numeric');
+        // $this->form_validation->set_rules('total_cheques', lang('total_cheques'), 'trim|numeric');
+        // $this->form_validation->set_rules('total_cc_slips', lang('total_cc_slips'), 'trim|numeric');
 
         if (true == $this->form_validation->run()) {
             if ($this->Owner || $this->Admin) {
@@ -328,7 +381,17 @@ class Pos extends MY_Controller
                 'total_cash'               => $this->input->post('total_cash'),
                 'total_cheques'            => $this->input->post('total_cheques'),
                 'total_cc_slips'           => $this->input->post('total_cc_slips'),
+                'total_dana'           => $this->input->post('total_dana'),
+                'total_ovo'           => $this->input->post('total_ovo'),
+                'total_gofood'           => $this->input->post('total_gofood'),
+                'total_shopee'           => $this->input->post('total_shopee'),
+                'total_qris'           => $this->input->post('total_qris'),
                 'total_cash_submitted'     => $this->input->post('total_cash_submitted'),
+                'total_dana_submitted'     => $this->input->post('total_dana_submitted'),
+                'total_ovo_submitted'     => $this->input->post('total_ovo_submitted'),
+                'total_gofood_submitted'     => $this->input->post('total_gofood_submitted'),
+                'total_shopee_submitted'     => $this->input->post('total_shopee_submitted'),
+                'total_qris_submitted'     => $this->input->post('total_qris_submitted'),
                 'total_cheques_submitted'  => $this->input->post('total_cheques_submitted'),
                 'total_cc_slips_submitted' => $this->input->post('total_cc_slips_submitted'),
                 'note'                     => $this->input->post('note'),
