@@ -426,13 +426,16 @@ class Auth extends MY_Controller
     public function login($m = null)
     {
         if ($this->loggedIn) {
-            if ($this->ion_auth->in_group('owner')) {
-            $this->session->set_flashdata('error', $this->session->flashdata('error'));
-            admin_redirect('welcome');
-            }
+            // if ($this->ion_auth->in_group('owner')) {
+            // $this->session->set_flashdata('error', $this->session->flashdata('error'));
+            // admin_redirect('welcome');
+            // }
             if ($this->ion_auth->in_group('sales')) {
                 $this->session->set_flashdata('error', $this->session->flashdata('error'));
                 admin_redirect('admin/pos');
+            } else {
+                $this->session->set_flashdata('error', $this->session->flashdata('error'));
+                admin_redirect('welcome');
             }
         }
         $this->data['title'] = lang('login');
