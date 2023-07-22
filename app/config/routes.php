@@ -41,7 +41,8 @@ $route['activate/(:any)/(:any)'] = 'main/activate/$1/$2';
 $route['reset_password/(:any)']  = 'main/reset_password/$1';
 
 // Admin area routes
-$route['admin']                      = 'admin/welcome';
+$route['admin/landing']              = 'admin/auth/landing';
+$route['admin']                      = 'admin/Welcome';
 $route['admin/users']                = 'admin/auth/users';
 $route['admin/users/create_user']    = 'admin/auth/create_user';
 $route['admin/users/profile/(:num)'] = 'admin/auth/profile/$1';
