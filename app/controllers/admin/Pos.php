@@ -308,44 +308,14 @@ class Pos extends MY_Controller
     {
         $user_id = $this->session->userdata('user_id');
 
-        $pass = rand(1000, 5000);
-        $this->data['pass_cr'] = $pass;
-
         $ambil_toko = $this->pos_model->ambil_toko($user_id);
-        $ambil_kacab = $this->pos_model->ambil_kacab($ambil_toko->warehouse_id);
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => $ambil_kacab->phone,
-                'message' => 'Password Close Register ' . $pass,
-                'countryCode' => '62',
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: qN-D8zeIRuJuk881jZDr' //change TOKEN to your actual token
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        // echo $response;
+        $this->data['pass_cr'] = $ambil_toko->code;
 
         $this->load->view($this->theme . 'pos/close_register_ver', $this->data);
     }
 
     public function close_register_process()
     {
-        $user_id = $this->session->userdata('user_id');
         $input_pass = $this->input->post('pass_cr');
         $pass_asli = $this->input->post('pass_hiden');
 

@@ -1,5 +1,0 @@
-﻿Name;Code;Barcode Symbology;Brand;Category Code;Unit Code;Sale Unit Code; Purchase Unit Code;Cost;Price;Alert Quantity; Tax Rate Name;Tax Method;Image;Subcategory Code;Product Variants Separated by |;Custom Field 1;Custom Field 2;Custom Field 3;Custom Field 4;Custom Field 5;Custom Field 6;HSN Code;Secondary Name;Details;Invoice Details;Nama Toko;Qty;Supplier Price;Supplier 2 Name;Supplier 2 Part No;Supplier 2 Price;Supplier 3 Name;Supplier 3 Part No;Supplier 3 Price;Supplier 4 Name;Supplier 4 Part No;Supplier 4 Price;Supplier 5 Name;Supplier 5 Part No;Supplier 5 Price
-Hahaha;TPR-11;code128;Guess;C1;pcs;pcs;dozen;90;100;20;No Tax;exclusive;no_image.png;;;;;;;;;;;;;Rotte Bukit Barisan;150;;;;;;;;;;;;;
-Keripik Emak CW;102;;Barang Dagang;C2;bks;bks;;20000;5000;5;PB1@10%;inclusive;;;;;;;;;;;;;;Rotte Bukit Barisan;200;;;;;;;;;;;;;
-Keju Kraft Single 5 (Pcs);103;;Barang Dagang;C3;bks;bks;;13000;18000;5;PB1@10%;inclusive;;;;;;;;;;;;;;Rotte Bukit Barisan;300;;;;;;;;;;;;;
-Keripik Kentang Original;104;;Barang Dagang;C4;bks;bks;;20000;25000;5;PB1@10%;inclusive;;;;;;;;;;;;;;Rotte Bukit Barisan;100;;;;;;;;;;;;;

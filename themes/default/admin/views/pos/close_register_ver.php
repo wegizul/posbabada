@@ -14,7 +14,7 @@
         <div class="model-body" style="padding-bottom: 20px;">
             <div class="col-lg-12">
                 <?= form_hidden('pass_hiden', $pass_cr ?? 0); ?>
-                <?= form_input('pass_cr', '', 'class="form-control" id="pass_cr" required="required"'); ?>
+                <?= form_input('pass_cr', '', 'class="form-control" id="pass_cr" required="required" autocomplete="off"'); ?>
             </div>
         </div>
         <div class="modal-footer no-print" style="margin-top: 35px;">

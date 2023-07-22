@@ -539,6 +539,14 @@ class Auth extends MY_Controller
         admin_redirect('login/' . $m);
     }
 
+    public function landing()
+    {
+        $data = [
+            "title" => 'Landing Page',
+        ];
+        $this->load->view($this->theme . "auth/landing");
+    }
+
     public function profile($id = null)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group('owner') && $id != $this->session->userdata('user_id')) {
