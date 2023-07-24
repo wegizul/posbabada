@@ -25,7 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 
 // For quick cash buttons -  if you need to format the currency please do it according to you system settings
-$lang['quick_cash_notes'] = ['500', '1000', '2000', '5000', '10000', '20000', '50000'];
+$lang['quick_cash_notes'] = ['1000', '2000', '5000', '10000', '20000', '50000', '100000'];
 
 $lang['pos_module']                         = 'Modul POS';
 $lang['cat_limit']                          = 'Tampilkan Kategori';

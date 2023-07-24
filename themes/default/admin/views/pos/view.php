@@ -101,8 +101,8 @@
                         </div>
                         <div id="receipt-data">
                             <div class="text-center">
-                                <h3 style="text-transform:uppercase;"><?= $warehouse->company && $warehouse->company != '-' ? $warehouse->company : $warehouse->name; ?></h3>
-                                <?php echo $warehouse->address . ' ' . $warehouse->city . ' ' . $warehouse->postal_code . ' ' . $warehouse->state . ' ' . $warehouse->country;
+                                <h3 style="text-transform:uppercase;"><?= $biller->company && $biller->company != '-' ? $biller->company : $biller->name; ?></h3>
+                                <?php echo $biller->address . ' ' . $biller->city . ' ' . $biller->postal_code . ' ' . $biller->state;
 
                                 // // comment or remove these extra info if you don't need
                                 // if (!empty($biller->cf1) && $biller->cf1 != '-') {
