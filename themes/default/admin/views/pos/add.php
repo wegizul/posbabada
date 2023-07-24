@@ -360,10 +360,10 @@
                                         <div class="row">
                                             <div class="col-xs-4" style="padding: 0;">
                                                 <div class="btn-group-vertical btn-block">
-                                                    <!-- <button type="button" class="btn btn-warning btn-block btn-flat" id="suspend">
+                                                    <button type="button" class="btn btn-warning btn-block btn-flat" id="suspend">
                                                         <?= lang('suspend'); ?>
-                                                    </button> -->
-                                                    <button type="button" class="btn btn-danger btn-block btn-flat" id="reset" style="height:67px;">
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-block btn-flat" id="reset">
                                                         <?= lang('cancel'); ?>
                                                     </button>
                                                 </div>
