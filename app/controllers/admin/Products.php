@@ -457,6 +457,7 @@ class Products extends MY_Controller
             $this->data['count_id'] = $count_id;
             $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
             $this->data['warehouses'] = $this->site->getAllWarehouses();
+            $this->data['kategori'] = $this->site->getAllkategoriAdjustment();
             $bc = [['link' => base_url(), 'page' => lang('home')], ['link' => admin_url('products'), 'page' => lang('products')], ['link' => '#', 'page' => lang('add_adjustment')]];
             $meta = ['page_title' => lang('add_adjustment'), 'bc' => $bc];
             $this->page_construct('products/add_adjustment', $meta, $this->data);

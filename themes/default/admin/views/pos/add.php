@@ -40,6 +40,17 @@
     <?php
     }
     ?>
+    <style>
+        .blink_me {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -55,72 +66,81 @@
     <div id="wrapper">
         <?= $this->session->flashdata('error'); ?>
         <header id="header" class="navbar">
-            <div class="container">
-                <a class="navbar-brand" href="<?= admin_url() ?>"><img src="<?= base_url('assets/uploads/logos/logo.png') ?>" width="150px"></a>
+            <div class="container row">
+                <div class="col-lg-3">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <a class="navbar-brand" href="<?= admin_url() ?>"><img src="<?= base_url('assets/uploads/logos/logo.png') ?>" width="150px"></a>
+                        </div>
+                        <div class="col-lg-6" style="padding: 5px 5px 5px 15px;">
+                            <div class="bg-danger blink_me" style="font-size: 2vw; display:none" id="stok_alert"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="header-nav">
+                        <ul class="nav navbar-nav pull-right">
+                            <li class="dropdown">
+                                <a class="btn account dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <img alt="" src="<?= $this->session->userdata('avatar') ? base_url() . 'assets/uploads/avatars/thumbs/' . $this->session->userdata('avatar') : $assets . 'images/' . $this->session->userdata('gender') . '.png'; ?>" class="mini_avatar img-rounded">
 
-                <div class="header-nav">
-                    <ul class="nav navbar-nav pull-right">
-                        <li class="dropdown">
-                            <a class="btn account dropdown-toggle" data-toggle="dropdown" href="#">
-                                <img alt="" src="<?= $this->session->userdata('avatar') ? base_url() . 'assets/uploads/avatars/thumbs/' . $this->session->userdata('avatar') : $assets . 'images/' . $this->session->userdata('gender') . '.png'; ?>" class="mini_avatar img-rounded">
+                                    <div class="user hidden-small">
+                                        <span><?= lang('welcome') ?>! <?= $this->session->userdata('username'); ?></span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li>
+                                        <a href="<?= admin_url('auth/profile/' . $this->session->userdata('user_id')); ?>">
+                                            <i class="fa fa-user"></i> <?= lang('profile'); ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?= admin_url('auth/profile/' . $this->session->userdata('user_id') . '/#cpassword'); ?>">
+                                            <i class="fa fa-key"></i> <?= lang('change_password'); ?>
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="<?= admin_url('auth/logout'); ?>">
+                                            <i class="fa fa-sign-out"></i> <?= lang('logout'); ?>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
 
-                                <div class="user hidden-small">
-                                    <span><?= lang('welcome') ?>! <?= $this->session->userdata('username'); ?></span>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu pull-right">
-                                <li>
-                                    <a href="<?= admin_url('auth/profile/' . $this->session->userdata('user_id')); ?>">
-                                        <i class="fa fa-user"></i> <?= lang('profile'); ?>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?= admin_url('auth/profile/' . $this->session->userdata('user_id') . '/#cpassword'); ?>">
-                                        <i class="fa fa-key"></i> <?= lang('change_password'); ?>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="<?= admin_url('auth/logout'); ?>">
-                                        <i class="fa fa-sign-out"></i> <?= lang('logout'); ?>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <ul class="nav navbar-nav pull-right">
-                        <li class="dropdown">
-                            <a class="btn bblue pos-tip" title="<?= lang('dashboard') ?>" data-placement="bottom" href="<?= admin_url('welcome') ?>">
-                                <i class="fa fa-dashboard"></i>
-                            </a>
-                        </li>
-                        <?php if ($Owner) {
-                        ?>
-                            <li class="dropdown hidden-sm hidden-small">
-                                <a class="btn pos-tip" title="<?= lang('settings') ?>" data-placement="bottom" href="<?= admin_url('pos/settings') ?>">
-                                    <i class="fa fa-cogs"></i>
+                        <ul class="nav navbar-nav pull-right">
+                            <li class="dropdown">
+                                <a class="btn bblue pos-tip" title="<?= lang('dashboard') ?>" data-placement="bottom" href="<?= admin_url('welcome') ?>">
+                                    <i class="fa fa-dashboard"></i>
                                 </a>
                             </li>
-                        <?php
-                        }
-                        ?>
-                        <li class="dropdown hidden-xs hidden-small">
-                            <a class="btn pos-tip" title="<?= lang('calculator') ?>" data-placement="bottom" href="#" data-toggle="dropdown">
-                                <i class="fa fa-calculator"></i>
-                            </a>
-                            <ul class="dropdown-menu pull-right calc">
-                                <li class="dropdown-content">
-                                    <span id="inlineCalc"></span>
+                            <?php if ($Owner) {
+                            ?>
+                                <li class="dropdown hidden-sm hidden-small">
+                                    <a class="btn pos-tip" title="<?= lang('settings') ?>" data-placement="bottom" href="<?= admin_url('pos/settings') ?>">
+                                        <i class="fa fa-cogs"></i>
+                                    </a>
                                 </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown hidden-sm hidden-small">
-                            <a class="btn pos-tip" title="<?= lang('shortcuts') ?>" data-placement="bottom" href="#" data-toggle="modal" data-target="#sckModal">
-                                <i class="fa fa-key"></i>
-                            </a>
-                        </li>
-                        <!-- <li class="dropdown hidden-small">
+                            <?php
+                            }
+                            ?>
+                            <li class="dropdown hidden-xs hidden-small">
+                                <a class="btn pos-tip" title="<?= lang('calculator') ?>" data-placement="bottom" href="#" data-toggle="dropdown">
+                                    <i class="fa fa-calculator"></i>
+                                </a>
+                                <ul class="dropdown-menu pull-right calc">
+                                    <li class="dropdown-content">
+                                        <span id="inlineCalc"></span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown hidden-sm hidden-small">
+                                <a class="btn pos-tip" title="<?= lang('shortcuts') ?>" data-placement="bottom" href="#" data-toggle="modal" data-target="#sckModal">
+                                    <i class="fa fa-key"></i>
+                                </a>
+                            </li>
+                            <!-- <li class="dropdown hidden-small">
                             <a type="button" class="btn pos-tip" title="<?= lang('pole_display') ?>" data-placement="bottom" id="rfd-pole-connect">
                                 <i class="fa fa-play"></i>
                             </a>
@@ -130,64 +150,65 @@
                                 <i class="fa fa-laptop"></i>
                             </a>
                         </li> -->
-                        <li class="dropdown">
-                            <a class="btn blightOrange pos-tip" id="opened_bills" title="<span><?= lang('suspended_sales') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/opened_bills') ?>" data-toggle="ajax">
-                                <i class="fa fa-th"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a class="btn borange pos-tip" id="close_register" title="<span><?= lang('close_register') ?></span>" data-placement="bottom" data-html="true" data-backdrop="static" href="<?= admin_url('pos/close_register_ver') ?>" data-toggle="modal" data-target="#myModal">
-                                <!-- <a class="btn borange pos-tip" id="close_register" title="<span><?= lang('close_register') ?></span>" data-placement="bottom" data-html="true" data-backdrop="static" href="<?= admin_url('pos/close_register') ?>" data-toggle="modal" data-target="#myModal"> -->
-                                <i class="fa fa-times-circle"></i>
-                            </a>
-                        </li>
-                        <?php if ($Owner) {
-                        ?>
                             <li class="dropdown">
-                                <a class="btn bdarkGreen pos-tip" id="today_profit" title="<span><?= lang('today_profit') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('reports/profit') ?>" data-toggle="modal" data-target="#myModal">
-                                    <i class="fa fa-hourglass-half"></i>
-                                </a>
-                            </li>
-                        <?php
-                        }
-                        ?>
-                        <?php if ($Owner || $Admin) {
-                        ?>
-                            <li class="dropdown hidden-small">
-                                <a class="btn bdarkGreen pos-tip" id="register_details" title="<span><?= lang('register_details') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/register_details') ?>" data-toggle="modal" data-target="#myModal">
-                                    <i class="fa fa-check-circle"></i>
-                                </a>
-                            </li>
-                            <li class="dropdown hidden-small">
-                                <a class="btn borange pos-tip" id="add_expense" title="<span><?= lang('add_expense') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('purchases/add_expense') ?>" data-toggle="modal" data-target="#myModal">
-                                    <i class="fa fa-dollar"></i>
+                                <a class="btn blightOrange pos-tip" id="opened_bills" title="<span><?= lang('suspended_sales') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/opened_bills') ?>" data-toggle="ajax">
+                                    <i class="fa fa-th"></i>
                                 </a>
                             </li>
                             <li class="dropdown">
-                                <a class="btn bdarkGreen pos-tip" id="today_sale" title="<span><?= lang('today_sale') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/today_sale') ?>" data-toggle="modal" data-target="#myModal">
-                                    <i class="fa fa-heart"></i>
+                                <a class="btn borange pos-tip" id="close_register" title="<span><?= lang('close_register') ?></span>" data-placement="bottom" data-html="true" data-backdrop="static" href="<?= admin_url('pos/close_register_ver') ?>" data-toggle="modal" data-target="#myModal">
+                                    <!-- <a class="btn borange pos-tip" id="close_register" title="<span><?= lang('close_register') ?></span>" data-placement="bottom" data-html="true" data-backdrop="static" href="<?= admin_url('pos/close_register') ?>" data-toggle="modal" data-target="#myModal"> -->
+                                    <i class="fa fa-times-circle"></i>
                                 </a>
                             </li>
-                            <li class="dropdown hidden-xs">
-                                <a class="btn bblue pos-tip" title="<?= lang('list_open_registers') ?>" data-placement="bottom" href="<?= admin_url('pos/registers') ?>">
-                                    <i class="fa fa-list"></i>
-                                </a>
-                            </li>
-                            <li class="dropdown hidden-xs">
-                                <a class="btn bred pos-tip" title="<?= lang('clear_ls') ?>" data-placement="bottom" id="clearLS" href="#">
-                                    <i class="ri-delete-bin-2-line"></i>
-                                </a>
-                            </li>
-                        <?php
-                        }
-                        ?>
-                    </ul>
+                            <?php if ($Owner) {
+                            ?>
+                                <li class="dropdown">
+                                    <a class="btn bdarkGreen pos-tip" id="today_profit" title="<span><?= lang('today_profit') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('reports/profit') ?>" data-toggle="modal" data-target="#myModal">
+                                        <i class="fa fa-hourglass-half"></i>
+                                    </a>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                            <?php if ($Owner || $Admin) {
+                            ?>
+                                <li class="dropdown hidden-small">
+                                    <a class="btn bdarkGreen pos-tip" id="register_details" title="<span><?= lang('register_details') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/register_details') ?>" data-toggle="modal" data-target="#myModal">
+                                        <i class="fa fa-check-circle"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown hidden-small">
+                                    <a class="btn borange pos-tip" id="add_expense" title="<span><?= lang('add_expense') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('purchases/add_expense') ?>" data-toggle="modal" data-target="#myModal">
+                                        <i class="fa fa-dollar"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="btn bdarkGreen pos-tip" id="today_sale" title="<span><?= lang('today_sale') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/today_sale') ?>" data-toggle="modal" data-target="#myModal">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown hidden-xs">
+                                    <a class="btn bblue pos-tip" title="<?= lang('list_open_registers') ?>" data-placement="bottom" href="<?= admin_url('pos/registers') ?>">
+                                        <i class="fa fa-list"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown hidden-xs">
+                                    <a class="btn bred pos-tip" title="<?= lang('clear_ls') ?>" data-placement="bottom" id="clearLS" href="#">
+                                        <i class="ri-delete-bin-2-line"></i>
+                                    </a>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
 
-                    <ul class="nav navbar-nav pull-right hidden-smallest">
-                        <li class="dropdown">
-                            <a class="btn bblack" style="cursor: default;"><span id="display_time"></span></a>
-                        </li>
-                    </ul>
+                        <ul class="nav navbar-nav pull-right hidden-smallest">
+                            <li class="dropdown">
+                                <a class="btn bblack" style="cursor: default;"><span id="display_time"></span></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>
@@ -1728,6 +1749,7 @@
                 select: function(event, ui) {
                     event.preventDefault();
                     if (ui.item.id !== 0) {
+                        alert_qty(ui.item);
                         var row = add_invoice_item(ui.item);
                         var wh = $("#poswarehouse").val();
                         $.ajax({
@@ -1742,6 +1764,7 @@
                                 if (data) {
                                     data.free = true;
                                     data.parent = ui.item.row.id;
+                                    alert_qty(data);
                                     add_invoice_item(data);
                                 }
                                 $("#add_item").removeClass('ui-autocomplete-loading');
@@ -1789,6 +1812,7 @@
                     success: function(data) {
                         e.preventDefault();
                         if (data !== null) {
+                            alert_qty(data);
                             add_invoice_item(data);
                             var id = data.row.id;
                             $.ajax({
@@ -1803,6 +1827,7 @@
                                     if (data) {
                                         data.free = true;
                                         data.parent = id;
+                                        alert_qty(data);
                                         add_invoice_item(data);
                                     }
                                 }
@@ -2081,6 +2106,22 @@
                 }
             });
         });
+
+        function alert_qty(data) {
+            console.log("wkwk");
+            $('#stok_alert').hide();
+            var alert = data.row.alert_quantity;
+            var stok = data.row.quantity;
+            var jml = data.row.qty;
+            if (parseInt(alert) == 0) alert = 5;
+
+            var warning = 0;
+            var sisa_stok = stok - jml;
+            if (sisa_stok <= alert) {
+                $('#stok_alert').show();
+                $('#stok_alert').html('Sisa Stok ' + sisa_stok);
+            }
+        }
 
         $(document).ready(function() {
             $('#print_order').click(function() {

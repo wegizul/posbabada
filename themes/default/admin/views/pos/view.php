@@ -102,7 +102,7 @@
                         <div id="receipt-data">
                             <div class="text-center">
                                 <h3 style="text-transform:uppercase;"><?= $biller->company && $biller->company != '-' ? $biller->company : $biller->name; ?></h3>
-                                <?php echo $biller->address . ' ' . $biller->city . ' ' . $biller->postal_code . ' ' . $biller->state;
+                                <?php echo $biller->address . ' ' . $biller->city . ' ' . $biller->postal_code . ' ' . $biller->state . '<br> Tel: ' . $biller->phone . '<br> NPWP: ' . $biller->vat_no;
 
                                 // // comment or remove these extra info if you don't need
                                 // if (!empty($biller->cf1) && $biller->cf1 != '-') {

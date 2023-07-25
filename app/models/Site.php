@@ -442,6 +442,18 @@ class Site extends CI_Model
         return false;
     }
 
+    public function getAllkategoriAdjustment()
+    {
+        $q = $this->db->get('kategori_adjustment');
+        if ($q->num_rows() > 0) {
+            foreach (($q->result()) as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+    }
+
     public function getAttachments($id, $type)
     {
         return $this->db->get_where('attachments', ['subject_id' => $id, 'subject_type' => $type])->result();
