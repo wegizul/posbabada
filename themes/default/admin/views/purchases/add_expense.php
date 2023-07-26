@@ -19,7 +19,7 @@
                     <?= form_input('date', ($_POST['date'] ?? ''), 'class="form-control datetime" id="date" required="required"'); ?>
                 </div>
             <?php
-        } ?>
+            } ?>
 
             <div class="form-group">
                 <?= lang('reference', 'reference'); ?>
@@ -39,7 +39,8 @@
                 <?= form_dropdown('category', $ct, set_value('category'), 'class="form-control tip" id="category"'); ?>
             </div>
 
-            <div class="form-group">
+            <input type="hidden" name="warehouse" id="warehouse" class="form-control" value="<?= $this->session->userdata('warehouse_id') ?>">
+            <!-- <div class="form-group">
                 <?= lang('warehouse', 'warehouse'); ?>
                 <?php
                 $wh[''] = lang('select') . ' ' . lang('warehouse');
@@ -48,12 +49,11 @@
                 }
                 echo form_dropdown('warehouse', $wh, ($_POST['warehouse'] ?? ''), 'id="warehouse" class="form-control input-tip select" style="width:100%;" ');
                 ?>
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <?= lang('amount', 'amount'); ?>
-                <input name="amount" type="text" id="amount" value="" class="pa form-control kb-pad amount"
-                       required="required"/>
+                <input name="amount" type="text" id="amount" value="" class="pa form-control kb-pad amount" required="required" />
             </div>
 
             <div class="form-group">
@@ -75,12 +75,12 @@
 </div>
 <script type="text/javascript" src="<?= $assets ?>js/custom.js"></script>
 <script type="text/javascript" charset="UTF-8">
-    $.fn.datetimepicker.dates['sma'] = <?=$dp_lang?>;
+    $.fn.datetimepicker.dates['sma'] = <?= $dp_lang ?>;
 </script>
 <?= $modal_js ?>
 <script type="text/javascript" charset="UTF-8">
-    $(document).ready(function () {
-        $.fn.datetimepicker.dates['sma'] = <?=$dp_lang?>;
+    $(document).ready(function() {
+        $.fn.datetimepicker.dates['sma'] = <?= $dp_lang ?>;
         $("#date").datetimepicker({
             format: site.dateFormats.js_ldate,
             fontAwesome: true,
