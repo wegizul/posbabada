@@ -299,10 +299,20 @@ class Reports extends MY_Controller
     public function expenses($id = null)
     {
         $this->sma->checkPermissions();
+
         $this->data['error'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('error');
-        $this->data['warehouses'] = $this->site->getAllWarehouses();
-        $this->data['users'] = $this->reports_model->getStaff();
-        $this->data['categories'] = $this->reports_model->getExpenseCategories();
+        if ($this->Owner || $this->Admin || !$this->session->userdata('warehouse_id')) {
+            // $this->data['warehouses']   = $this->site->getAllWarehouses();
+            // $this->data['warehouse_id'] = $warehouse_id;
+            // $this->data['warehouse']    = $warehouse_id ? $this->site->getWarehouseByID($warehouse_id) : null;
+            $this->data['warehouses'] = $this->site->getAllWarehouses();
+            $this->data['users'] = $this->reports_model->getStaff();
+            $this->data['categories'] = $this->reports_model->getExpenseCategories();
+        } else {
+            $this->data['warehouse_id'] = $this->session->userdata('warehouse_id');
+            $this->data['warehouses']    = $this->session->userdata('warehouse_id') ? $this->site->getWarehouseByID($this->session->userdata('warehouse_id')) : null;
+        }
+        
         $bc = [['link' => base_url(), 'page' => lang('home')], ['link' => admin_url('reports'), 'page' => lang('reports')], ['link' => '#', 'page' => lang('expenses')]];
         $meta = ['page_title' => lang('expenses'), 'bc' => $bc];
         $this->page_construct('reports/expenses', $meta, $this->data);
@@ -600,6 +610,10 @@ class Reports extends MY_Controller
         }
         if (!$this->Owner && !$this->Admin && !$this->session->userdata('view_right')) {
             $user = $this->session->userdata('user_id');
+        }
+
+        if ($this->session->userdata('view_right')) {
+            $warehouse = $this->session->userdata('warehouse_id');
         }
 
         if ($pdf || $xls) {
@@ -1138,6 +1152,10 @@ class Reports extends MY_Controller
                 $this->db->where('created_by', $this->session->userdata('user_id'));
             }
 
+            if ($this->session->userdata('view_right')) {
+                $warehouse = $this->session->userdata('warehouse_id');
+            }
+
             if ($note) {
                 $this->db->like('note', $note, 'both');
             }
@@ -1217,6 +1235,10 @@ class Reports extends MY_Controller
 
             if (!$this->Owner && !$this->Admin && !$this->session->userdata('view_right')) {
                 $this->datatables->where('created_by', $this->session->userdata('user_id'));
+            }
+
+            if ($this->session->userdata('view_right')) {
+                $warehouse = $this->session->userdata('warehouse_id');
             }
 
             if ($note) {

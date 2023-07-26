@@ -1100,6 +1100,16 @@ class Purchases extends MY_Controller
         $this->sma->checkPermissions();
 
         $this->data['error'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('error');
+        if ($this->Owner || $this->Admin || !$this->session->userdata('warehouse_id')) {
+            $this->data['warehouses']   = $this->site->getAllWarehouses();
+            $this->data['warehouse_id'] = $warehouse_id;
+            $this->data['warehouse']    = $warehouse_id ? $this->site->getWarehouseByID($warehouse_id) : null;
+        } else {
+            $this->data['warehouses']   = null;
+            $this->data['warehouse_id'] = $this->session->userdata('warehouse_id');
+            $this->data['warehouse']    = $this->session->userdata('warehouse_id') ? $this->site->getWarehouseByID($this->session->userdata('warehouse_id')) : null;
+        }
+
         $bc                  = [['link' => base_url(), 'page' => lang('home')], ['link' => '#', 'page' => lang('expenses')]];
         $meta                = ['page_title' => lang('expenses'), 'bc' => $bc];
         $this->page_construct('purchases/expenses', $meta, $this->data);
@@ -1107,6 +1117,7 @@ class Purchases extends MY_Controller
 
     public function getExpenses()
     {
+        $warehouse = $this->session->userdata('warehouse_id');
         $this->sma->checkPermissions('expenses');
 
         $detail_link = anchor('admin/purchases/expense_note/$1', '<i class="fa fa-file-text-o"></i> ' . lang('expense_note'), 'data-toggle="modal" data-target="#myModal2"');
@@ -1137,6 +1148,10 @@ class Purchases extends MY_Controller
 
         if (!$this->Owner && !$this->Admin && !$this->session->userdata('view_right')) {
             $this->datatables->where('created_by', $this->session->userdata('user_id'));
+        }
+
+        if ($warehouse) {
+            $this->db->where('expenses.warehouse_id', $warehouse);
         }
         //$this->datatables->edit_column("attachment", $attachment_link, "attachment");
         $this->datatables->add_column('Actions', $action, 'id');
