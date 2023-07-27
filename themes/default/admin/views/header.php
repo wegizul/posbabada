@@ -39,32 +39,29 @@
             <div class="container">
                 <a class="navbar-brand" href="<?= admin_url() ?>"><img src="<?= base_url('assets/uploads/logos/logo.png') ?>" width="150px"></a>
 
-                <div class="btn-group visible-xs pull-right btn-visible-sm">
+                <div class="btn-group visible-sm pull-right btn-visible-sm">
                     <button class="navbar-toggle btn" type="button" data-toggle="collapse" data-target="#sidebar_menu">
-                        <span class="fa fa-bars"></span>
+                        <span class="fa fa-bars fa-lg"></span>
                     </button>
                     <?php if (SHOP) {
                     ?>
                         <a href="<?= site_url('/') ?>" class="btn">
-                            <span class="fa fa-shopping-cart"></span>
+                            <span class="fa fa-shopping-cart fa-lg"></span>
                         </a>
                     <?php
                     } ?>
                     <?php if (POS) {
                     ?>
                         <a href="<?= admin_url('pos') ?>" class="btn">
-                            <span class="fa fa-th-large"></span>
+                            <span class="fa fa-th-large fa-lg"></span>
                         </a>
                     <?php
                     } ?>
-                    <a href="<?= admin_url('calendar') ?>" class="btn">
-                        <span class="fa fa-calendar"></span>
-                    </a>
                     <a href="<?= admin_url('users/profile/' . $this->session->userdata('user_id')); ?>" class="btn">
-                        <span class="fa fa-user"></span>
+                        <span class="fa fa-user fa-lg"></span>
                     </a>
                     <a href="<?= admin_url('logout'); ?>" class="btn">
-                        <span class="fa fa-sign-out"></span>
+                        <span class="fa fa-sign-out fa-lg"></span>
                     </a>
                 </div>
                 <div class="header-nav">

@@ -2074,6 +2074,19 @@
                     $('#pos-sale-form').submit();
                 }
             });
+
+            $(document).on('submit', function() {
+                if (total_paid == 0 || total_paid < grand_total) {
+                    bootbox.alert("<?= lang('paid_l_t_payable'); ?>");
+                    return false;
+                } else {
+                    $('#pos_note').val(localStorage.getItem('posnote'));
+                    $('#staff_note').val(localStorage.getItem('staffnote'));
+                    $(this).text('<?= lang('loading'); ?>').attr('disabled', true);
+                    $('#pos-sale-form').submit();
+                }
+            });
+
             $('#suspend').click(function() {
                 if (count <= 1) {
                     bootbox.alert('<?= lang('x_suspend'); ?>');
