@@ -132,10 +132,10 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <?= lang('Kategori', 'Kategori'); ?>
-                                <select class="form-control" name="id_kategori" id="id_kategori">
+                                <select class="form-control" name="id_kategori" id="id_kategori" onChange="resetTable()">
                                     <option value=""></option>
                                     <?php foreach ($kategori as $kat) { ?>
-                                        <option value="<?= $kat->id_kategori ?>"><?= $kat->nama_kategori ?></option>
+                                        <option value="<?= $kat->id_kategori ?>" data-value="<?= $kat->tipe_kategori; ?>"><?= $kat->nama_kategori ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -249,3 +249,11 @@
         </div>
     </div>
 </div>
+<script>
+    function resetTable() {
+        localStorage.removeItem('qaitems');
+        qaitems = {};
+        $("#qaTable tbody").empty();
+        $("#qaTable tfoot").empty();
+    }
+</script>

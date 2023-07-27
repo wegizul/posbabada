@@ -346,6 +346,9 @@ class Products extends MY_Controller
             $warehouse_id = $this->input->post('warehouse');
             $note = $this->sma->clear_tags($this->input->post('note'));
 
+            $id_kategori = $this->input->post('id_kategori');
+            $nama_kategori = $this->site->getkategoriAdjustment($id_kategori); //ambil dari variabel kategori db
+
             $i = isset($_POST['product_id']) ? sizeof($_POST['product_id']) : 0;
             for ($r = 0; $r < $i; $r++) {
                 $product_id = $_POST['product_id'][$r];
@@ -400,6 +403,8 @@ class Products extends MY_Controller
                 'note'         => $note,
                 'created_by'   => $this->session->userdata('user_id'),
                 'count_id'     => $this->input->post('count_id') ? $this->input->post('count_id') : null,
+                'adj_id_kategori'  => $id_kategori,
+                'adj_nama_kategori'  => $nama_kategori ? $nama_kategori->nama_kategori : "",
             ];
 
             if ($_FILES['document']['size'] > 0) {
