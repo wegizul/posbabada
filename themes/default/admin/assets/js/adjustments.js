@@ -217,8 +217,9 @@ function add_adjustment_item(item) {
         return;
 
     var item_id = site.settings.item_addition == 1 ? item.item_id : item.id;
+    var typenya = $("#id_kategori option:selected").attr("data-value");
+    item.row.type = typenya;
     if (qaitems[item_id]) {
-
         var new_qty = parseFloat(qaitems[item_id].row.qty) + 1;
         qaitems[item_id].row.base_quantity = new_qty;
         if(qaitems[item_id].row.unit != qaitems[item_id].row.base_unit) {
