@@ -65,11 +65,11 @@ if ($this->input->post('end_date')) {
                     'success': fnCallback
                 });
             },
-            'fnRowCallback': function(nRow, aData, iDisplayIndex) {
-                nRow.id = aData[3];
-                nRow.className = (aData[3] > 0) ? "invoice_link2" : "invoice_link2 warning";
-                return nRow;
-            },
+            // 'fnRowCallback': function(nRow, aData, iDisplayIndex) {
+            //     nRow.id = aData[3];
+            //     nRow.className = (aData[3] > 0) ? "invoice_link2" : "invoice_link2 warning";
+            //     return nRow;
+            // },
             "aoColumns": [null, {
                 "mRender": currencyFormat
             }, {

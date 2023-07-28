@@ -10,7 +10,7 @@ class Welcome extends MY_Controller
 
         if (!$this->loggedIn) {
             $this->session->set_userdata('requested_page', $this->uri->uri_string());
-            admin_redirect('login');
+            admin_redirect('landing');
         }
 
         if ($this->Customer || $this->Supplier) {

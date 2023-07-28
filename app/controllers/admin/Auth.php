@@ -527,7 +527,7 @@ class Auth extends MY_Controller
                 $this->data['error'] = lang('we_are_sorry_as_this_sction_is_still_under_development.');
             }
 
-            $this->load->view($this->theme . 'auth/login', $this->data);
+            $this->load->view($this->theme . 'auth/landing', $this->data);
         }
     }
 
@@ -542,9 +542,9 @@ class Auth extends MY_Controller
     public function landing()
     {
         $data = [
-            "title" => 'Landing Page',
+            "title" => 'Dreampos | Landing Page',
         ];
-        $this->load->view($this->theme . "auth/landing");
+        $this->load->view($this->theme . "auth/landing", $data);
     }
 
     public function profile($id = null)

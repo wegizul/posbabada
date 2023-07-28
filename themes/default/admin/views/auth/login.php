@@ -77,7 +77,7 @@ foreach ($bgs as &$bg) {
         <div class="contents">
             <div class="text-center">
                 <?php if ($Settings->logo2) {
-                    echo '<img src="' . base_url('assets/uploads/logos/' . $Settings->logo2) . '" alt="' . $Settings->site_name . '" style="margin-bottom:10px;" />';
+                    echo '<a href="' . base_url() . '"><img src="' . base_url('assets/uploads/logos/' . $Settings->logo2) . '" alt="' . $Settings->site_name . '" style="margin-bottom:10px;" /></a>';
                 } ?>
             </div>
 
@@ -113,7 +113,7 @@ foreach ($bgs as &$bg) {
                             ?>
                             <?php echo admin_form_open('auth/login', 'class="login" data-toggle="validator"'); ?>
                             <div class="div-title col-sm-12">
-                                <h3 class="text-primary text-center" style="margin-bottom: 3px;">Assalamualaikum,</h3>
+                                <h3 class="text-primary text-center" style="margin: 5px 0px 3px 0px;">Assalamualaikum,</h3>
                                 <h3 class="text-primary text-center">silahkan login ke akun anda</h3>
                             </div>
                             <div class="col-sm-12">
