@@ -25,7 +25,8 @@
     <!-- Jquery -->
     <script type='text/javascript' src='<?= base_url() ?>assets/wdp/js/jquery.js'></script>
 
-    <link rel="icon" href="<?= base_url() ?>assets/img/logo.png">
+    <!-- <link rel="shortcut icon" href="<?= $assets ?>images/icon.png" /> -->
+    <link rel="icon" href="<?= base_url('themes/default/admin/assets/') ?>images/icon.png">
 
     <style type="text/css">
         #chart-container {
@@ -33,8 +34,6 @@
             height: auto;
         }
     </style>
-    <script type="text/javascript" src="<?= base_url() ?>assets/AdminLTE/plugins/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="<?= base_url() ?>assets/AdminLTE/plugins/chart.js/Chart.min.js"></script>
 
 </head>
 
@@ -48,13 +47,63 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="<?= base_url() ?>" style="margin-bottom:30px">
-                    <img src="<?= base_url() ?>assets/img/logo1.png" alt="" width="140px;">
+                    <img src="<?= base_url() ?>assets/uploads/logos/logo.png" alt="" width="140px;">
                 </a>
             </div>
             <div class="navbar-collapse collapse pull-right" id="mainMenu">
                 <ul id="menu-main-menu" class="nav navbar-nav">
-                    <li><a href="#top">Beranda</a></li>
-                    <li><a href="#">Login</a></li>
+                    <li><a href="<?= base_url() ?>">Beranda</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-sign-in"></i> Login
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <?php if ($Settings->mmode) {
+                            ?>
+                                <div class="alert alert-warning">
+                                    <button data-dismiss="alert" class="close" type="button">×</button>
+                                    <?= lang('site_offline') ?>
+                                </div>
+                            <?php
+                            }
+                            if ($error) {
+                            ?>
+                                <div class="alert alert-danger">
+                                    <button data-dismiss="alert" class="close" type="button">×</button>
+                                    <ul class="list-group"><?= $error; ?></ul>
+                                </div>
+                            <?php
+                            }
+                            if ($message) {
+                            ?>
+                                <div class="alert alert-success">
+                                    <button data-dismiss="alert" class="close" type="button">×</button>
+                                    <ul class="list-group"><?= $message; ?></ul>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                            <?php echo admin_form_open('auth/login', 'class="login" data-toggle="validator"'); ?>
+                            <div class="col-sm-12">
+                                <div class="textbox-wrap form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                        <input type="text" required="required" class="form-control" name="identity" placeholder="<?= lang('username') ?>" />
+                                    </div>
+                                </div>
+                                <div class="textbox-wrap form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                        <input type="password" required="required" class="form-control " name="password" placeholder="<?= lang('pw') ?>" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-action col-sm-12">
+                                <button type="submit" class="btn btn-success pull-right" style="margin-top: 0px;"><?= lang('login') ?> &nbsp; <i class="fa fa-sign-in"></i></button>
+                            </div>
+                            <?php echo form_close(); ?>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -62,34 +111,23 @@
 
     <!-- SECTION testimonials
 	================================================== -->
-    <section id="testimonials" class="parallax parallax-image dark-bg" style="background-color: #000000; background-image:url(assets/img/back4.jpg);">
+    <section id="testimonials" class="parallax parallax-image dark-bg" style="background-color: #000000; background-image:url(<?= base_url() ?>assets/uploads/promo/back1.JPG);">
         <div class="wrapsection">
-            <div class="overlay" style="background-color: #000000; opacity: 0.5;"></div>
+            <div class="overlay" style="background-color: #000000; opacity: 0.7;"></div>
             <div class="container">
                 <div class="parallax-content">
                     <div class="row">
                         <div id="wowtestimonials" class="owl-carousel owl-theme">
                             <div class="item wowshtestim">
                                 <div class="max80 text-center">
-                                    <img src="<?= base_url('assets/img/dbd1.png') ?>" width="600px" alt=""><br />
+                                    <img src="<?= base_url('assets/uploads/promo/promo3.jpeg') ?>" width="400px" alt=""><br />
                                 </div>
-                            </div><!-- /.item -->
+                            </div>
                             <div class="item wowshtestim">
                                 <div class="max80 text-center">
-                                    <img src="<?= base_url('assets/img/dbd2.jpeg') ?>" width="600px" alt=""><br />
+                                    <img src="<?= base_url('assets/uploads/promo/promo2.jpg') ?>" width="400px" alt=""><br />
                                 </div>
-                            </div><!-- /.item -->
-                            <div class="item wowshtestim">
-                                <div class="max80 text-center">
-                                    <img src="<?= base_url('assets/img/malaria1.jpeg') ?>" width="600px" alt=""><br />
-                                </div>
-                            </div><!-- /.item -->
-                            <div class="item wowshtestim">
-                                <div class="max80 text-center">
-                                    <img src="<?= base_url('assets/img/malaria2.jpg') ?>" width="600px" alt=""><br />
-                                </div>
-                            </div><!-- /.item -->
-
+                            </div>
                         </div><!-- /.wowcarouselanything -->
                     </div><!-- /.row -->
                 </div><!-- .parallax-content -->
