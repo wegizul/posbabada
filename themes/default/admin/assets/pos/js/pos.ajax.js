@@ -2245,7 +2245,8 @@ if (pos_settings.finalize_sale != '') {
         pos_settings.finalize_sale,
         function () {
             if ($('#paymentModal').is(':visible')) {
-                $('#submit-sale').click();
+                $('#submit-sale').focus();
+                $('#submit-sale').trigger('click');
             } else {
                 $('#payment').trigger('click');
             }

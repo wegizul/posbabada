@@ -2454,7 +2454,7 @@ class Reports extends MY_Controller
             }
             $si .= " GROUP BY {$this->db->dbprefix('sale_items')}.sale_id ) FSI";
             $this->db
-            ->select("biller, SUM(grand_total) as grand_total, SUM(total_items) as total_items, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
+            ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_items, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
             ->from('sales')
             ->join($si, 'FSI.sale_id=sales.id', 'left')
             ->join('warehouses', 'warehouses.id=sales.warehouse_id', 'left')
@@ -2547,12 +2547,12 @@ class Reports extends MY_Controller
             $si .= " GROUP BY {$this->db->dbprefix('sale_items')}.sale_id ) FSI";
             $this->load->library('datatables');
             $this->datatables
-                ->select("biller, SUM(grand_total) as grand_total, SUM(total_items) as total_items, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
+                ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_items, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
                 ->from('sales')
                 ->join($si, 'FSI.sale_id=sales.id', 'left')
             ->join('warehouses', 'warehouses.id=sales.warehouse_id', 'left')
             ->group_by('sales.warehouse_id');
-
+            
             if ($user) {
                 $this->datatables->where('sales.created_by', $user);
             }
@@ -2576,6 +2576,8 @@ class Reports extends MY_Controller
             }
             if ($start_date) {
                 $this->datatables->where($this->db->dbprefix('sales') . '.date BETWEEN "' . $start_date . '" and "' . $end_date . '"');
+            } else {
+                $this->datatables->where($this->db->dbprefix('sales') . '.date BETWEEN "' . date('Y-m-d 00:00:00') . '" and "' . date('Y-m-d 23:59:00') . '"');
             }
 
             echo $this->datatables->generate();

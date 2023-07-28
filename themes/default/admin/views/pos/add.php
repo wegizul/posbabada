@@ -1555,7 +1555,7 @@
             });
             $('#paymentModal').on('shown.bs.modal', function(e) {
                 $('#amount_1').focus().val(grand_total);
-                $('#amount_1').focus().val(0);
+                // $('#amount_1').focus().val(0);
                 $('#quick-payable').click();
             });
             var pi = 'amount_' + pa_no,
@@ -2064,18 +2064,6 @@
             });
 
             $(document).on('click', '#submit-sale', function() {
-                if (total_paid == 0 || total_paid < grand_total) {
-                    bootbox.alert("<?= lang('paid_l_t_payable'); ?>");
-                    return false;
-                } else {
-                    $('#pos_note').val(localStorage.getItem('posnote'));
-                    $('#staff_note').val(localStorage.getItem('staffnote'));
-                    $(this).text('<?= lang('loading'); ?>').attr('disabled', true);
-                    $('#pos-sale-form').submit();
-                }
-            });
-
-            $(document).on('submit', function() {
                 if (total_paid == 0 || total_paid < grand_total) {
                     bootbox.alert("<?= lang('paid_l_t_payable'); ?>");
                     return false;
