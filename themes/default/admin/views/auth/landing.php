@@ -1,3 +1,5 @@
+<?= $error = '';
+$message = ''; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,14 +60,7 @@
                             <i class="fa fa-sign-in"></i> Login
                         </a>
                         <ul class="dropdown-menu pull-right">
-                            <?php if ($Settings->mmode) {
-                            ?>
-                                <div class="alert alert-warning">
-                                    <button data-dismiss="alert" class="close" type="button">×</button>
-                                    <?= lang('site_offline') ?>
-                                </div>
                             <?php
-                            }
                             if ($error) {
                             ?>
                                 <div class="alert alert-danger">
@@ -120,12 +115,12 @@
                         <div id="wowtestimonials" class="owl-carousel owl-theme">
                             <div class="item wowshtestim">
                                 <div class="max80 text-center">
-                                    <img src="<?= base_url('assets/uploads/promo/promo3.jpeg') ?>" width="400px" alt=""><br />
+                                    <img src="<?= base_url('assets/uploads/promo/promo3.jpeg') ?>" width="600px" alt=""><br />
                                 </div>
                             </div>
                             <div class="item wowshtestim">
                                 <div class="max80 text-center">
-                                    <img src="<?= base_url('assets/uploads/promo/promo2.jpg') ?>" width="400px" alt=""><br />
+                                    <img src="<?= base_url('assets/uploads/promo/promo2.jpg') ?>" width="600px" alt=""><br />
                                 </div>
                             </div>
                         </div><!-- /.wowcarouselanything -->
