@@ -211,7 +211,7 @@
                         </li> -->
                         <?php if (($Owner || $Admin || $GP['reports-quantity_alerts'] || $GP['reports-expiry_alerts']) && ($qty_alert_num > 0 || $exp_alert_num > 0 || $shop_sale_alerts)) {
                         ?>
-                            <li class="dropdown hidden-sm">
+                            <!-- <li class="dropdown hidden-sm">
                                 <a class="btn blightOrange tip" title="<?= lang('alerts') ?>" data-placement="left" data-toggle="dropdown" href="#">
                                     <i class="fa fa-exclamation-triangle"></i>
                                     <span class="number bred black"><?= $qty_alert_num + (($Settings->product_expiry) ? $exp_alert_num : 0) + $shop_sale_alerts + $shop_payment_alerts; ?></span>
@@ -258,7 +258,7 @@
                                     <?php
                                     } ?>
                                 </ul>
-                            </li>
+                            </li> -->
                         <?php
                         } ?>
                         <?php if (POS) {

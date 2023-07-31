@@ -85,6 +85,11 @@
                         <i class="icon fa fa-file-picture-o"></i>
                     </a>
                 </li> -->
+                <li class="dropdown">
+                    <a href="#" id="xls" class="tip" title="<?= lang('download_xls') ?>">
+                        <i class="icon fa fa-file-excel-o"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -115,6 +120,11 @@
         $('#pdf').click(function(event) {
             event.preventDefault();
             window.location.href = "<?= admin_url('reports/daily_sales/' . ($warehouse_id ? $warehouse_id : 0) . '/' . $year . '/' . $month . '/pdf') ?>";
+            return false;
+        });
+        $('#xls').click(function(event) {
+            event.preventDefault();
+            window.location.href = "<?= admin_url('reports/daily_sales/' . ($warehouse_id ? $warehouse_id : 0) . '/' . $year . '/' . $month . '/xls') ?>";
             return false;
         });
         $('#image').click(function(event) {
