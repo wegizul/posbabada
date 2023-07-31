@@ -219,7 +219,7 @@ class Reports extends MY_Controller
         $this->page_construct('reports/daily_purchases', $meta, $this->data);
     }
 
-    public function daily_sales($warehouse_id = null, $year = null, $month = null, $pdf = null, $user_id = null)
+    public function daily_sales($warehouse_id = null, $year = null, $month = null, $xls = null, $user_id = null)
     {
         $this->sma->checkPermissions();
         if (!$this->Owner && !$this->Admin && $this->session->userdata('warehouse_id')) {
@@ -282,11 +282,71 @@ class Reports extends MY_Controller
         $this->data['calender'] = $this->calendar->generate($year, $month, $daily_sale);
         $this->data['year'] = $year;
         $this->data['month'] = $month;
-        if ($pdf) {
-            $html = $this->load->view($this->theme . 'reports/daily', $this->data, true);
-            $name = lang('daily_sales') . '_' . $year . '_' . $month . '.pdf';
-            $html = str_replace('<p class="introtext">' . lang('reports_calendar_text') . '</p>', '', $html);
-            $this->sma->generate_pdf($html, $name, null, null, null, null, null, 'L');
+        if ($xls) {
+            $this->db
+                ->select("DATE_FORMAT(date, '%d-%m-%Y') as date, SUM(grand_total) as total, COUNT(reference_no) as total_transaksi, SUM(total_discount) as diskon, SUM(product_tax) as pajak_produk, SUM(order_tax) as pajak_penjualan, SUM(shipping) as pengiriman", false)
+                ->from('sales')
+                ->join('warehouses', 'warehouses.id=sales.warehouse_id', 'left')
+                ->group_by('sales.date');
+
+            // if ($warehouse) {
+            //     $this->db->where('sales.warehouse_id', $warehouse);
+            // }
+
+            $q = $this->db->get();
+            if ($q->num_rows() > 0) {
+                foreach (($q->result()) as $row) {
+                    $data[] = $row;
+                }
+            } else {
+                $data = null;
+            }
+
+            if (!empty($data)) {
+                $this->load->library('excel');
+                $this->excel->setActiveSheetIndex(0);
+                $this->excel->getActiveSheet()->setTitle('Penjualan Harian');
+                $this->excel->getActiveSheet()->SetCellValue('C1', 'Laporan Penjualan Harian All Outlet');
+                $this->excel->getActiveSheet()->SetCellValue('A2', 'Tanggal');
+                $this->excel->getActiveSheet()->SetCellValue('B2', 'Diskon');
+                $this->excel->getActiveSheet()->SetCellValue('C2', 'Pengiriman');
+                $this->excel->getActiveSheet()->SetCellValue('D2', 'Pajak Produk');
+                $this->excel->getActiveSheet()->SetCellValue('E2', 'Pajak Penjualan');
+                $this->excel->getActiveSheet()->SetCellValue('F2', 'Total Transaksi');
+                $this->excel->getActiveSheet()->SetCellValue('G2', 'Total');
+
+                $row = 2;
+                $total_disc = 0;
+                $total_pjk = 0;
+                $total_tr = 0;
+                $total_pendapatan = 0;
+                foreach ($data as $data_row) {
+                    $this->excel->getActiveSheet()->SetCellValue('A' . $row, $data_row->date);
+                    $this->excel->getActiveSheet()->SetCellValue('B' . $row, $data_row->diskon);
+                    $this->excel->getActiveSheet()->SetCellValue('C' . $row, $data_row->pengiriman);
+                    $this->excel->getActiveSheet()->SetCellValue('D' . $row, $data_row->pajak_produk);
+                    $this->excel->getActiveSheet()->SetCellValue('E' . $row, $data_row->pajak_penjualan);
+                    $this->excel->getActiveSheet()->SetCellValue('F' . $row, $data_row->total_transaksi);
+                    $this->excel->getActiveSheet()->SetCellValue('G' . $row, $data_row->total);
+                    $total_disc += $data_row->diskon;
+                    $total_pjk += $data_row->pajak_produk;
+                    $total_tr += $data_row->total_transaksi;
+                    $total_pendapatan += $data_row->total;
+                    $row++;
+                }
+                $this->excel->getActiveSheet()->getStyle('B' . $row . ':G' . $row)->getBorders()
+                    ->getTop()->setBorderStyle('medium');
+                $this->excel->getActiveSheet()->SetCellValue('B' . $row, $total_disc);
+                $this->excel->getActiveSheet()->SetCellValue('D' . $row, $total_pjk);
+                $this->excel->getActiveSheet()->SetCellValue('F' . $row, $total_tr);
+                $this->excel->getActiveSheet()->SetCellValue('G' . $row, $total_pendapatan);
+
+                $filename = 'penjualan_harian_all_outlet';
+                $this->load->helper('excel');
+                create_excel($this->excel, $filename);
+            }
+            $this->session->set_flashdata('error', lang('nothing_found'));
+            redirect($_SERVER['HTTP_REFERER']);
         }
         $this->data['warehouses'] = $this->site->getAllWarehouses();
         $this->data['warehouse_id'] = $warehouse_id;
@@ -2483,6 +2543,8 @@ class Reports extends MY_Controller
             }
             if ($start_date) {
                 $this->db->where($this->db->dbprefix('sales') . '.date BETWEEN "' . $start_date . '" and "' . $end_date . '"');
+            } else {
+                $this->db->where($this->db->dbprefix('sales') . '.date BETWEEN "' . date('Y-m-d 00:00:00') . '" and "' . date('Y-m-d 23:59:00') . '"');
             }
 
             $q = $this->db->get();
