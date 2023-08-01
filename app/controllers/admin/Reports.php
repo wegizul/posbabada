@@ -304,12 +304,14 @@ class Reports extends MY_Controller
                 $data = null;
             }
 
+            $title = 'Laporan Penjualan Harian All Outlet';
             $warehouse = $this->site->getWarehouseByID($warehouse_id);
+            if ($warehouse) $title = 'Laporan Penjualan Harian ' . $warehouse->name;
             if (!empty($data)) {
                 $this->load->library('excel');
                 $this->excel->setActiveSheetIndex(0);
                 $this->excel->getActiveSheet()->setTitle('Penjualan Harian');
-                $this->excel->getActiveSheet()->SetCellValue('C1', $warehouse->name ? 'Laporan Penjualan Harian ' . $warehouse->name : 'Laporan Penjualan Harian All Outlet');
+                $this->excel->getActiveSheet()->SetCellValue('C1', $title);
                 $this->excel->getActiveSheet()->SetCellValue('A2', 'Tanggal');
                 $this->excel->getActiveSheet()->SetCellValue('B2', 'Diskon');
                 $this->excel->getActiveSheet()->SetCellValue('C2', 'Pengiriman');
@@ -1567,7 +1569,7 @@ class Reports extends MY_Controller
         $start_date = $this->input->get('start_date') ? $this->input->get('start_date') : null;
         $end_date = $this->input->get('end_date') ? $this->input->get('end_date') : null;
 
-        $pp = "( SELECT product_id, p.date as date, p.created_by as created_by, SUM(CASE WHEN pi.purchase_id IS NOT NULL THEN quantity ELSE 0 END) as purchasedQty, SUM(quantity_balance) as balacneQty, SUM( base_unit_cost * quantity_balance ) balacneValue, SUM( (CASE WHEN pi.purchase_id IS NOT NULL THEN (pi.subtotal) ELSE 0 END) ) totalPurchase from {$this->db->dbprefix('purchase_items')} pi LEFT JOIN {$this->db->dbprefix('purchases')} p on p.id = pi.purchase_id WHERE pi.status = 'received' ";
+        $pp = "( SELECT product_id, pi.date as date, p.created_by as created_by, SUM(CASE WHEN pi.purchase_id IS NOT NULL THEN quantity ELSE 0 END) as purchasedQty, SUM(quantity_balance) as balacneQty, SUM( base_unit_cost * quantity_balance ) balacneValue, SUM( (CASE WHEN pi.purchase_id IS NOT NULL THEN (pi.subtotal) ELSE 0 END) ) totalPurchase from {$this->db->dbprefix('purchase_items')} pi LEFT JOIN {$this->db->dbprefix('purchases')} p on p.id = pi.purchase_id WHERE pi.status = 'received' ";
         // WHERE p.status != 'pending' AND p.status != 'ordered'
         $sp = '( SELECT si.product_id, s.date as date, s.created_by as created_by, SUM(si.quantity) soldQty, SUM(si.quantity * si.sale_unit_price) totalSale from ' . $this->db->dbprefix('costing') . ' si JOIN ' . $this->db->dbprefix('sales') . ' s on s.id = si.sale_id ';
         // $sp = '( SELECT si.product_id, s.date as date, s.created_by as created_by, SUM(si.quantity) soldQty, SUM(si.subtotal) totalSale from ' . $this->db->dbprefix('sale_items') . ' si JOIN ' . $this->db->dbprefix('sales') . ' s on s.id = si.sale_id ';
@@ -1576,7 +1578,7 @@ class Reports extends MY_Controller
             if ($start_date) {
                 $start_date = $this->sma->fld($start_date);
                 $end_date = $end_date ? $this->sma->fld($end_date) : date('Y-m-d');
-                $pp .= " AND p.date >= '{$start_date}' AND p.date <= '{$end_date}' ";
+                $pp .= " AND pi.date >= '{$start_date}' AND pi.date <= '{$end_date}' ";
                 $sp .= " s.date >= '{$start_date}' AND s.date <= '{$end_date}' ";
             }
             if ($warehouse) {
