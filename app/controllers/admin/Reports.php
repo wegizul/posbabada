@@ -284,14 +284,16 @@ class Reports extends MY_Controller
         $this->data['month'] = $month;
         if ($xls) {
             $this->db
-                ->select("DATE_FORMAT(date, '%d-%m-%Y') as date, SUM(grand_total) as total, COUNT(reference_no) as total_transaksi, SUM(total_discount) as diskon, SUM(product_tax) as pajak_produk, SUM(order_tax) as pajak_penjualan, SUM(shipping) as pengiriman", false)
+                ->select("warehouse_id, name, DATE_FORMAT(date, '%d-%m-%Y') as date, SUM(grand_total) as total, COUNT(reference_no) as total_transaksi, SUM(total_discount) as diskon, SUM(product_tax) as pajak_produk, SUM(order_tax) as pajak_penjualan, SUM(shipping) as pengiriman", false)
                 ->from('sales')
                 ->join('warehouses', 'warehouses.id=sales.warehouse_id', 'left')
-                ->group_by('sales.date');
+            ->where("MONTH(date)", $month)
+            ->where("YEAR(date)", $year)
+            ->group_by("DATE(date)");
 
-            // if ($warehouse) {
-            //     $this->db->where('sales.warehouse_id', $warehouse);
-            // }
+            if ($warehouse_id) {
+                $this->db->where('sales.warehouse_id', $warehouse_id);
+            }
 
             $q = $this->db->get();
             if ($q->num_rows() > 0) {
@@ -302,11 +304,12 @@ class Reports extends MY_Controller
                 $data = null;
             }
 
+            $warehouse = $this->site->getWarehouseByID($warehouse_id);
             if (!empty($data)) {
                 $this->load->library('excel');
                 $this->excel->setActiveSheetIndex(0);
                 $this->excel->getActiveSheet()->setTitle('Penjualan Harian');
-                $this->excel->getActiveSheet()->SetCellValue('C1', 'Laporan Penjualan Harian All Outlet');
+                $this->excel->getActiveSheet()->SetCellValue('C1', $warehouse->name ? 'Laporan Penjualan Harian ' . $warehouse->name : 'Laporan Penjualan Harian All Outlet');
                 $this->excel->getActiveSheet()->SetCellValue('A2', 'Tanggal');
                 $this->excel->getActiveSheet()->SetCellValue('B2', 'Diskon');
                 $this->excel->getActiveSheet()->SetCellValue('C2', 'Pengiriman');
@@ -315,7 +318,7 @@ class Reports extends MY_Controller
                 $this->excel->getActiveSheet()->SetCellValue('F2', 'Total Transaksi');
                 $this->excel->getActiveSheet()->SetCellValue('G2', 'Total');
 
-                $row = 2;
+                $row = 3;
                 $total_disc = 0;
                 $total_pjk = 0;
                 $total_tr = 0;
