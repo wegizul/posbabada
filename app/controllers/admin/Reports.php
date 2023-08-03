@@ -1578,7 +1578,7 @@ class Reports extends MY_Controller
             if ($start_date) {
                 $start_date = $this->sma->fld($start_date);
                 $end_date = $end_date ? $this->sma->fld($end_date) : date('Y-m-d');
-                $pp .= " AND pi.date >= '{$start_date}' AND pi.date <= '{$end_date}' ";
+                // $pp .= " AND pi.date >= '{$start_date}' AND pi.date <= '{$end_date}' ";
                 $sp .= " s.date >= '{$start_date}' AND s.date <= '{$end_date}' ";
             }
             if ($warehouse) {
