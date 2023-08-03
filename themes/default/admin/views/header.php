@@ -527,6 +527,11 @@
                                                     </li>
                                                 </ul>
                                             </li>
+                                            <li class="mm_notifications">
+                                                <a class="submenu" href="<?= admin_url('notes'); ?>">
+                                                    <i class="fa fa-info-circle"></i><span class="text"> Pesan Kasir</span>
+                                                </a>
+                                            </li>
                                             <!-- <li class="mm_notifications">
                                                 <a class="submenu" href="<?= admin_url('notifications'); ?>">
                                                     <i class="fa fa-info-circle"></i><span class="text"> <?= lang('notifications'); ?></span>
