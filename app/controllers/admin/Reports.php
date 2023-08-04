@@ -346,7 +346,7 @@ class Reports extends MY_Controller
                 $this->excel->getActiveSheet()->SetCellValue('F' . $row, $total_tr);
                 $this->excel->getActiveSheet()->SetCellValue('G' . $row, $total_pendapatan);
 
-                $filename = 'penjualan_harian_all_outlet';
+                $filename = $warehouse ? 'penjualan_harian_' . $warehouse->name : 'penjualan_harian_all_outlet';
                 $this->load->helper('excel');
                 create_excel($this->excel, $filename);
             }
