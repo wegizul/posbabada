@@ -273,10 +273,15 @@
                         <ul class="dropdown-menu pull-right tasks-menus" role="menu" aria-labelledby="dLabel">
                             <li><a href="<?=admin_url('sales')?>"><i class="fa fa-building-o"></i> <?=lang('all_warehouses')?></a></li>
                             <li class="divider"></li>
-                            <?php
-                            foreach ($warehouses as $warehouse) {
-                                echo '<li><a href="' . admin_url('sales/' . $warehouse->id) . '"><i class="fa fa-building"></i>' . $warehouse->name . '</a></li>';
-                            } ?>
+                            <li>
+                                <select class="form-control" onChange="cari_toko(this.value)">
+                                    <option value="">Klik untuk mencari toko</option>
+                                    <?php
+                                    foreach ($warehouses as $warehouse) {
+                                        echo '<option value="' . $warehouse->id . '"><i class="fa fa-building"></i>' . $warehouse->name . '</option>';
+                                    } ?>
+                                </select>
+                            </li>
                         </ul>
                     </li>
                     <?php
@@ -360,3 +365,9 @@
     <?php
 }
 ?>
+
+<script type="text/javascript">
+    function cari_toko(toko) {
+        window.location.href = '<?= admin_url('sales'); ?>/' + toko;
+    }
+</script>

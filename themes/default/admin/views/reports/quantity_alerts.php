@@ -82,10 +82,15 @@
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            <?php
-                            foreach ($warehouses as $warehouse) {
-                                echo '<li ' . ($warehouse_id && $warehouse_id == $warehouse->id ? 'class="active"' : '') . '><a href="' . admin_url('reports/quantity_alerts/' . $warehouse->id) . '"><i class="fa fa-building"></i>' . $warehouse->name . '</a></li>';
-                            } ?>
+                            <li>
+                                <select class="form-control" onChange="cari_toko(this.value)">
+                                    <option value="">Klik untuk mencari toko</option>
+                                    <?php
+                                    foreach ($warehouses as $warehouse) {
+                                        echo '<option value="' . $warehouse->id . '"><i class="fa fa-building"></i>' . $warehouse->name . '</option>';
+                                    } ?>
+                                </select>
+                            </li>
                         </ul>
                     </li>
                 <?php
@@ -146,6 +151,9 @@
 </div>
 <script type="text/javascript" src="<?= $assets ?>js/html2canvas.min.js"></script>
 <script type="text/javascript">
+    function cari_toko(toko) {
+        window.location.href = '<?= admin_url('reports/quantity_alerts'); ?>/' + toko;
+    }
     $(document).ready(function() {
         $('#pdf').click(function(event) {
             event.preventDefault();

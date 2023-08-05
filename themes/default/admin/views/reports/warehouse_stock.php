@@ -1,13 +1,18 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <script src="<?= $assets; ?>js/hc/highcharts.js"></script>
 <script type="text/javascript">
-
-
-    $(function () {
-        Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+    $(function() {
+        Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
             return {
-                radialGradient: {cx: 0.5, cy: 0.3, r: 0.7},
-                stops: [[0, color], [1, Highcharts.Color(color).brighten(-0.3).get('rgb')]]
+                radialGradient: {
+                    cx: 0.5,
+                    cy: 0.3,
+                    r: 0.7
+                },
+                stops: [
+                    [0, color],
+                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')]
+                ]
             };
         });
         $('#chart').highcharts({
@@ -16,10 +21,14 @@
                 plotBorderWidth: null,
                 plotShadow: false
             },
-            title: {text: ''},
-            credits: {enabled: false},
+            title: {
+                text: ''
+            },
+            credits: {
+                enabled: false
+            },
             tooltip: {
-                formatter: function () {
+                formatter: function() {
                     return '<div class="tooltip-inner hc-tip" style="margin-bottom:0;">' + this.key + '<br><strong>' + currencyFormat(this.y) + '</strong> (' + formatNumber(this.percentage) + '%)';
                 },
                 followPointer: true,
@@ -27,13 +36,17 @@
                 borderWidth: 0,
                 shadow: false,
                 valueDecimals: site.settings.decimals,
-                style: {fontSize: '14px', padding: '0', color: '#000000'}
+                style: {
+                    fontSize: '14px',
+                    padding: '0',
+                    color: '#000000'
+                }
             },
             plotOptions: {
                 pie: {
                     dataLabels: {
                         enabled: true,
-                        formatter: function () {
+                        formatter: function() {
                             return '<h3 style="margin:-15px 0 0 0;"><b>' + this.point.name + '</b>:<br><b> ' + currencyFormat(this.y) + '</b></h3>';
                         },
                         useHTML: true
@@ -46,44 +59,42 @@
                 data: [
                     ['<?php echo $this->lang->line('stock_value_by_price'); ?>', <?php echo $stock->stock_by_price; ?>],
                     ['<?php echo $this->lang->line('stock_value_by_cost'); ?>', <?php echo $stock->stock_by_cost; ?>],
-                    ['<?php echo $this->lang->line('profit_estimate'); ?>', <?php echo($stock->stock_by_price - $stock->stock_by_cost); ?>],
+                    ['<?php echo $this->lang->line('profit_estimate'); ?>', <?php echo ($stock->stock_by_price - $stock->stock_by_cost); ?>],
                 ]
-
             }]
         });
-
     });
 </script>
 
 <?php if ($Owner || $Admin) {
-    ?>
+?>
     <div class="box" style="margin-top: 15px;">
         <div class="box-header">
-            <h2 class="blue"><i
-                    class="fa-fw fa fa-bar-chart-o"></i><?= lang('warehouse_stock') . ' (' . ($warehouse ? $warehouse->name : lang('all_warehouses')) . ')'; ?>
+            <h2 class="blue"><i class="fa-fw fa fa-bar-chart-o"></i><?= lang('warehouse_stock') . ' (' . ($warehouse ? $warehouse->name : lang('all_warehouses')) . ')'; ?>
             </h2>
 
             <div class="box-icon">
                 <ul class="btn-tasks">
                     <?php if (!empty($warehouses) && ($Owner || $Admin)) {
-        ?>
+                    ?>
                         <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i
-                                    class="icon fa fa-building-o tip" data-placement="left"
-                                    title="<?= lang('warehouses') ?>"></i></a>
-                            <ul class="dropdown-menu pull-right tasks-menus" role="menu"
-                                aria-labelledby="dLabel">
-                                <li><a href="<?= admin_url('reports/warehouse_stock') ?>"><i
-                                            class="fa fa-building-o"></i> <?= lang('all_warehouses') ?></a></li>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon fa fa-building-o tip" data-placement="left" title="<?= lang('warehouses') ?>"></i></a>
+                            <ul class="dropdown-menu pull-right tasks-menus" role="menu" aria-labelledby="dLabel">
+                                <li><a href="<?= admin_url('reports/warehouse_stock') ?>"><i class="fa fa-building-o"></i> <?= lang('all_warehouses') ?></a></li>
                                 <li class="divider"></li>
-                                <?php
-                                foreach ($warehouses as $warehouse) {
-                                    echo '<li ' . ($warehouse_id && $warehouse_id == $warehouse->id ? 'class="active"' : '') . '><a href="' . admin_url('reports/warehouse_stock/' . $warehouse->id) . '"><i class="fa fa-building"></i>' . $warehouse->name . '</a></li>';
-                                } ?>
+                                <li>
+                                    <select class="form-control" onChange="cari_toko(this.value)">
+                                        <option value="">Klik untuk mencari toko</option>
+                                        <?php
+                                        foreach ($warehouses as $warehouse) {
+                                            echo '<option value="' . $warehouse->id . '"><i class="fa fa-building"></i>' . $warehouse->name . '</option>';
+                                        } ?>
+                                    </select>
+                                </li>
                             </ul>
                         </li>
                     <?php
-    } ?>
+                    } ?>
                 </ul>
             </div>
         </div>
@@ -92,8 +103,7 @@
                 <div class="col-lg-12">
                     <p class="introtext"><?php echo lang('warehouse_stock_heading'); ?></p>
                     <?php if ($totals) {
-        ?>
-
+                    ?>
                         <div class="small-box padding1010 col-sm-6 bblue">
                             <div class="inner clearfix">
                                 <a>
@@ -115,7 +125,7 @@
                         </div>
                         <div class="clearfix" style="margin-top:20px;"></div>
                     <?php
-    } ?>
+                    } ?>
                     <div id="chart" style="width:100%; height:450px;"></div>
                 </div>
             </div>
@@ -123,3 +133,8 @@
     </div>
 <?php
 } ?>
+<script type="text/javascript">
+    function cari_toko(toko) {
+        window.location.href = '<?= admin_url('reports/warehouse_stock'); ?>/' + toko;
+    }
+</script>

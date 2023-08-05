@@ -17,38 +17,6 @@
     }
 <?php } 
 ?>
-    .scrollbar {
-  margin-left: 30px;
-  float: left;
-  height: 400px;
-  background: #fff;
-  overflow-y: scroll;
-  margin-bottom: 25px;
-}
-.force-overflow {
-  min-height: 450px;
-}
-.scrollbar-warning::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5F5;
-  border-radius: 10px;
-}
-
-.scrollbar-warning::-webkit-scrollbar {
-  width: 12px;
-  background-color: #F5F5F5;
-}
-
-.scrollbar-warning::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #FF8800;
-}
-
-.scrollbar-warning {
-  scrollbar-color: #FF8800 #F5F5F5;
-}
-
 </style>
 <script>
     var oTable;
@@ -240,13 +208,18 @@
                 ?>
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon fa fa-building-o tip" data-placement="left" title="<?= lang('warehouses') ?>"></i></a>
-                        <ul class="dropdown-menu pull-right tasks-menus scrollbar scrollbar-warning" role="menu" aria-labelledby="dLabel">
+                        <ul class="dropdown-menu pull-right tasks-menus" role="menu" aria-labelledby="dLabel">
                             <li><a href="<?= admin_url('products') ?>"><i class="fa fa-building-o"></i> <?= lang('all_warehouses') ?></a></li>
                             <li class="divider"></li>
-                            <?php
-                            foreach ($warehouses as $warehouse) {
-                                echo '<li><a href="' . admin_url('products/' . $warehouse->id) . '"><i class="fa fa-building"></i>' . $warehouse->name . '</a></li>';
-                            } ?>
+                            <li>
+                                <select class="form-control" onChange="cari_toko(this.value)">
+                                    <option value="">Klik untuk mencari toko</option>
+                                    <?php
+                                    foreach ($warehouses as $warehouse) {
+                                        echo '<option value="' . $warehouse->id . '"><i class="fa fa-building"></i>' . $warehouse->name . '</option>';
+                                    } ?>
+                                </select>
+                            </li>
                         </ul>
                     </li>
                 <?php
@@ -342,3 +315,9 @@
     <?= form_close() ?>
 <?php
 } ?>
+
+<script type="text/javascript">
+    function cari_toko(toko) {
+        window.location.href = '<?= admin_url('products'); ?>/' + toko;
+    }
+</script>
