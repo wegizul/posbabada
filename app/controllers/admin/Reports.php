@@ -1302,9 +1302,9 @@ class Reports extends MY_Controller
                 $this->datatables->where('created_by', $this->session->userdata('user_id'));
             }
 
-            if ($this->session->userdata('view_right')) {
-                $warehouse = $this->session->userdata('warehouse_id');
-            }
+            // if ($this->session->userdata('view_right')) {
+            //     $warehouse = $this->session->userdata('warehouse_id');
+            // }
 
             if ($note) {
                 $this->datatables->like('note', $note, 'both');
