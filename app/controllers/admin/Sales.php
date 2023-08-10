@@ -1203,7 +1203,7 @@ class Sales extends MY_Controller
                 'cc_year'      => $this->input->post('pcc_year'),
                 'cc_type'      => $this->input->post('pcc_type'),
                 'note'         => $this->input->post('note'),
-                'created_by'   => $this->session->userdata('user_id'),
+                // 'created_by'   => $this->session->userdata('user_id'),
             ];
 
             if ($_FILES['userfile']['size'] > 0) {
