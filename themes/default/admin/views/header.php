@@ -1165,6 +1165,11 @@
                                                         <span class="chevron closed"></span>
                                                     </a>
                                                     <ul>
+                                                        <li id="reports_register">
+                                                            <a href="<?= admin_url('reports/register') ?>">
+                                                                <i class="fa fa-th-large"></i><span class="text"> <?= lang('register_report'); ?></span>
+                                                            </a>
+                                                        </li>
                                                         <?php if ($GP['reports-quantity_alerts']) {
                                                         ?>
                                                             <li id="reports_quantity_alerts">

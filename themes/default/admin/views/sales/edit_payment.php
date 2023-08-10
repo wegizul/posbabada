@@ -58,7 +58,7 @@
 
                         </div>
                         <div class="clearfix"></div>
-                        <div class="pcc_1" style="display:none;">
+                        <!-- <div class="pcc_1" style="display:none;">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -87,7 +87,7 @@
                                             <option
                                                 value="Discover"<?= $payment->cc_type == 'Discover' ? ' checked="checcked"' : '' ?>><?= lang('Discover'); ?></option>
                                         </select>
-                                        <!-- <input type="text" id="pcc_type_1" class="form-control" placeholder="<?= lang('card_type') ?>" />-->
+                                        <input type="text" id="pcc_type_1" class="form-control" placeholder="<?= lang('card_type') ?>" />
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -104,11 +104,11 @@
                                                id="pcc_year_1" class="form-control" placeholder="<?= lang('year') ?>"/>
                                     </div>
                                 </div>
-                                <!--<div class="col-md-3">
+                                <div class="col-md-3">
                                                         <div class="form-group">
                                                             <input name="pcc_ccv" type="text" id="pcc_cvv2_1" class="form-control" placeholder="<?= lang('cvv2') ?>" />
                                                         </div>
-                                                    </div>-->
+                                                    </div>
                             </div>
                         </div>
                         <div class="pcheque_1" style="display:none;">
@@ -116,7 +116,7 @@
                                 <input name="cheque_no" value="<?= $payment->cheque_no; ?>" type="text" id="cheque_no_1"
                                        class="form-control cheque_no"/>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -201,7 +201,7 @@
             var CardType = null;
             var ccn1 = pcc_no.charAt(0);
             if (ccn1 == 4)
-                CardType = 'Visa';
+                CardType = '';
             else if (ccn1 == 5)
                 CardType = 'MasterCard';
             else if (ccn1 == 3)
@@ -209,7 +209,7 @@
             else if (ccn1 == 6)
                 CardType = 'Discover';
             else
-                CardType = 'Visa';
+                CardType = '';
 
             $('#pcc_type_1').select2("val", CardType);
         });

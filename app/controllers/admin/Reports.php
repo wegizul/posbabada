@@ -2298,7 +2298,10 @@ class Reports extends MY_Controller
                 ->from('pos_register')
             ->join('users', 'users.id=pos_register.user_id', 'left')
             ->join('warehouses', 'warehouses.id=pos_register.warehouse_id', 'left');
-
+            
+            if($this->session->userdata('group_id') == 8){
+                $this->datatables->where('pos_register.warehouse_id', $this->session->userdata('warehouse_id'));
+            }
             if ($user) {
                 $this->datatables->where('pos_register.user_id', $user);
             }
