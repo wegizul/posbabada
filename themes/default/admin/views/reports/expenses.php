@@ -210,21 +210,15 @@ if ($this->input->post('end_date')) {
                             <div class="form-group">
                                 <label class="control-label" for="warehouse"><?= lang('warehouse'); ?></label>
                                 <?php
-                                $ct[''] = lang('select') . ' ' . lang('warehouse');
+                                $wh[''] = lang('select') . ' ' . lang('warehouse');
                                 foreach ($warehouses as $warehouse) {
-                                    $ct[$warehouse->id] = $warehouse->name;
+                                    $wh[$warehouse->id] = $warehouse->name;
                                 }
-                                echo form_dropdown('warehouse', $ct, (isset($_POST['warehouse']) ? $_POST['warehouse'] : ''), 'class="form-control" id="warehouse" data-placeholder="' . $this->lang->line('select') . ' ' . $this->lang->line('warehouse') . '"');
+                                echo form_dropdown('warehouse', $wh, (isset($_POST['warehouse']) ? $_POST['warehouse'] : ''), 'class="form-control" id="warehouse" data-placeholder="' . $this->lang->line('select') . ' ' . $this->lang->line('warehouse') . '"');
                                 ?>
                             </div>
                         </div>
-
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <?= lang('note', 'note'); ?>
-                                <?php echo form_input('note', (isset($_POST['note']) ? $_POST['note'] : ''), 'class="form-control" id="note"'); ?>
-                            </div>
-                        </div>
+                        
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <?= lang('start_date', 'start_date'); ?>
