@@ -339,7 +339,7 @@ class Products extends MY_Controller
             if ($this->Owner || $this->Admin) {
                 $date = $this->sma->fld($this->input->post('date'));
             } else {
-                $date = date('Y-m-d H:s:i');
+                $date = date('Y-m-d H:i:s');
             }
 
             $reference_no = $this->input->post('reference_no') ? $this->input->post('reference_no') : $this->site->getReference('qa');
