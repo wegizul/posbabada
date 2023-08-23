@@ -78,7 +78,7 @@ class Pos extends MY_Controller
                 'cc_type'      => $this->input->post('pcc_type'),
                 'cc_cvv2'      => $this->input->post('pcc_ccv'),
                 'note'         => $this->input->post('note'),
-                'created_by'   => $this->session->userdata('user_id'),
+                'created_by'   => $sale->created_by,
                 'type'         => 'returned' == $sale->sale_status ? 'returned' : 'received',
             ];
 
