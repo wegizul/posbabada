@@ -314,7 +314,7 @@
                                     <?php
                                     } ?>
                                     <tr>
-                                        <td colspan="4"><?= ($row->item_tax != 0 ? ' [' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ' (10%) ' . $this->sma->formatMoney($return_sale ? ($inv->product_tax + $return_sale->product_tax) : ($inv->grand_total / 11)) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') . ']' : '') ?></td>
+                                        <td colspan="4"><?= (' [' . ($Settings->indian_gst ? $row->tax : $row->tax_code) . ' (10%) ' . $this->sma->formatMoney($return_sale ? ($inv->product_tax + $return_sale->product_tax) : ($inv->grand_total / 11)) . ($row->hsn_code ? ' (' . lang($row->product_type == 'service' ? 'sac_code' : 'hsn_code') . ': ' . $row->hsn_code . ')' : '') . ']') ?></td>
                                     </tr>
                                 </tfoot>
                             </table>

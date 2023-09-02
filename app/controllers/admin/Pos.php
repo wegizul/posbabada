@@ -1391,6 +1391,29 @@ class Pos extends MY_Controller
         $this->page_construct('pos/printers', $meta, $this->data);
     }
 
+    public function register_details_pin($user_id = null)
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        $ambil_toko = $this->pos_model->ambil_toko($user_id);
+        $this->data['pass_dr'] = $ambil_toko->pass_detail;
+
+        $this->load->view($this->theme . 'pos/detail_register_ver', $this->data);
+    }
+
+    public function register_details_process()
+    {
+        $input_pass = $this->input->post('pass_dr');
+        $pass_asli = $this->input->post('pass_hiden');
+
+        if ($input_pass == $pass_asli) {
+            admin_redirect('pos/register_details');
+        } else {
+            $this->session->set_flashdata('error', "Password Salah !!");
+            admin_redirect('pos');
+        }
+    }
+
     public function register_details()
     {
         $this->sma->checkPermissions('index');
@@ -1403,6 +1426,11 @@ class Pos extends MY_Controller
         $this->data['pppsales'] = $this->pos_model->getRegisterPPPSales($register_open_time);
         $this->data['stripesales'] = $this->pos_model->getRegisterStripeSales($register_open_time);
         $this->data['othersales'] = $this->pos_model->getRegisterOtherSales($register_open_time);
+        $this->data['dana'] = $this->pos_model->getRegisterDana($register_open_time, $user_id);
+        $this->data['ovo'] = $this->pos_model->getRegisterOvo($register_open_time, $user_id);
+        $this->data['shopee'] = $this->pos_model->getRegisterShopeePay($register_open_time, $user_id);
+        $this->data['gofood'] = $this->pos_model->getRegisterGoFood($register_open_time, $user_id);
+        $this->data['qris'] = $this->pos_model->getRegisterQris($register_open_time, $user_id);
         $this->data['authorizesales'] = $this->pos_model->getRegisterAuthorizeSales($register_open_time);
         $this->data['totalsales'] = $this->pos_model->getRegisterSales($register_open_time);
         $this->data['refunds'] = $this->pos_model->getRegisterRefunds($register_open_time);

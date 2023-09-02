@@ -64,7 +64,6 @@
     </noscript>
 
     <div id="wrapper">
-        <?= $this->session->flashdata('error'); ?>
         <header id="header" class="navbar">
             <div class="container row">
                 <div class="col-lg-3">
@@ -171,13 +170,13 @@
                             <?php
                             }
                             ?>
+                            <li class="dropdown hidden-small">
+                                <a class="btn bdarkGreen pos-tip" id="register_details" title="<span><?= lang('register_details') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/register_details_pin') ?>" data-toggle="modal" data-target="#myModal">
+                                    <i class="fa fa-check-circle"></i>
+                                </a>
+                            </li>
                             <?php if ($Owner || $Admin) {
                             ?>
-                                <li class="dropdown hidden-small">
-                                    <a class="btn bdarkGreen pos-tip" id="register_details" title="<span><?= lang('register_details') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('pos/register_details') ?>" data-toggle="modal" data-target="#myModal">
-                                        <i class="fa fa-check-circle"></i>
-                                    </a>
-                                </li>
                                 <li class="dropdown hidden-small">
                                     <a class="btn borange pos-tip" id="add_expense" title="<span><?= lang('add_expense') ?></span>" data-placement="bottom" data-html="true" href="<?= admin_url('purchases/add_expense') ?>" data-toggle="modal" data-target="#myModal">
                                         <i class="fa fa-dollar"></i>
@@ -593,13 +592,13 @@
                                             <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <?= lang('amount', 'amount_1'); ?>
-                                                    <input name="amount[]" type="text" id="amount_1" class="pa form-control kb-pad1 amount" />
+                                                    <input name="amount[]" type="text" id="amount_1" class="pa form-control kb-pad1 amount" readonly />
                                                 </div>
                                             </div>
                                             <div class="col-sm-5 col-sm-offset-1">
                                                 <div class="form-group">
                                                     <?= lang('paying_by', 'paid_by_1'); ?>
-                                                    <select name="paid_by[]" id="paid_by_1" class="form-control paid_by">
+                                                    <select name="paid_by[]" id="paid_by_1" class="form-control paid_by" onChange=(jenis_pembayaran(this.value))>
                                                         <?= $this->sma->paid_opts(); ?>
                                                         <?= $pos_settings->paypal_pro ? '<option value="ppp">' . lang('paypal_pro') . '</option>' : ''; ?>
                                                         <?= $pos_settings->stripe ? '<option value="stripe">' . lang('stripe') . '</option>' : ''; ?>
@@ -705,9 +704,9 @@
                             <div class="btn-group btn-group-vertical">
                                 <button type="button" class="btn btn-lg btn-info quick-cash" id="quick-payable">0.00
                                 </button>
-                                <?php
+                                <?php $u = 0;
                                 foreach (lang('quick_cash_notes') as $cash_note_amount) {
-                                    echo '<button type="button" class="btn btn-lg btn-warning quick-cash">' . $cash_note_amount . '</button>';
+                                    echo '<button type="button" class="btn btn-lg btn-warning quick-cash" id="uang_cepat' . $u++ . '">' . $cash_note_amount . '</button>';
                                 }
                                 ?>
                                 <button type="button" class="btn btn-lg btn-danger" id="clear-cash-notes"><?= lang('clear'); ?></button>
@@ -2191,6 +2190,18 @@
         <?php
         }
         ?>
+
+        function jenis_pembayaran(val) {
+            if (val != 'cash') {
+                for (c = 0; c < 9; c++) {
+                    $('#uang_cepat' + c).attr('disabled', true);
+                }
+            } else {
+                for (c = 0; c < 9; c++) {
+                    $('#uang_cepat' + c).attr('disabled', false);
+                }
+            }
+        }
     </script>
     <?php
     $s2_lang_file = read_file('./assets/config_dumps/s2_lang.js');
