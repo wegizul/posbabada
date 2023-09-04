@@ -1417,7 +1417,9 @@ class Pos extends MY_Controller
     public function register_details()
     {
         $this->sma->checkPermissions('index');
+        $user_id = $this->session->userdata('user_id');
         $register_open_time = $this->session->userdata('register_open_time');
+        
         $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
         $this->data['ccsales'] = $this->pos_model->getRegisterCCSales($register_open_time);
         $this->data['cashsales'] = $this->pos_model->getRegisterCashSales($register_open_time);
