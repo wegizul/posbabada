@@ -592,7 +592,7 @@
                                             <div class="col-sm-5">
                                                 <div class="form-group">
                                                     <?= lang('amount', 'amount_1'); ?>
-                                                    <input name="amount[]" type="text" id="amount_1" class="pa form-control kb-pad1 amount" readonly />
+                                                    <input name="amount[]" type="text" id="amount_1" class="pa form-control kb-pad1 amount" />
                                                 </div>
                                             </div>
                                             <div class="col-sm-5 col-sm-offset-1">
