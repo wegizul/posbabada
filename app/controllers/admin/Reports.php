@@ -2479,6 +2479,8 @@ class Reports extends MY_Controller
             }
             if ($start_date) {
                 $this->datatables->where($this->db->dbprefix('sales') . '.date BETWEEN "' . $start_date . '" and "' . $end_date . '"');
+            } else {
+                $this->datatables->where($this->db->dbprefix('sales') . '.date BETWEEN "' . date('Y-m-d 00:00:00') . '" and "' . date('Y-m-d 23:59:00') . '"');
             }
 
             echo $this->datatables->generate();

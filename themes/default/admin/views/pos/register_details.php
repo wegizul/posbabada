@@ -1,9 +1,22 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<base href="<?= base_url() ?>" />
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="pragma" content="no-cache" />
+<link rel="shortcut icon" href="<?= $assets ?>images/icon.png" />
+<link rel="stylesheet" href="<?= $assets ?>styles/theme.css" type="text/css" />
+<link rel="stylesheet" href="<?= $assets ?>styles/style.css" type="text/css" />
+<link rel="stylesheet" href="<?= $assets ?>pos/css/posajax.css" type="text/css" />
+<link rel="stylesheet" href="<?= $assets ?>pos/css/print.css" type="text/css" media="print" />
+<link href="<?= base_url('assets/custom/pos.css') ?>" rel="stylesheet" />
+<script type="text/javascript" src="<?= $assets ?>js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="<?= $assets ?>js/jquery-migrate-1.2.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-2x">&times;</i>
-            </button>
+            <a href="<?= base_url('admin/pos') ?>" class="close"><i class="fa fa-2x">&times;</i></a>
             <button type="button" class="btn btn-xs btn-default no-print pull-right" style="margin-right:15px;" onclick="window.print();">
                 <i class="fa fa-print"></i> <?= lang('print'); ?>
             </button>
@@ -34,41 +47,51 @@
                 </tr>
                 <tr>
                     <td style="border-bottom: 1px solid #EEE;">
-                        <h4><?= lang('ch_sale'); ?>:</h4>
+                        <h4>Pembayaran Dana :</h4>
                     </td>
                     <td style="text-align:right;border-bottom: 1px solid #EEE;">
                         <h4>
-                            <span><?= $this->sma->formatMoney($chsales->paid ? $chsales->paid : '0.00') . ' (' . $this->sma->formatMoney($chsales->total ? $chsales->total : '0.00') . ')'; ?></span>
+                            <span><?= $this->sma->formatMoney($dana->paid ? $dana->paid : '0.00') . ' (' . $this->sma->formatMoney($dana->total ? $dana->total : '0.00') . ')'; ?></span>
                         </h4>
                     </td>
                 </tr>
                 <tr>
                     <td style="border-bottom: 1px solid #EEE;">
-                        <h4><?= lang('cc_sale'); ?>:</h4>
+                        <h4>Pembayaran ShopeePay :</h4>
                     </td>
                     <td style="text-align:right;border-bottom: 1px solid #EEE;">
                         <h4>
-                            <span><?= $this->sma->formatMoney($ccsales->paid ? $ccsales->paid : '0.00') . ' (' . $this->sma->formatMoney($ccsales->total ? $ccsales->total : '0.00') . ')'; ?></span>
-                        </h4>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="border-bottom: 1px solid #DDD;">
-                        <h4><?= lang('gc_sale'); ?>:</h4>
-                    </td>
-                    <td style="text-align:right;border-bottom: 1px solid #DDD;">
-                        <h4>
-                            <span><?= $this->sma->formatMoney($gcsales->paid ? $gcsales->paid : '0.00') . ' (' . $this->sma->formatMoney($gcsales->total ? $gcsales->total : '0.00') . ')'; ?></span>
+                            <span><?= $this->sma->formatMoney($shopee->paid ? $shopee->paid : '0.00') . ' (' . $this->sma->formatMoney($shopee->total ? $shopee->total : '0.00') . ')'; ?></span>
                         </h4>
                     </td>
                 </tr>
                 <tr>
                     <td style="border-bottom: 1px solid #EEE;">
-                        <h4>Dana:</h4>
+                        <h4>Pembayaran GoFood :</h4>
                     </td>
                     <td style="text-align:right;border-bottom: 1px solid #EEE;">
                         <h4>
-                            <span><?= $this->sma->formatMoney($othersales->paid ? $othersales->paid : '0.00') . ' (' . $this->sma->formatMoney($othersales->total ? $othersales->total : '0.00') . ')'; ?></span>
+                            <span><?= $this->sma->formatMoney($gofood->paid ? $gofood->paid : '0.00') . ' (' . $this->sma->formatMoney($gofood->total ? $gofood->total : '0.00') . ')'; ?></span>
+                        </h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #EEE;">
+                        <h4>Pembayaran OVO :</h4>
+                    </td>
+                    <td style="text-align:right;border-bottom: 1px solid #EEE;">
+                        <h4>
+                            <span><?= $this->sma->formatMoney($ovo->paid ? $ovo->paid : '0.00') . ' (' . $this->sma->formatMoney($ovo->total ? $ovo->total : '0.00') . ')'; ?></span>
+                        </h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #EEE;">
+                        <h4>Pembayaran QRIS :</h4>
+                    </td>
+                    <td style="text-align:right;border-bottom: 1px solid #EEE;">
+                        <h4>
+                            <span><?= $this->sma->formatMoney($qris->paid ? $qris->paid : '0.00') . ' (' . $this->sma->formatMoney($qris->total ? $qris->total : '0.00') . ')'; ?></span>
                         </h4>
                     </td>
                 </tr>
