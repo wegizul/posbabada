@@ -349,8 +349,8 @@ class Pos extends MY_Controller
             $data = [
                 'closed_at'                => date('Y-m-d H:i:s'),
                 'total_cash'               => $this->input->post('total_cash'),
-                'total_cheques'            => $this->input->post('total_cheques'),
-                'total_cc_slips'           => $this->input->post('total_cc_slips'),
+                // 'total_cheques'            => $this->input->post('total_cheques'),
+                // 'total_cc_slips'           => $this->input->post('total_cc_slips'),
                 'total_dana'           => $this->input->post('total_dana'),
                 'total_ovo'           => $this->input->post('total_ovo'),
                 'total_gofood'           => $this->input->post('total_gofood'),
@@ -362,8 +362,8 @@ class Pos extends MY_Controller
                 'total_gofood_submitted'     => $this->input->post('total_gofood_submitted'),
                 'total_shopee_submitted'     => $this->input->post('total_shopee_submitted'),
                 'total_qris_submitted'     => $this->input->post('total_qris_submitted'),
-                'total_cheques_submitted'  => $this->input->post('total_cheques_submitted'),
-                'total_cc_slips_submitted' => $this->input->post('total_cc_slips_submitted'),
+                // 'total_cheques_submitted'  => $this->input->post('total_cheques_submitted'),
+                // 'total_cc_slips_submitted' => $this->input->post('total_cc_slips_submitted'),
                 'note'                     => $this->input->post('note'),
                 'status'                   => 'close',
                 'transfer_opened_bills'    => $this->input->post('transfer_opened_bills'),
@@ -1424,10 +1424,6 @@ class Pos extends MY_Controller
         $this->data['ccsales'] = $this->pos_model->getRegisterCCSales($register_open_time);
         $this->data['cashsales'] = $this->pos_model->getRegisterCashSales($register_open_time);
         $this->data['chsales'] = $this->pos_model->getRegisterChSales($register_open_time);
-        $this->data['gcsales'] = $this->pos_model->getRegisterGCSales($register_open_time);
-        $this->data['pppsales'] = $this->pos_model->getRegisterPPPSales($register_open_time);
-        $this->data['stripesales'] = $this->pos_model->getRegisterStripeSales($register_open_time);
-        $this->data['othersales'] = $this->pos_model->getRegisterOtherSales($register_open_time);
         $this->data['dana'] = $this->pos_model->getRegisterDana($register_open_time, $user_id);
         $this->data['ovo'] = $this->pos_model->getRegisterOvo($register_open_time, $user_id);
         $this->data['shopee'] = $this->pos_model->getRegisterShopeePay($register_open_time, $user_id);
