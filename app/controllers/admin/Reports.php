@@ -2528,10 +2528,11 @@ class Reports extends MY_Controller
             }
             $si .= " GROUP BY {$this->db->dbprefix('sale_items')}.sale_id ) FSI";
             $this->db
-            ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_items, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
-            ->from('sales')
-            ->join($si, 'FSI.sale_id=sales.id', 'left')
+                ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_items, SUM(quantity) as total_pcs, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
+                ->from('sales')
+                // ->join($si, 'FSI.sale_id=sales.id', 'left')
             ->join('warehouses', 'warehouses.id=sales.warehouse_id', 'left')
+            ->join('sale_items', 'sale_items.sale_id=sales.id', 'left')
             ->group_by('sales.warehouse_id');
 
             if ($user) {
@@ -2540,9 +2541,9 @@ class Reports extends MY_Controller
             if ($product) {
                 $this->db->where('sale_items.product_id', $product);
             }
-            if ($serial) {
-                $this->db->like('sale_items.serial_no', $serial);
-            }
+            // if ($serial) {
+            //     $this->db->like('sale_items.serial_no', $serial);
+            // }
             if ($biller) {
                 $this->db->where('sales.biller_id', $biller);
             }
@@ -2577,27 +2578,33 @@ class Reports extends MY_Controller
                 $this->excel->getActiveSheet()->SetCellValue('A1', 'Toko');
                 $this->excel->getActiveSheet()->SetCellValue('B1', lang('grand_total'));
                 $this->excel->getActiveSheet()->SetCellValue('C1', 'Total Transaksi');
+                $this->excel->getActiveSheet()->SetCellValue('D1', 'Total Item');
 
                 $row = 2;
                 $total = 0;
                 $items = 0;
+                $pcs = 0;
                 $balance = 0;
                 foreach ($data as $data_row) {
                     $this->excel->getActiveSheet()->SetCellValue('A' . $row, $data_row->biller);
                     $this->excel->getActiveSheet()->SetCellValue('B' . $row, $data_row->grand_total);
                     $this->excel->getActiveSheet()->SetCellValue('C' . $row, $data_row->total_items);
+                    $this->excel->getActiveSheet()->SetCellValue('D' . $row, $data_row->total_pcs);
                     $total += $data_row->grand_total;
                     $items += $data_row->total_items;
+                    $pcs += $data_row->total_pcs;
                     $balance += ($data_row->grand_total - $data_row->paid);
                     $row++;
                 }
-                $this->excel->getActiveSheet()->getStyle('B' . $row . ':C' . $row)->getBorders()
+                $this->excel->getActiveSheet()->getStyle('B' . $row . ':D' . $row)->getBorders()
                     ->getTop()->setBorderStyle('medium');
                 $this->excel->getActiveSheet()->SetCellValue('B' . $row, $total);
                 $this->excel->getActiveSheet()->SetCellValue('C' . $row, $items);
+                $this->excel->getActiveSheet()->SetCellValue('D' . $row, $pcs);
 
                 $this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
                 $this->excel->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+                $this->excel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
                 $this->excel->getDefaultStyle()->getAlignment()->setVertical('center');
                 $this->excel->getActiveSheet()->getStyle('E2:E' . $row)->getAlignment()->setWrapText(true);
                 $filename = 'laporan_penjualan_pertoko';
