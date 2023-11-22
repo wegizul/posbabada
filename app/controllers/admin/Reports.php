@@ -1217,9 +1217,9 @@ class Reports extends MY_Controller
                 $this->db->where('created_by', $this->session->userdata('user_id'));
             }
 
-            if ($this->session->userdata('view_right')) {
-                $warehouse = $this->session->userdata('warehouse_id');
-            }
+            // if ($this->session->userdata('view_right')) {
+            //     $warehouse = $this->session->userdata('warehouse_id');
+            // }
 
             if ($note) {
                 $this->db->like('note', $note, 'both');
@@ -1544,6 +1544,8 @@ class Reports extends MY_Controller
             }
             if ($start_date) {
                 $this->datatables->where($this->db->dbprefix('payments') . '.date BETWEEN "' . $start_date . '" and "' . $end_date . '"');
+            } else {
+                $this->datatables->where($this->db->dbprefix('payments') . '.date BETWEEN "' . date('Y-m-d 00:00:00') . '" and "' . date('Y-m-d 23:59:00') . '"');
             }
 
             echo $this->datatables->generate();
@@ -1560,6 +1562,8 @@ class Reports extends MY_Controller
         $brand = $this->input->get('brand') ? $this->input->get('brand') : null;
         $subcategory = $this->input->get('subcategory') ? $this->input->get('subcategory') : null;
         $warehouse = $this->input->get('warehouse') ? $this->input->get('warehouse') : null;
+        $ambil_warehouse = $this->site->getWarehouseByID($warehouse);
+        
         $cf1 = $this->input->get('cf1') ? $this->input->get('cf1') : null;
         $cf2 = $this->input->get('cf2') ? $this->input->get('cf2') : null;
         $cf3 = $this->input->get('cf3') ? $this->input->get('cf3') : null;
@@ -1716,7 +1720,7 @@ class Reports extends MY_Controller
                 // $this->excel->getActiveSheet()->getColumnDimension('I')->setWidth(25);
                 $this->excel->getDefaultStyle()->getAlignment()->setVertical('center');
                 $this->excel->getActiveSheet()->getStyle('C2:G' . $row)->getAlignment()->setWrapText(true);
-                $filename = 'products_report';
+                $filename = 'pr_' . $ambil_warehouse->name;
                 $this->load->helper('excel');
                 create_excel($this->excel, $filename);
             }
@@ -2298,7 +2302,7 @@ class Reports extends MY_Controller
                 ->from('pos_register')
             ->join('users', 'users.id=pos_register.user_id', 'left')
             ->join('warehouses', 'warehouses.id=pos_register.warehouse_id', 'left');
-            
+
             if($this->session->userdata('group_id') == 8){
                 $this->datatables->where('pos_register.warehouse_id', $this->session->userdata('warehouse_id'));
             }
@@ -2619,17 +2623,21 @@ class Reports extends MY_Controller
             $si .= " GROUP BY {$this->db->dbprefix('sale_items')}.sale_id ) FSI";
             $this->load->library('datatables');
             $this->datatables
-                ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_items, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
+                ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_transaksi, SUM(quantity) as total_pcs, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
                 ->from('sales')
-                ->join($si, 'FSI.sale_id=sales.id', 'left')
+                // ->join($si, 'FSI.sale_id=sales.id', 'left')
             ->join('warehouses', 'warehouses.id=sales.warehouse_id', 'left')
+            ->join('sale_items', 'sale_items.sale_id=sales.id', 'left')
             ->group_by('sales.warehouse_id');
             
             if ($user) {
                 $this->datatables->where('sales.created_by', $user);
             }
+            // if ($product) {
+            //     $this->datatables->where('FSI.product_id', $product);
+            // }
             if ($product) {
-                $this->datatables->where('FSI.product_id', $product);
+                $this->datatables->where('sale_items.product_id', $product);
             }
             if ($serial) {
                 $this->datatables->like('FSI.serial_no', $serial);

@@ -436,7 +436,7 @@
                         <?php
                         } else {
                         ?>
-                            <span class="pull-right col-xs-12">
+                            <!-- <span class="pull-right col-xs-12">
                                 <?php
                                 if ($pos->remote_printing == 1) {
                                     echo '<button onclick="window.print();" class="btn btn-block btn-primary">' . lang('print') . '</button>';
@@ -445,7 +445,7 @@
                                     echo '<button onclick="return printReceipt()" class="btn btn-block btn-primary">' . lang('print') . '</button>';
                                     echo '<button onclick="return openCashDrawer()" class="btn btn-block btn-default">' . lang('open_cash_drawer') . '</button>';
                                 } ?>
-                            </span>
+                            </span> -->
                             <span class="pull-left col-xs-12"><a class="btn btn-block btn-success" href="#" id="email"><?= lang('email'); ?></a></span>
                             <span class="col-xs-12">
                                 <a class="btn btn-block btn-warning" href="<?= admin_url('pos'); ?>"><?= lang('back_to_pos'); ?></a>

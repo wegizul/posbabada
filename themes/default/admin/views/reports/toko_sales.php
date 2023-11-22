@@ -204,17 +204,11 @@ if ($this->input->post('end_date')) {
 
                     <?php echo admin_form_open('reports/toko_sales', 'autocomplete="off"'); ?>
                     <div class="row">
-
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label class="control-label" for="warehouse"><?= lang('warehouse'); ?></label>
-                                <?php
-                                $wh[''] = lang('select') . ' ' . lang('warehouse');
-                                foreach ($warehouses as $warehouse) {
-                                    $wh[$warehouse->id] = $warehouse->name;
-                                }
-                                echo form_dropdown('warehouse', $wh, (isset($_POST['warehouse']) ? $_POST['warehouse'] : ''), 'class="form-control" id="warehouse" data-placeholder="' . $this->lang->line('select') . ' ' . $this->lang->line('warehouse') . '"');
-                                ?>
+                                <?= lang('product', 'suggest_product'); ?>
+                                <?php echo form_input('sproduct', (isset($_POST['sproduct']) ? $_POST['sproduct'] : ''), 'class="form-control" id="suggest_product"'); ?>
+                                <input type="hidden" name="product" value="<?= isset($_POST['product']) ? $_POST['product'] : '' ?>" id="report_product_id" />
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -227,6 +221,18 @@ if ($this->input->post('end_date')) {
                             <div class="form-group">
                                 <?= lang('end_date', 'end_date'); ?>
                                 <?php echo form_input('end_date', (isset($_POST['end_date']) ? $_POST['end_date'] : ''), 'class="form-control datetime" id="end_date"'); ?>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="warehouse"><?= lang('warehouse'); ?></label>
+                                <?php
+                                $wh[''] = lang('select') . ' ' . lang('warehouse');
+                                foreach ($warehouses as $warehouse) {
+                                    $wh[$warehouse->id] = $warehouse->name;
+                                }
+                                echo form_dropdown('warehouse', $wh, (isset($_POST['warehouse']) ? $_POST['warehouse'] : ''), 'class="form-control" id="warehouse" data-placeholder="' . $this->lang->line('select') . ' ' . $this->lang->line('warehouse') . '"');
+                                ?>
                             </div>
                         </div>
                     </div>
