@@ -74,18 +74,23 @@ if ($this->input->post('end_date')) {
                 "mRender": currencyFormat
             }, {
                 "mRender": spt
+            }, {
+                "mRender": spt
             }],
             "fnFooterCallback": function(nRow, aaData, iStart, iEnd, aiDisplay) {
                 var gtotal = 0,
                     items = 0,
+                    pcs = 0,
                     balance = 0;
                 for (var i = 0; i < aaData.length; i++) {
                     gtotal += parseFloat(aaData[aiDisplay[i]][1]);
                     items += parseFloat(aaData[aiDisplay[i]][2]);
+                    pcs += parseFloat(aaData[aiDisplay[i]][3]);
                 }
                 var nCells = nRow.getElementsByTagName('th');
                 nCells[1].innerHTML = currencyFormat(parseFloat(gtotal));
                 nCells[2].innerHTML = '<div class="text-right">' + formatQuantity2(items) + '</div>';
+                nCells[3].innerHTML = '<div class="text-right">' + formatQuantity2(pcs) + '</div>';
             }
         }).fnSetFilteringDelay().dtFilter([{
             column_number: 1,
@@ -251,6 +256,7 @@ if ($this->input->post('end_date')) {
                                 <th>Toko</th>
                                 <th><?= lang('grand_total'); ?></th>
                                 <th>Total Transaksi</th>
+                                <th>Total Item</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -263,6 +269,7 @@ if ($this->input->post('end_date')) {
                                 <th></th>
                                 <th><?= lang('grand_total'); ?></th>
                                 <th>Total Transaksi</th>
+                                <th>Total Item</th>
                             </tr>
                         </tfoot>
                     </table>
