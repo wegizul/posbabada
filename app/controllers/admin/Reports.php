@@ -1593,6 +1593,8 @@ class Reports extends MY_Controller
                 $pp .= " AND p.created_by = '{$user}' ";
                 $sp .= ($start_date || $warehouse ? ' and ' : '') . " s.created_by = '{$user}' ";
             }
+        } else {
+            $sp .= "WHERE s.date = '" . date('Y-m-d') . "'";
         }
         $pp .= ' GROUP BY pi.product_id ) PCosts';
         $sp .= ' GROUP BY si.product_id ) PSales';
@@ -2503,6 +2505,16 @@ class Reports extends MY_Controller
         $start_date = $this->input->get('start_date') ? $this->input->get('start_date') : null;
         $end_date = $this->input->get('end_date') ? $this->input->get('end_date') : null;
         $serial = $this->input->get('serial') ? $this->input->get('serial') : null;
+        $nama_produk = $this->site->getProductByID($product);
+
+        $judul = "Penjualan Semua Produk " . date(('d-m-Y'));
+        if ($product && $start_date || $end_date) {
+            $judul = "Penjualan " . $nama_produk->name . " " . $start_date . " s/d " . $end_date;
+        } else if ($product) {
+            $judul = "Penjualan " . $nama_produk->name;
+        } else {
+            $judul = "Penjualan Pertoko " . $start_date . " s/d " . $end_date;
+        }
 
         if ($start_date) {
             $start_date = $this->sma->fld($start_date);
@@ -2513,7 +2525,7 @@ class Reports extends MY_Controller
         }
 
         if ($pdf || $xls) {
-            $si = "( SELECT sale_id, {$this->db->dbprefix('sale_items')}.product_id, serial_no, GROUP_CONCAT(CONCAT({$this->db->dbprefix('sale_items')}.product_name, '__', {$this->db->dbprefix('sale_items')}.quantity, (CASE WHEN {$this->db->dbprefix('sale_items')}.option_id > 0 THEN CONCAT('__',{$this->db->dbprefix('product_variants')}.name) ELSE '' END)) SEPARATOR '___') AS item_nane from {$this->db->dbprefix('sale_items')} LEFT JOIN {$this->db->dbprefix('product_variants')} ON {$this->db->dbprefix('product_variants')}.id = {$this->db->dbprefix('sale_items')}.option_id ";
+            $si = "( SELECT sale_id, {$this->db->dbprefix('sale_items')}.product_id, {$this->db->dbprefix('sale_items')}.quantity, serial_no, GROUP_CONCAT(CONCAT({$this->db->dbprefix('sale_items')}.product_name, '__', {$this->db->dbprefix('sale_items')}.quantity, (CASE WHEN {$this->db->dbprefix('sale_items')}.option_id > 0 THEN CONCAT('__',{$this->db->dbprefix('product_variants')}.name) ELSE '' END)) SEPARATOR '___') AS item_nane from {$this->db->dbprefix('sale_items')} LEFT JOIN {$this->db->dbprefix('product_variants')} ON {$this->db->dbprefix('product_variants')}.id = {$this->db->dbprefix('sale_items')}.option_id ";
             if ($product || $serial) {
                 $si .= ' WHERE ';
             }
@@ -2528,22 +2540,18 @@ class Reports extends MY_Controller
             }
             $si .= " GROUP BY {$this->db->dbprefix('sale_items')}.sale_id ) FSI";
             $this->db
-                ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_items, SUM(quantity) as total_pcs, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
+                ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_items, SUM(FSI.quantity) as total_pcs, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
                 ->from('sales')
-                // ->join($si, 'FSI.sale_id=sales.id', 'left')
+                ->join($si, 'FSI.sale_id=sales.id', 'left')
             ->join('warehouses', 'warehouses.id=sales.warehouse_id', 'left')
-            ->join('sale_items', 'sale_items.sale_id=sales.id', 'left')
             ->group_by('sales.warehouse_id');
 
             if ($user) {
                 $this->db->where('sales.created_by', $user);
             }
             if ($product) {
-                $this->db->where('sale_items.product_id', $product);
+                $this->db->where('FSI.product_id', $product);
             }
-            // if ($serial) {
-            //     $this->db->like('sale_items.serial_no', $serial);
-            // }
             if ($biller) {
                 $this->db->where('sales.biller_id', $biller);
             }
@@ -2607,14 +2615,14 @@ class Reports extends MY_Controller
                 $this->excel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
                 $this->excel->getDefaultStyle()->getAlignment()->setVertical('center');
                 $this->excel->getActiveSheet()->getStyle('E2:E' . $row)->getAlignment()->setWrapText(true);
-                $filename = 'laporan_penjualan_pertoko';
+                $filename = $judul;
                 $this->load->helper('excel');
                 create_excel($this->excel, $filename);
             }
             $this->session->set_flashdata('error', lang('nothing_found'));
             redirect($_SERVER['HTTP_REFERER']);
         } else {
-            $si = "( SELECT sale_id, {$this->db->dbprefix('sale_items')}.product_id, serial_no, GROUP_CONCAT(CONCAT({$this->db->dbprefix('sale_items')}.product_name, '__', {$this->db->dbprefix('sale_items')}.quantity, (CASE WHEN {$this->db->dbprefix('sale_items')}.option_id > 0 THEN CONCAT('__',{$this->db->dbprefix('product_variants')}.name) ELSE '' END)) SEPARATOR '___') AS item_nane from {$this->db->dbprefix('sale_items')} LEFT JOIN {$this->db->dbprefix('product_variants')} ON {$this->db->dbprefix('product_variants')}.id = {$this->db->dbprefix('sale_items')}.option_id ";
+            $si = "( SELECT sale_id, {$this->db->dbprefix('sale_items')}.product_id, {$this->db->dbprefix('sale_items')}.quantity, serial_no, GROUP_CONCAT(CONCAT({$this->db->dbprefix('sale_items')}.product_name, '__', {$this->db->dbprefix('sale_items')}.quantity, (CASE WHEN {$this->db->dbprefix('sale_items')}.option_id > 0 THEN CONCAT('__',{$this->db->dbprefix('product_variants')}.name) ELSE '' END)) SEPARATOR '___') AS item_nane from {$this->db->dbprefix('sale_items')} LEFT JOIN {$this->db->dbprefix('product_variants')} ON {$this->db->dbprefix('product_variants')}.id = {$this->db->dbprefix('sale_items')}.option_id ";
             if ($product || $serial) {
                 $si .= ' WHERE ';
             }
@@ -2630,21 +2638,17 @@ class Reports extends MY_Controller
             $si .= " GROUP BY {$this->db->dbprefix('sale_items')}.sale_id ) FSI";
             $this->load->library('datatables');
             $this->datatables
-                ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_transaksi, SUM(quantity) as total_pcs, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
+                ->select("biller, SUM(grand_total) as grand_total, COUNT(reference_no) as total_transaksi, SUM(FSI.quantity) as total_pcs, paid, (grand_total-paid) as balance, payment_status, {$this->db->dbprefix('sales')}.id as id", false)
                 ->from('sales')
-                // ->join($si, 'FSI.sale_id=sales.id', 'left')
+                ->join($si, 'FSI.sale_id=sales.id', 'left')
             ->join('warehouses', 'warehouses.id=sales.warehouse_id', 'left')
-            ->join('sale_items', 'sale_items.sale_id=sales.id', 'left')
             ->group_by('sales.warehouse_id');
             
             if ($user) {
                 $this->datatables->where('sales.created_by', $user);
             }
-            // if ($product) {
-            //     $this->datatables->where('FSI.product_id', $product);
-            // }
             if ($product) {
-                $this->datatables->where('sale_items.product_id', $product);
+                $this->datatables->where('FSI.product_id', $product);
             }
             if ($serial) {
                 $this->datatables->like('FSI.serial_no', $serial);
