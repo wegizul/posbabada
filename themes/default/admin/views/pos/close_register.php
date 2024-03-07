@@ -102,6 +102,16 @@
                             </h4>
                         </td>
                     </tr>
+                    <tr>
+                        <td style="border-bottom: 1px solid #EEE;">
+                            <h4>Pembayaran Voucher :</h4>
+                        </td>
+                        <td style="text-align:right;border-bottom: 1px solid #EEE;">
+                            <h4>
+                                <span><?= $this->sma->formatMoney($gcsales->paid ? $gcsales->paid : '0.00') . ' (' . $this->sma->formatMoney($gcsales->total ? $gcsales->total : '0.00') . ')'; ?></span>
+                            </h4>
+                        </td>
+                    </tr>
                     <?php if ($pos_settings->paypal_pro) {
                     ?>
                         <tr>
@@ -213,7 +223,7 @@
                 <div class="row no-print">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <?= lang('total_cash', 'total_cash_submitted'); ?>
+                            <b>Total Uang Tunai *</b>
                             <?= form_hidden('total_cash', $total_cash_amount); ?>
                             <?= form_input('total_cash_submitted', ($_POST['total_cash_submitted'] ?? $this->sma->formatMoney($total_cash_amount)), 'class="form-control input-tip" id="total_cash_submitted" required="required" readonly'); ?>
                         </div>
@@ -226,6 +236,11 @@
                             <b>Total ShopeePay *</b>
                             <?= form_hidden('total_shopee', $shopee->total ?? 0); ?>
                             <?= form_input('total_shopee_submitted', ($_POST['total_shopee_submitted'] ?? $this->sma->formatMoney($shopee->total) ?? 0), 'class="form-control input-tip" id="total_shopee_submitted" required="required" readonly'); ?>
+                        </div>
+                        <div class="form-group">
+                            <b>Total Voucher *</b>
+                            <?= form_hidden('total_voucher', $gcsales->total ?? 0); ?>
+                            <?= form_input('total_voucher_submitted', ($_POST['total_voucher_submitted'] ?? $this->sma->formatMoney($gcsales->total) ?? 0), 'class="form-control input-tip" id="total_voucher_submitted" required="required" readonly'); ?>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -279,7 +294,6 @@
     </div>
 </div>
 
-</div>
 <script type="text/javascript" src="<?= $assets ?>js/jquery.js"></script>
 <script type="text/javascript" src="<?= $assets ?>js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<?= $assets ?>js/bootstrap.min.js"></script>

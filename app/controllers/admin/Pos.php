@@ -304,6 +304,18 @@ class Pos extends MY_Controller
         $this->sma->send_json(['res' => 0]);
     }
 
+    public function aktif_status_close()
+    {
+        $wh_id = $this->session->userdata('warehouse_id');
+        $this->pos_model->status_close_aktif($wh_id);
+    }
+
+    public function nonaktif_status_close()
+    {
+        $wh_id = $this->session->userdata('warehouse_id');
+        $this->pos_model->status_close_nonaktif($wh_id);
+    }
+
     public function close_register_ver($user_id = null)
     {
         $user_id = $this->session->userdata('user_id');
@@ -316,12 +328,25 @@ class Pos extends MY_Controller
 
     public function close_register_process()
     {
+        // $wh_id = $this->session->userdata('warehouse_id');
+
         $input_pass = $this->input->post('pass_cr');
         $pass_asli = $this->input->post('pass_hiden');
 
         if ($input_pass == $pass_asli) {
             admin_redirect('pos/close_register');
+            
+            // $cek = $this->pos_model->cek_status_close();
+            // if ($cek < 7) {
+            //     $this->pos_model->status_close_aktif($wh_id);
+            //     admin_redirect('pos/close_register');
+            // } else {
+            //     $this->pos_model->status_close_nonaktif($wh_id);
+            //     $this->session->set_flashdata('error', "<b>Silahkan tungu &plusmn; 2 Menit</b> kemudian reload halaman ini. Saat ini sistem sedang memproses " . $cek . " Cabang !");
+            //     admin_redirect('pos');
+            // }
         } else {
+            // $this->pos_model->status_close_nonaktif($wh_id);
             $this->session->set_flashdata('error', "Password Salah !!");
             admin_redirect('pos');
         }
@@ -329,13 +354,14 @@ class Pos extends MY_Controller
 
     public function close_register($user_id = null)
     {
+        // $wh_id = $this->session->userdata('warehouse_id');
+        // $this->pos_model->status_close_nonaktif($wh_id);
+
         $this->sma->checkPermissions('index');
         if (!$this->Owner && !$this->Admin) {
             $user_id = $this->session->userdata('user_id');
         }
         $this->form_validation->set_rules('total_cash', lang('total_cash'), 'trim|required|numeric');
-        // $this->form_validation->set_rules('total_cheques', lang('total_cheques'), 'trim|numeric');
-        // $this->form_validation->set_rules('total_cc_slips', lang('total_cc_slips'), 'trim|numeric');
 
         if (true == $this->form_validation->run()) {
             if ($this->Owner || $this->Admin) {
@@ -349,8 +375,6 @@ class Pos extends MY_Controller
             $data = [
                 'closed_at'                => date('Y-m-d H:i:s'),
                 'total_cash'               => $this->input->post('total_cash'),
-                // 'total_cheques'            => $this->input->post('total_cheques'),
-                // 'total_cc_slips'           => $this->input->post('total_cc_slips'),
                 'total_dana'           => $this->input->post('total_dana'),
                 'total_ovo'           => $this->input->post('total_ovo'),
                 'total_gofood'           => $this->input->post('total_gofood'),
@@ -362,8 +386,6 @@ class Pos extends MY_Controller
                 'total_gofood_submitted'     => $this->input->post('total_gofood_submitted'),
                 'total_shopee_submitted'     => $this->input->post('total_shopee_submitted'),
                 'total_qris_submitted'     => $this->input->post('total_qris_submitted'),
-                // 'total_cheques_submitted'  => $this->input->post('total_cheques_submitted'),
-                // 'total_cc_slips_submitted' => $this->input->post('total_cc_slips_submitted'),
                 'note'                     => $this->input->post('note'),
                 'status'                   => 'close',
                 'transfer_opened_bills'    => $this->input->post('transfer_opened_bills'),
@@ -376,6 +398,7 @@ class Pos extends MY_Controller
 
         if (true == $this->form_validation->run() && $this->pos_model->closeRegister($rid, $user_id, $data)) {
             $this->session->set_flashdata('message', lang('register_closed'));
+            // $this->pos_model->status_close_nonaktif($wh_id);
             admin_redirect('welcome');
         } else {
             if ($this->Owner || $this->Admin) {
@@ -389,18 +412,14 @@ class Pos extends MY_Controller
                 $this->data['register_open_time'] = null;
             }
             $this->data['error'] = (validation_errors() ? validation_errors() : $this->session->flashdata('error'));
-            $this->data['ccsales'] = $this->pos_model->getRegisterCCSales($register_open_time, $user_id);
             $this->data['cashsales'] = $this->pos_model->getRegisterCashSales($register_open_time, $user_id);
-            $this->data['chsales'] = $this->pos_model->getRegisterChSales($register_open_time, $user_id);
-            $this->data['gcsales'] = $this->pos_model->getRegisterGCSales($register_open_time);
-            $this->data['pppsales'] = $this->pos_model->getRegisterPPPSales($register_open_time, $user_id);
-            $this->data['stripesales'] = $this->pos_model->getRegisterStripeSales($register_open_time, $user_id);
             $this->data['othersales'] = $this->pos_model->getRegisterOtherSales($register_open_time);
             $this->data['dana'] = $this->pos_model->getRegisterDana($register_open_time, $user_id);
             $this->data['ovo'] = $this->pos_model->getRegisterOvo($register_open_time, $user_id);
             $this->data['shopee'] = $this->pos_model->getRegisterShopeePay($register_open_time, $user_id);
             $this->data['gofood'] = $this->pos_model->getRegisterGoFood($register_open_time, $user_id);
             $this->data['qris'] = $this->pos_model->getRegisterQris($register_open_time, $user_id);
+            $this->data['gcsales'] = $this->pos_model->getRegisterGCSales($register_open_time);
             $this->data['authorizesales'] = $this->pos_model->getRegisterAuthorizeSales($register_open_time, $user_id);
             $this->data['totalsales'] = $this->pos_model->getRegisterSales($register_open_time, $user_id);
             $this->data['refunds'] = $this->pos_model->getRegisterRefunds($register_open_time, $user_id);
@@ -791,6 +810,8 @@ class Pos extends MY_Controller
                 ->group_by('sales.id');
         }
         $this->datatables->where('pos', 1);
+        $this->datatables->where($this->db->dbprefix('sales') . '.date BETWEEN "' . date('2024-01-01 00:00:00') . '" and "' . date('Y-m-d 23:59:00') . '"');
+        
         if (!$this->Customer && !$this->Supplier && !$this->Owner && !$this->Admin && !$this->session->userdata('view_right')) {
             $this->datatables->where('created_by', $this->session->userdata('user_id'));
         } elseif ($this->Customer) {
@@ -804,6 +825,9 @@ class Pos extends MY_Controller
 
     public function index($sid = null)
     {
+        // $wh_id = $this->session->userdata('warehouse_id');
+        // $this->pos_model->status_close_nonaktif($wh_id);
+        
         $this->sma->checkPermissions();
 
         if (!$this->pos_settings->default_biller || !$this->pos_settings->default_customer || !$this->pos_settings->default_category) {
