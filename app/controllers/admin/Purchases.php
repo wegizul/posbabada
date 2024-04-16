@@ -33,6 +33,14 @@ class Purchases extends MY_Controller
     }
 
     /* -------------------------------------------------------------------------------------------------------------------------------- */
+    public function material()
+    {
+        $this->data['warehouses'] = $this->site->getWarehouseByID($this->session->userdata('warehouse_id'));
+        $this->load->helper('string');
+        $bc                 = [['link' => base_url(), 'page' => lang('home')], ['link' => admin_url('purchases'), 'page' => lang('purchases')], ['link' => '#', 'page' => lang('add_purchase')]];
+        $meta               = ['page_title' => lang('add_purchase'), 'bc' => $bc];
+        $this->page_construct('purchases/material', $meta, $this->data);
+    }
 
     public function add($quote_id = null)
     {

@@ -1025,7 +1025,7 @@
                                                         <?php if ($GP['purchases-add']) {
                                                         ?>
                                                             <li id="purchases_add">
-                                                                <a class="submenu" href="<?= admin_url('purchases/add'); ?>">
+                                                                <a class="submenu" href="<?= admin_url('purchases/material'); ?>">
                                                                     <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_purchase'); ?></span>
                                                                 </a>
                                                             </li>
