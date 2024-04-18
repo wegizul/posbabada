@@ -77,7 +77,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Mengambil data dari API menggunakan fetch
-        fetch('http://localhost/babada-logistik/Api/getMaterial')
+        fetch('https://ilogs.webdeveloperpku.com/Api/getMaterial')
             .then(response => response.json())
             .then(data => {
                 // Memproses data yang diterima
@@ -98,7 +98,7 @@
         event.preventDefault();
         $.ajax({
             type: "POST",
-            url: "http://localhost/babada-logistik/Api/findMaterial",
+            url: "https://ilogs.webdeveloperpku.com/Api/findMaterial",
             data: "mtl_id=" + id,
             dataType: "json",
             success: function(data) {
@@ -142,7 +142,7 @@
         $(".btn").attr("disabled", true);
         $.ajax({
             type: "POST",
-            url: "http://localhost/babada-logistik/Api/sendPurchase",
+            url: "https://ilogs.webdeveloperpku.com/Api/sendPurchase",
             data: new FormData(this),
             processData: false,
             contentType: false,

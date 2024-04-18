@@ -17,6 +17,7 @@ class Api extends CI_Controller
             $json_data = json_encode($data);
 
             header('Content-Type: application/json');
+            header('Access-Control-Allow-Origin: *');
             echo $json_data;
         } else {
             http_response_code(405);
