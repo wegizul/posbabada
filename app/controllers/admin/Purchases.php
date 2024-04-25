@@ -42,6 +42,30 @@ class Purchases extends MY_Controller
         $this->page_construct('purchases/material', $meta, $this->data);
     }
 
+    public function riwayat()
+    {
+        $user = $this->session->userdata('user_id');
+        // Mendefinisikan URL API yang akan diakses
+        // $api_url = 'https://logistikolahgemilang.com/Api/getPenjualan/' . $user;
+        $api_url = 'http://localhost/ilogs/Api/getPenjualan/' . $user;
+
+        // Membuat request menggunakan cURL
+        $curl = curl_init($api_url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        // Mengubah respons JSON menjadi array PHP
+        $penjualan = json_decode($response, true);
+
+        $this->data['penjualan'] = $penjualan;
+        $this->data['warehouses'] = $this->site->getWarehouseByID($this->session->userdata('warehouse_id'));
+        $this->load->helper('string');
+        $bc                 = [['link' => base_url(), 'page' => lang('home')], ['link' => admin_url('purchases'), 'page' => lang('purchases')], ['link' => '#', 'page' => lang('add_purchase')]];
+        $meta               = ['page_title' => lang('add_purchase'), 'bc' => $bc];
+        $this->page_construct('purchases/riwayat', $meta, $this->data);
+    }
+
     public function add($quote_id = null)
     {
         $this->sma->checkPermissions();

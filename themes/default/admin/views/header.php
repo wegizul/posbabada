@@ -1018,7 +1018,7 @@
                                                     </a>
                                                     <ul>
                                                         <li id="purchases_index">
-                                                            <a class="submenu" href="<?= admin_url('purchases'); ?>">
+                                                            <a class="submenu" href="<?= admin_url('purchases/riwayat'); ?>">
                                                                 <i class="fa fa-star"></i><span class="text"> <?= lang('list_purchases'); ?></span>
                                                             </a>
                                                         </li>

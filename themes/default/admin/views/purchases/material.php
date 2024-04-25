@@ -77,7 +77,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Mengambil data dari API menggunakan fetch
-        fetch('https://ilogs.webdeveloperpku.com/Api/getMaterial')
+        fetch('https://logistikolahgemilang.com/Api/getMaterial')
             .then(response => response.json())
             .then(data => {
                 // Memproses data yang diterima
@@ -85,7 +85,12 @@
                 data.forEach(product => {
                     var opt = document.createElement('option');
                     opt.value = product.mtl_id;
-                    opt.innerHTML = product.mtl_nama;
+                    if (product.mtl_stok > 0) {
+                        opt.innerHTML = product.mtl_nama + " (stok " + product.mtl_stok + ")";
+                    } else {
+                        opt.innerHTML = product.mtl_nama + "(stok habis)";
+                        opt.disabled = true;
+                    }
                     select.appendChild(opt);
                 });
             })
@@ -98,7 +103,7 @@
         event.preventDefault();
         $.ajax({
             type: "POST",
-            url: "https://ilogs.webdeveloperpku.com/Api/findMaterial",
+            url: "https://logistikolahgemilang.com/Api/findMaterial",
             data: "mtl_id=" + id,
             dataType: "json",
             success: function(data) {
@@ -118,7 +123,8 @@
 				<input type="hidden" id="pjd_mtl_id` + i + `" name="pjd_mtl_id[]" value="` + val.mtl_id + `" class="form-control form-control-sm" readonly>
 			</td>
 			<td width="30%">
-				<input type="number" min="0" id="pjd_qty` + i + `" name="pjd_qty[]" class="form-control form-control-sm" style="width:50%;" required>
+				<input type="number" min="0" id="pjd_qty` + i + `" name="pjd_qty[]" class="form-control form-control-sm" style="width:50%;" onInput="cek_stok(` + val.mtl_id + `,this.value)" required>
+                <small id="er_qty" class="text-danger"></small>
 			</td>
 			<td width="20%">
 				` + val.smt_nama + `
@@ -136,13 +142,33 @@
         $('#row' + btn_hapus + '').remove();
     });
 
+    function cek_stok(id, jml) {
+        event.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "https://logistikolahgemilang.com/Api/findMaterial",
+            data: "mtl_id=" + id,
+            dataType: "json",
+            success: function(data) {
+                if (jml > data.mtl_stok) {
+                    $('#er_qty').html('sisa stok ' + data.mtl_stok);
+                    $('#pjl_simpan').attr("disabled", true);
+                } else {
+                    $('#er_qty').html('');
+                    $('#pjl_simpan').attr("disabled", false);
+                }
+                return false;
+            }
+        });
+    }
+
     $("#frm_penjualan").submit(function(e) {
         e.preventDefault();
         $("#pjl_simpan").html("Menyimpan...");
         $(".btn").attr("disabled", true);
         $.ajax({
             type: "POST",
-            url: "https://ilogs.webdeveloperpku.com/Api/sendPurchase",
+            url: "https://logistikolahgemilang.com/Api/sendPurchase",
             data: new FormData(this),
             processData: false,
             contentType: false,
